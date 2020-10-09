@@ -1,0 +1,11 @@
+GeneratorModel for yakindu::java {
+
+	statechart basicCoffeeController {
+
+		feature Outlet {
+			targetProject = "fr.univcotedazur.polytech.si4.fsm.2020.project"
+			targetFolder = "src-gen"
+			libraryTargetFolder = "src"
+		}
+	}
+}
