@@ -4,6 +4,8 @@
 .metadata
 .idea
 
+*.iml
+
 # Log file
 *.log
 
