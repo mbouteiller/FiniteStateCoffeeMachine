@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<launchConfiguration type="org.yakindu.sct.simulation.core.launch.statechart">
-<stringAttribute key="filename" value="/fr.univcotedazur.polytech.si4.fsm.2020.project/statecharts/basicCoffeeController.sct"/>
-</launchConfiguration>

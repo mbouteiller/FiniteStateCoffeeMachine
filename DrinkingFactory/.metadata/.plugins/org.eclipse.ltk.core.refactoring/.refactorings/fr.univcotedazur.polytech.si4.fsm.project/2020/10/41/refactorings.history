@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;fr.univcotedazur.polytech.si4.fsm.project&apos;&#x0D;&#x0A;- Original project: &apos;fr.univcotedazur.polytech.si4.fsm.project&apos;&#x0D;&#x0A;- Original element: &apos;fr.univcotedazur.polytech.si4.fsm.project/src/fr.univcotedazur.polytech.si4.fsm&apos;" description="Delete element" element1="/src&lt;fr.univcotedazur.polytech.si4.fsm" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1602237400532" subPackages="false" version="1.0"/>
-</session>

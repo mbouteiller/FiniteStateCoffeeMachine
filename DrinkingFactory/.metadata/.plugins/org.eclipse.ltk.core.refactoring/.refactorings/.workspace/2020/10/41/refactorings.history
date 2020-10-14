@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;fr.univcotedazur.polytech.si4.fsm.2020.project&apos; to &apos;fr.univcotedazur.polytech.si4.fsm.project&apos;" description="Rename resource &apos;fr.univcotedazur.polytech.si4.fsm.2020.project&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/fr.univcotedazur.polytech.si4.fsm.2020.project" name="fr.univcotedazur.polytech.si4.fsm.project" stamp="1602237381565" updateReferences="true"/>
-</session>
