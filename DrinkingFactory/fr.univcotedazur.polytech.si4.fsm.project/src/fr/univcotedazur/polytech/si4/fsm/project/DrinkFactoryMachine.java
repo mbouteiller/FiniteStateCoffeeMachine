@@ -83,7 +83,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel messagesToUser = new JLabel("<html>This is<br>place to communicate <br> with the user");
+		JLabel messagesToUser = new JLabel(display);
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
@@ -258,6 +258,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=50;
 				updateConsole();
+				messagesToUser.setText(display);
 				theFSM.raiseAny();
 				if(enough()){
 					theFSM.raisePaid();
@@ -274,6 +275,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=25;
 				updateConsole();
+				messagesToUser.setText(display);
 				theFSM.raiseAny();
 				if(enough()){
 					theFSM.raisePaid();
@@ -290,6 +292,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=10;
 				updateConsole();
+				messagesToUser.setText(display);
 				theFSM.raiseAny();
 				if(enough()){
 					theFSM.raisePaid();
@@ -377,6 +380,6 @@ public class DrinkFactoryMachine extends JFrame {
 		return false;
 	}
 	void updateConsole(){
-		display="Votre choix : "+choice.toString()+"\n"+"Solde : "+money;
+		display="<html>Votre choix : "+choice.toString().toLowerCase()+"<br>"+"Solde : "+money;
 	}
 }
