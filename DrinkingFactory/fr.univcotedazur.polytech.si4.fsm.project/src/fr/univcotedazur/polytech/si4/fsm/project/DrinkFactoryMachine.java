@@ -1,6 +1,7 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -23,8 +24,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
-public class DrinkFactoryMachine extends JFrame {
+import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
 
+public class DrinkFactoryMachine extends JFrame {
+	static BasicCoffeeControllerStatemachine theFSM;
 	/**
 	 * 
 	 */
@@ -39,6 +42,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		theFSM = new BasicCoffeeControllerStatemachine();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
