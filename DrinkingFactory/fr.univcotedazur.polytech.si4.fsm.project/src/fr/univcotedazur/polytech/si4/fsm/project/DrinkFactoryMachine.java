@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -28,7 +30,7 @@ import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoff
 
 public class DrinkFactoryMachine extends JFrame {
 	static BasicCoffeeControllerStatemachine theFSM;
-
+	Products choice;
 	/**
 	 * 
 	 */
@@ -95,25 +97,71 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setForeground(Color.WHITE);
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
+		coffeeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				choice = Products.COFFEE;
+				theFSM.raiseAny();
+				theFSM.raiseChoice();
+			}
+		});
 		contentPane.add(coffeeButton);
 
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
 		expressoButton.setBounds(12, 71, 96, 25);
+		expressoButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				choice = Products.EXPRESSO;
+				theFSM.raiseAny();
+				theFSM.raiseChoice();
+			}
+		});
 		contentPane.add(expressoButton);
 
 		JButton teaButton = new JButton("Tea");
 		teaButton.setForeground(Color.WHITE);
 		teaButton.setBackground(Color.DARK_GRAY);
 		teaButton.setBounds(12, 108, 96, 25);
+		teaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				choice = Products.TEA;
+				theFSM.raiseAny();
+				theFSM.raiseChoice();
+			}
+		});
 		contentPane.add(teaButton);
 
 		JButton soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
+		soupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				choice = Products.SOUP;
+				theFSM.raiseAny();
+				theFSM.raiseChoice();
+			}
+		});
 		contentPane.add(soupButton);
+
+		JButton icedTeaButton = new JButton("Iced Tea");
+		icedTeaButton.setForeground(Color.WHITE);
+		icedTeaButton.setBackground(Color.DARK_GRAY);
+		icedTeaButton.setBounds(12, 182, 96, 25);
+		icedTeaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				choice = Products.ICETEA;
+				theFSM.raiseAny();
+				theFSM.raiseChoice();
+			}
+		});
+		contentPane.add(icedTeaButton);
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
@@ -169,12 +217,6 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setLabelTable(temperatureTable);
 
 		contentPane.add(temperatureSlider);
-
-		JButton icedTeaButton = new JButton("Iced Tea");
-		icedTeaButton.setForeground(Color.WHITE);
-		icedTeaButton.setBackground(Color.DARK_GRAY);
-		icedTeaButton.setBounds(12, 182, 96, 25);
-		contentPane.add(icedTeaButton);
 
 		JLabel lblSugar = new JLabel("Sugar");
 		lblSugar.setForeground(Color.WHITE);
