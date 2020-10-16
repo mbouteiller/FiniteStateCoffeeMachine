@@ -31,6 +31,8 @@ import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoff
 public class DrinkFactoryMachine extends JFrame {
 	static BasicCoffeeControllerStatemachine theFSM;
 	Products choice;
+	int money;
+	String display;
 	/**
 	 * 
 	 */
@@ -66,6 +68,9 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
+		money=0;
+		display="<html>This is<br>place to communicate <br> with the user";
+		choice=Products.NONE;
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
 		setBackground(Color.DARK_GRAY);
@@ -248,16 +253,49 @@ public class DrinkFactoryMachine extends JFrame {
 		JButton money50centsButton = new JButton("0.50 €");
 		money50centsButton.setForeground(Color.WHITE);
 		money50centsButton.setBackground(Color.DARK_GRAY);
+		money50centsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				money+=50;
+				updateConsole();
+				theFSM.raiseAny();
+				if(enough()){
+					theFSM.raisePaid();
+				}
+			}
+		});
 		panel.add(money50centsButton);
 
 		JButton money25centsButton = new JButton("0.25 €");
 		money25centsButton.setForeground(Color.WHITE);
 		money25centsButton.setBackground(Color.DARK_GRAY);
+		money25centsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				money+=25;
+				updateConsole();
+				theFSM.raiseAny();
+				if(enough()){
+					theFSM.raisePaid();
+				}
+			}
+		});
 		panel.add(money25centsButton);
 
 		JButton money10centsButton = new JButton("0.10 €");
 		money10centsButton.setForeground(Color.WHITE);
 		money10centsButton.setBackground(Color.DARK_GRAY);
+		money10centsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				money+=10;
+				updateConsole();
+				theFSM.raiseAny();
+				if(enough()){
+					theFSM.raisePaid();
+				}
+			}
+		});
 		panel.add(money10centsButton);
 
 		JPanel panel_1 = new JPanel();
@@ -320,5 +358,25 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
+	}
+	boolean enough(){
+		switch (choice){
+			case TEA:
+				return money>=40;
+			case SOUP:
+				return money>=75;
+			case COFFEE:
+				return money>=35;
+			case ICETEA:
+				return money>=800;
+			case EXPRESSO:
+				return money>=50;
+			case NONE:
+				return  false;
+		}
+		return false;
+	}
+	void updateConsole(){
+		display="Votre choix : "+choice.toString()+"\n"+"Solde : "+money;
 	}
 }
