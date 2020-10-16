@@ -44,6 +44,8 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public static void main(String[] args) {
 		theFSM = new BasicCoffeeControllerStatemachine();
+		TimerService timer = new TimerService();
+		theFSM.setTimer(timer);
 		theFSM.init();
 		theFSM.enter();
 		EventQueue.invokeLater(new Runnable() {
