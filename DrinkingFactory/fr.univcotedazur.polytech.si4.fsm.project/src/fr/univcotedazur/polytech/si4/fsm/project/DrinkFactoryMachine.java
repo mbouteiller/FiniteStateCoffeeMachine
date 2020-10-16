@@ -28,6 +28,7 @@ import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoff
 
 public class DrinkFactoryMachine extends JFrame {
 	static BasicCoffeeControllerStatemachine theFSM;
+
 	/**
 	 * 
 	 */
@@ -43,6 +44,8 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public static void main(String[] args) {
 		theFSM = new BasicCoffeeControllerStatemachine();
+		theFSM.init();
+		theFSM.enter();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
