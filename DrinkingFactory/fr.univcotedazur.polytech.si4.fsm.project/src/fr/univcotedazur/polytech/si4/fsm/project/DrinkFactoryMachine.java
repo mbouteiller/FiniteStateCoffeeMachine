@@ -32,7 +32,7 @@ public class DrinkFactoryMachine extends JFrame {
 	static BasicCoffeeControllerStatemachine theFSM;
 	Products choice;
 	int money;
-	String display;
+	String consoleMessage;
 	/**
 	 * 
 	 */
@@ -68,9 +68,10 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
-		money=0;
-		display="<html>This is<br>place to communicate <br> with the user";
-		choice=Products.NONE;
+		money = 0;
+		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
+		choice = Products.NONE;
+
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
 		setBackground(Color.DARK_GRAY);
@@ -83,7 +84,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel messagesToUser = new JLabel(display);
+		JLabel messagesToUser = new JLabel(consoleMessage);
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
@@ -106,6 +107,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				choice = Products.COFFEE;
+				updateConsole();
 				theFSM.raiseAny();
 				theFSM.raiseChoice();
 			}
@@ -120,6 +122,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				choice = Products.EXPRESSO;
+				updateConsole();
 				theFSM.raiseAny();
 				theFSM.raiseChoice();
 			}
@@ -134,6 +137,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				choice = Products.TEA;
+				updateConsole();
 				theFSM.raiseAny();
 				theFSM.raiseChoice();
 			}
@@ -148,6 +152,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				choice = Products.SOUP;
+				updateConsole();
 				theFSM.raiseAny();
 				theFSM.raiseChoice();
 			}
@@ -162,6 +167,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				choice = Products.ICETEA;
+				updateConsole();
 				theFSM.raiseAny();
 				theFSM.raiseChoice();
 			}
@@ -258,9 +264,8 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=50;
 				updateConsole();
-				messagesToUser.setText(display);
 				theFSM.raiseAny();
-				if(enough()){
+				if(enoughMoney()){
 					theFSM.raisePaid();
 				}
 			}
@@ -275,9 +280,8 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=25;
 				updateConsole();
-				messagesToUser.setText(display);
 				theFSM.raiseAny();
-				if(enough()){
+				if(enoughMoney()){
 					theFSM.raisePaid();
 				}
 			}
@@ -292,9 +296,8 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				money+=10;
 				updateConsole();
-				messagesToUser.setText(display);
 				theFSM.raiseAny();
-				if(enough()){
+				if(enoughMoney()){
 					theFSM.raisePaid();
 				}
 			}
@@ -360,9 +363,9 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
-
 	}
-	boolean enough(){
+
+	boolean enoughMoney(){
 		switch (choice){
 			case TEA:
 				return money>=40;
@@ -379,7 +382,10 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		return false;
 	}
+
 	void updateConsole(){
-		display="<html>Votre choix : "+choice.toString().toLowerCase()+"<br>"+"Solde : "+money;
+		consoleMessage = "<html>Votre choix : " + choice.toString().toLowerCase() + "<br>" + "Solde : " + money;
+		JLabel console = (JLabel)(contentPane.getComponent(0));
+		console.setText(consoleMessage);
 	}
 }
