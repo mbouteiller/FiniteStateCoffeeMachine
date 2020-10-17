@@ -11,7 +11,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     
     @Override
     public void onPayRaised() {
-
     }
 
     @Override
@@ -26,7 +25,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onCheckAmountRaised() {
-
+        System.out.println("ok");
     }
 
     @Override
@@ -36,7 +35,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onStartRecipeRaised() {
-
+        System.out.println("lets go le café lets go");
     }
 
     @Override

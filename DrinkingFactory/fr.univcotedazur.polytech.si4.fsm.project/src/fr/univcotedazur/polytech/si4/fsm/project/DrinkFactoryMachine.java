@@ -47,9 +47,12 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		DrinkFactoryMachine dfm = new DrinkFactoryMachine();
+
 		theFSM = new BasicCoffeeControllerStatemachine();
 		TimerService timer = new TimerService();
 		theFSM.setTimer(timer);
+		theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(dfm));
 		theFSM.init();
 		theFSM.enter();
 		EventQueue.invokeLater(new Runnable() {
@@ -106,10 +109,7 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				choice = Products.COFFEE;
-				updateConsole();
-				theFSM.raiseAny();
-				theFSM.raiseChoice();
+				chooseAction(Products.COFFEE);
 			}
 		});
 		contentPane.add(coffeeButton);
@@ -121,10 +121,7 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				choice = Products.EXPRESSO;
-				updateConsole();
-				theFSM.raiseAny();
-				theFSM.raiseChoice();
+				chooseAction(Products.EXPRESSO);
 			}
 		});
 		contentPane.add(expressoButton);
@@ -136,10 +133,7 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				choice = Products.TEA;
-				updateConsole();
-				theFSM.raiseAny();
-				theFSM.raiseChoice();
+				chooseAction(Products.TEA);
 			}
 		});
 		contentPane.add(teaButton);
@@ -151,10 +145,7 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				choice = Products.SOUP;
-				updateConsole();
-				theFSM.raiseAny();
-				theFSM.raiseChoice();
+				chooseAction(Products.SOUP);
 			}
 		});
 		contentPane.add(soupButton);
@@ -166,10 +157,7 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				choice = Products.ICETEA;
-				updateConsole();
-				theFSM.raiseAny();
-				theFSM.raiseChoice();
+				chooseAction(Products.ICETEA);
 			}
 		});
 		contentPane.add(icedTeaButton);
@@ -262,12 +250,7 @@ public class DrinkFactoryMachine extends JFrame {
 		money50centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				money+=50;
-				updateConsole();
-				theFSM.raiseAny();
-				if(enoughMoney()){
-					theFSM.raisePaid();
-				}
+				payAction(50);
 			}
 		});
 		panel.add(money50centsButton);
@@ -278,12 +261,7 @@ public class DrinkFactoryMachine extends JFrame {
 		money25centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				money+=25;
-				updateConsole();
-				theFSM.raiseAny();
-				if(enoughMoney()){
-					theFSM.raisePaid();
-				}
+				payAction(25);
 			}
 		});
 		panel.add(money25centsButton);
@@ -294,12 +272,7 @@ public class DrinkFactoryMachine extends JFrame {
 		money10centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				money+=10;
-				updateConsole();
-				theFSM.raiseAny();
-				if(enoughMoney()){
-					theFSM.raisePaid();
-				}
+				payAction(10);
 			}
 		});
 		panel.add(money10centsButton);
@@ -387,5 +360,28 @@ public class DrinkFactoryMachine extends JFrame {
 		consoleMessage = "<html>Votre choix : " + choice.toString().toLowerCase() + "<br>" + "Solde : " + money;
 		JLabel console = (JLabel)(contentPane.getComponent(0));
 		console.setText(consoleMessage);
+	}
+
+	void chooseAction(Products p) {
+		choice = p;
+		updateConsole();
+		theFSM.raiseChoice();
+		theFSM.raiseAny();
+
+		if(enoughMoney()){
+			theFSM.raiseAmountVerified();
+		}
+
+	}
+
+	void payAction(int money) {
+		this.money += money;
+		updateConsole();
+		theFSM.raisePaid();
+		theFSM.raiseAny();
+
+		if(enoughMoney()){
+			theFSM.raiseAmountVerified();
+		}
 	}
 }
