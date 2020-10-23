@@ -29,10 +29,10 @@ import javax.swing.border.EmptyBorder;
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
 
 public class DrinkFactoryMachine extends JFrame {
-	static BasicCoffeeControllerStatemachine theFSM;
-	Products choice;
-	int money;
-	String consoleMessage;
+	protected static BasicCoffeeControllerStatemachine theFSM;
+	protected Products choice;
+	protected int money;
+	protected String consoleMessage;
 	/**
 	 * 
 	 */
@@ -47,18 +47,19 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		DrinkFactoryMachine dfm = new DrinkFactoryMachine();
 
-		theFSM = new BasicCoffeeControllerStatemachine();
-		TimerService timer = new TimerService();
-		theFSM.setTimer(timer);
-		theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(dfm));
-		theFSM.init();
-		theFSM.enter();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DrinkFactoryMachine frame = new DrinkFactoryMachine();
+
+					theFSM = new BasicCoffeeControllerStatemachine();
+					TimerService timer = new TimerService();
+					theFSM.setTimer(timer);
+					theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(frame));
+					theFSM.init();
+					theFSM.enter();
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

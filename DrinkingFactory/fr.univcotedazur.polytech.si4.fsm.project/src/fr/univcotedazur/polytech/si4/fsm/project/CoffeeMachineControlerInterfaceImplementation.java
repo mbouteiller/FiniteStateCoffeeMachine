@@ -25,7 +25,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onCheckAmountRaised() {
-        System.out.println("ok");
+
     }
 
     @Override
