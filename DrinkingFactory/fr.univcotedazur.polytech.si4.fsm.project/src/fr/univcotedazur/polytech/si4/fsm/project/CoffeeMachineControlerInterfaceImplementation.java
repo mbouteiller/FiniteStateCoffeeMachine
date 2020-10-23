@@ -40,11 +40,13 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onStartRecipeRaised() {
         System.out.println("lets go le café lets go");
+        theDfm.messagesToUser.setText("Commande en préparation");
+        theDfm.makeDrink();
     }
 
     @Override
     public void onCleanRaised() {
-
+    	theDfm.messagesToUser.setText("Commande terminée, nettoyage");
     }
 
     @Override

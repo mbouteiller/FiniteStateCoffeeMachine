@@ -2,6 +2,7 @@ package fr.univcotedazur.polytech.si4.fsm.project;
 
 import java.awt.Color;
 
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.Timer;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
 
@@ -34,6 +36,7 @@ public class DrinkFactoryMachine extends JFrame {
 	protected int money;
 	protected String consoleMessage;
 	JLabel messagesToUser;
+	Timer timer;
 	
 	/**
 	 * 
@@ -387,7 +390,19 @@ public class DrinkFactoryMachine extends JFrame {
 			theFSM.raiseAmountVerified();
 		}
 	}
+	
 	void raiseCancel() {
 		theFSM.raiseCanceled();
+	}
+	
+	void makeDrink() {
+		timer=new Timer(5000,ready);
+		timer.start();
+	}
+	ActionListener ready = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			theFSM.raiseFinish();
 		}
+	};
 }
