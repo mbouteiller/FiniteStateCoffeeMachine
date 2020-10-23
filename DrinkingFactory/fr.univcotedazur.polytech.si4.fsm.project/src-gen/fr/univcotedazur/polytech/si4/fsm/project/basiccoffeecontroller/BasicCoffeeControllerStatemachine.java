@@ -304,6 +304,24 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private boolean timesup;
+		
+		
+		public boolean isRaisedTimesup() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return timesup;
+			}
+		}
+		
+		protected void raiseTimesup() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				timesup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onTimesupRaised();
+				}
+			}
+		}
+		
 		protected void clearEvents() {
 			choice = false;
 			amountVerified = false;
@@ -324,6 +342,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		startRecipe = false;
 		clean = false;
 		restart = false;
+		timesup = false;
 		}
 		
 	}
@@ -339,6 +358,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		main_region_ChoiceState_r1_WaitChoice,
 		main_region_ChoiceState_r1_Initial,
 		main_region_ChoiceState_r1_VerifyAmount,
+		main_region_ChoiceState_r1_CancelDisplay,
 		main_region_Begin,
 		main_region_Clean,
 		payment_NotPaid,
@@ -354,7 +374,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[1];
+	private final boolean[] timeEvents = new boolean[2];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -428,6 +448,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				break;
 			case main_region_ChoiceState_r1_VerifyAmount:
 				main_region_ChoiceState_r1_VerifyAmount_react(true);
+				break;
+			case main_region_ChoiceState_r1_CancelDisplay:
+				main_region_ChoiceState_r1_CancelDisplay_react(true);
 				break;
 			case main_region_Begin:
 				main_region_Begin_react(true);
@@ -515,7 +538,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		switch (state) {
 		case main_region_ChoiceState:
 			return stateVector[0].ordinal() >= State.
-					main_region_ChoiceState.ordinal()&& stateVector[0].ordinal() <= State.main_region_ChoiceState_r1_VerifyAmount.ordinal();
+					main_region_ChoiceState.ordinal()&& stateVector[0].ordinal() <= State.main_region_ChoiceState_r1_CancelDisplay.ordinal();
 		case main_region_ChoiceState_r1_Chosen:
 			return stateVector[0] == State.main_region_ChoiceState_r1_Chosen;
 		case main_region_ChoiceState_r1_WaitChoice:
@@ -524,6 +547,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			return stateVector[0] == State.main_region_ChoiceState_r1_Initial;
 		case main_region_ChoiceState_r1_VerifyAmount:
 			return stateVector[0] == State.main_region_ChoiceState_r1_VerifyAmount;
+		case main_region_ChoiceState_r1_CancelDisplay:
+			return stateVector[0] == State.main_region_ChoiceState_r1_CancelDisplay;
 		case main_region_Begin:
 			return stateVector[0] == State.main_region_Begin;
 		case main_region_Clean:
@@ -640,14 +665,28 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return sCInterface.isRaisedRestart();
 	}
 	
+	public synchronized boolean isRaisedTimesup() {
+		return sCInterface.isRaisedTimesup();
+	}
+	
+	/* Entry action for state 'CancelDisplay'. */
+	private void entryAction_main_region_ChoiceState_r1_CancelDisplay() {
+		timer.setTimer(this, 0, (5 * 1000), false);
+	}
+	
 	/* Entry action for state 'Present'. */
 	private void entryAction_activity_Present() {
-		timer.setTimer(this, 0, (10 * 1000), false);
+		timer.setTimer(this, 1, (10 * 1000), false);
+	}
+	
+	/* Exit action for state 'CancelDisplay'. */
+	private void exitAction_main_region_ChoiceState_r1_CancelDisplay() {
+		timer.unsetTimer(this, 0);
 	}
 	
 	/* Exit action for state 'Present'. */
 	private void exitAction_activity_Present() {
-		timer.unsetTimer(this, 0);
+		timer.unsetTimer(this, 1);
 	}
 	
 	/* 'default' enter sequence for state Chosen */
@@ -672,6 +711,13 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	private void enterSequence_main_region_ChoiceState_r1_VerifyAmount_default() {
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_ChoiceState_r1_VerifyAmount;
+	}
+	
+	/* 'default' enter sequence for state CancelDisplay */
+	private void enterSequence_main_region_ChoiceState_r1_CancelDisplay_default() {
+		entryAction_main_region_ChoiceState_r1_CancelDisplay();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_ChoiceState_r1_CancelDisplay;
 	}
 	
 	/* 'default' enter sequence for state Begin */
@@ -755,6 +801,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[0] = State.$NullState$;
 	}
 	
+	/* Default exit sequence for state CancelDisplay */
+	private void exitSequence_main_region_ChoiceState_r1_CancelDisplay() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_ChoiceState_r1_CancelDisplay();
+	}
+	
 	/* Default exit sequence for state Begin */
 	private void exitSequence_main_region_Begin() {
 		nextStateIndex = 0;
@@ -808,6 +862,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		case main_region_ChoiceState_r1_VerifyAmount:
 			exitSequence_main_region_ChoiceState_r1_VerifyAmount();
 			break;
+		case main_region_ChoiceState_r1_CancelDisplay:
+			exitSequence_main_region_ChoiceState_r1_CancelDisplay();
+			break;
 		case main_region_Begin:
 			exitSequence_main_region_Begin();
 			break;
@@ -833,6 +890,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			break;
 		case main_region_ChoiceState_r1_VerifyAmount:
 			exitSequence_main_region_ChoiceState_r1_VerifyAmount();
+			break;
+		case main_region_ChoiceState_r1_CancelDisplay:
+			exitSequence_main_region_ChoiceState_r1_CancelDisplay();
 			break;
 		default:
 			break;
@@ -892,9 +952,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (sCInterface.canceled) {
 				exitSequence_main_region_ChoiceState();
-				sCInterface.raiseRestart();
+				sCInterface.raiseCancel();
 				
-				enterSequence_main_region_ChoiceState_r1_Initial_default();
+				enterSequence_main_region_ChoiceState_r1_CancelDisplay_default();
 			} else {
 				did_transition = false;
 			}
@@ -985,6 +1045,26 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return did_transition;
 	}
 	
+	private boolean main_region_ChoiceState_r1_CancelDisplay_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[0]) {
+				exitSequence_main_region_ChoiceState_r1_CancelDisplay();
+				sCInterface.raiseRestart();
+				
+				enterSequence_main_region_ChoiceState_r1_Initial_default();
+				main_region_ChoiceState_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_ChoiceState_react(try_transition);
+		}
+		return did_transition;
+	}
+	
 	private boolean main_region_Begin_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
@@ -1027,25 +1107,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				
 				enterSequence_payment_Paid_default();
 			} else {
-				did_transition = false;
-			}
-		}
-		return did_transition;
-	}
-	
-	private boolean payment_Paid_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (sCInterface.canceled) {
-				exitSequence_payment_Paid();
-				sCInterface.raiseRefund();
-				
-				enterSequence_payment_NotPaid_default();
-			} else {
-				if (sCInterface.reset) {
-					exitSequence_payment_Paid();
-					sCInterface.raiseGiveChange();
+				if (sCInterface.canceled) {
+					exitSequence_payment_NotPaid();
+					sCInterface.raiseRefund();
 					
 					enterSequence_payment_NotPaid_default();
 				} else {
@@ -1056,13 +1120,29 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return did_transition;
 	}
 	
+	private boolean payment_Paid_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.reset) {
+				exitSequence_payment_Paid();
+				sCInterface.raiseGiveChange();
+				
+				enterSequence_payment_NotPaid_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
 	private boolean activity_Present_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[0]) {
+			if (timeEvents[1]) {
 				exitSequence_activity_Present();
-				sCInterface.raiseCancel();
+				sCInterface.raiseTimesup();
 				
 				enterSequence_activity_Absent_default();
 				react();

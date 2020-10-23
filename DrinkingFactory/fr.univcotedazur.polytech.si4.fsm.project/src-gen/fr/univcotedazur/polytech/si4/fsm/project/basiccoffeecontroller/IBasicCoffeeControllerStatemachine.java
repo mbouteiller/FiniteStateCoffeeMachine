@@ -44,6 +44,8 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public boolean isRaisedRestart();
 		
+		public boolean isRaisedTimesup();
+		
 	public List<SCInterfaceListener> getListeners();
 	}
 	
@@ -57,6 +59,7 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public void onStartRecipeRaised();
 		public void onCleanRaised();
 		public void onRestartRaised();
+		public void onTimesupRaised();
 		}
 	
 	public SCInterface getSCInterface();

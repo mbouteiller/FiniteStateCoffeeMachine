@@ -15,7 +15,11 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRefundRaised() {
-
+    	String message="<html>Commande annulée<br>";
+    	if (theDfm.money!=0) {
+    		message+="Récuperez vos : <br> "+theDfm.money+" centimes";
+    	}
+    	theDfm.messagesToUser.setText(message);
     }
 
     @Override
@@ -30,7 +34,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onCancelRaised() {
-
+    	
     }
 
     @Override
@@ -45,6 +49,14 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRestartRaised() {
-
+    	theDfm.choice=Products.NONE;
+    	theDfm.money=0;
+    	theDfm.messagesToUser.setText("Veuillez faire votre choix");
     }
+
+	@Override
+	public void onTimesupRaised() {
+		theDfm.raiseCancel();
+		
+	}
 }

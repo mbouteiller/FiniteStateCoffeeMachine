@@ -33,6 +33,8 @@ public class DrinkFactoryMachine extends JFrame {
 	protected Products choice;
 	protected int money;
 	protected String consoleMessage;
+	JLabel messagesToUser;
+	
 	/**
 	 * 
 	 */
@@ -88,7 +90,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel messagesToUser = new JLabel(consoleMessage);
+		messagesToUser = new JLabel(consoleMessage);
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
@@ -385,4 +387,7 @@ public class DrinkFactoryMachine extends JFrame {
 			theFSM.raiseAmountVerified();
 		}
 	}
+	void raiseCancel() {
+		theFSM.raiseCanceled();
+		}
 }
