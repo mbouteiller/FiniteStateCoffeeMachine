@@ -37,6 +37,8 @@ public class DrinkFactoryMachine extends JFrame {
 	protected String consoleMessage;
 	JLabel messagesToUser;
 	Timer timer;
+	Timer timer2;
+	int progressBarValue;
 	
 	/**
 	 * 
@@ -78,6 +80,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public DrinkFactoryMachine() {
 		money = 0;
+		progressBarValue=0;
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
 		choice = Products.NONE;
 
@@ -170,7 +173,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setValue(10);
+		progressBar.setValue(progressBarValue);
 		progressBar.setForeground(Color.LIGHT_GRAY);
 		progressBar.setBackground(Color.DARK_GRAY);
 		progressBar.setBounds(12, 254, 622, 26);
@@ -398,11 +401,26 @@ public class DrinkFactoryMachine extends JFrame {
 	void makeDrink() {
 		timer=new Timer(5000,ready);
 		timer.start();
+		theFSM.raiseAny();
 	}
 	ActionListener ready = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			theFSM.raiseFinish();
+		}
+	};
+	void clean() {
+		System.out.println("truc");
+		timer2=new Timer(2000,readytorestart);
+		
+		timer2.start();
+		theFSM.raiseAny();
+		//theFSM.raiseReset();
+	}
+	ActionListener readytorestart = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			theFSM.raiseReset();
 		}
 	};
 }

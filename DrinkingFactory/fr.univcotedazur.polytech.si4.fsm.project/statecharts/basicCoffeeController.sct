@@ -47,7 +47,7 @@
     </regions>
     <regions xmi:id="_Cq1t0AoOEeuLfff9QNBocQ" name="activity">
       <vertices xsi:type="sgraph:State" xmi:id="_LDA5sAoOEeuLfff9QNBocQ" name="Present" incomingTransitions="_Pk1fEAoOEeuLfff9QNBocQ _Qzo0gAoOEeuLfff9QNBocQ">
-        <outgoingTransitions xmi:id="_QcmNgAoOEeuLfff9QNBocQ" specification="after 10s / raise timesup" target="_NbLD4AoOEeuLfff9QNBocQ"/>
+        <outgoingTransitions xmi:id="_QcmNgAoOEeuLfff9QNBocQ" specification="after 30s / raise timesup" target="_NbLD4AoOEeuLfff9QNBocQ"/>
         <outgoingTransitions xmi:id="_Qzo0gAoOEeuLfff9QNBocQ" specification="any" target="_LDA5sAoOEeuLfff9QNBocQ"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_NbLD4AoOEeuLfff9QNBocQ" name="Absent" incomingTransitions="_QcmNgAoOEeuLfff9QNBocQ _U5P_AAoOEeuLfff9QNBocQ">

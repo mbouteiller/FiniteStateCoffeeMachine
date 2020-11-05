@@ -24,7 +24,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
-
+    	theDfm.messagesToUser.setText("fini");
     }
 
     @Override
@@ -47,6 +47,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onCleanRaised() {
     	theDfm.messagesToUser.setText("Commande terminée, nettoyage");
+    	theDfm.clean();
     }
 
     @Override
@@ -58,6 +59,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
 	@Override
 	public void onTimesupRaised() {
+		System.out.println("commande annulée");
 		theDfm.raiseCancel();
 		
 	}
