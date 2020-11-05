@@ -422,7 +422,6 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 	};
 	void clean() {
-		System.out.println("truc");
 		timer2=new Timer(2000,readytorestart);
 		
 		timer2.start();
@@ -432,7 +431,9 @@ public class DrinkFactoryMachine extends JFrame {
 	ActionListener readytorestart = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("truc");
 			theFSM.raiseReset();
+			timer2.stop();
 		}
 	};
 }

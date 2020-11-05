@@ -24,6 +24,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
+    	System.out.println("cahnge");
     	theDfm.messagesToUser.setText("fini");
     }
 
