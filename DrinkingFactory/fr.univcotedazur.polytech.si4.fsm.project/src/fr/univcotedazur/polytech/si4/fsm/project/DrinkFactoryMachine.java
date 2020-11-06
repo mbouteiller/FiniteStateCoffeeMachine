@@ -58,22 +58,20 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public static void main(String[] args) {
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DrinkFactoryMachine frame = new DrinkFactoryMachine();
+		EventQueue.invokeLater(() -> {
+			try {
+				DrinkFactoryMachine frame = new DrinkFactoryMachine();
 
-					theFSM = new BasicCoffeeControllerStatemachine();
-					TimerService timer = new TimerService();
-					theFSM.setTimer(timer);
-					theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(frame));
-					theFSM.init();
-					theFSM.enter();
+				theFSM = new BasicCoffeeControllerStatemachine();
+				TimerService timer = new TimerService();
+				theFSM.setTimer(timer);
+				theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(frame));
+				theFSM.init();
+				theFSM.enter();
 
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -119,60 +117,35 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setForeground(Color.WHITE);
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
-		coffeeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(new Coffee());
-			}
-		});
+		coffeeButton.addActionListener(actionEvent -> chooseAction(new Coffee()));
 		contentPane.add(coffeeButton);
 
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
 		expressoButton.setBounds(12, 71, 96, 25);
-		expressoButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(new Expresso());
-			}
-		});
+		expressoButton.addActionListener(actionEvent -> chooseAction(new Expresso()));
 		contentPane.add(expressoButton);
 
 		JButton teaButton = new JButton("Tea");
 		teaButton.setForeground(Color.WHITE);
 		teaButton.setBackground(Color.DARK_GRAY);
 		teaButton.setBounds(12, 108, 96, 25);
-		teaButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(new Tea());
-			}
-		});
+		teaButton.addActionListener(actionEvent -> chooseAction(new Tea()));
 		contentPane.add(teaButton);
 
 		JButton soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
-		soupButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(new Soup());
-			}
-		});
+		soupButton.addActionListener(actionEvent -> chooseAction(new Soup()));
 		contentPane.add(soupButton);
 
 		JButton icedTeaButton = new JButton("Iced Tea");
 		icedTeaButton.setForeground(Color.WHITE);
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
-		icedTeaButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(new IceTea());
-			}
-		});
+		icedTeaButton.addActionListener(actionEvent -> chooseAction(new IceTea()));
 		contentPane.add(icedTeaButton);
 
 		progressBar = new JProgressBar();
@@ -218,7 +191,7 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setMaximum(3);
 		temperatureSlider.setBounds(301, 188, 200, 54);
 
-		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<Integer, JLabel>();
+		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
 		temperatureTable.put(0, new JLabel("20°C"));
 		temperatureTable.put(1, new JLabel("35°C"));
 		temperatureTable.put(2, new JLabel("60°C"));
@@ -260,34 +233,19 @@ public class DrinkFactoryMachine extends JFrame {
 		JButton money50centsButton = new JButton("0.50 €");
 		money50centsButton.setForeground(Color.WHITE);
 		money50centsButton.setBackground(Color.DARK_GRAY);
-		money50centsButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				payAction(50);
-			}
-		});
+		money50centsButton.addActionListener(actionEvent -> payAction(50));
 		panel.add(money50centsButton);
 
 		JButton money25centsButton = new JButton("0.25 €");
 		money25centsButton.setForeground(Color.WHITE);
 		money25centsButton.setBackground(Color.DARK_GRAY);
-		money25centsButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				payAction(25);
-			}
-		});
+		money25centsButton.addActionListener(actionEvent -> payAction(25));
 		panel.add(money25centsButton);
 
 		JButton money10centsButton = new JButton("0.10 €");
 		money10centsButton.setForeground(Color.WHITE);
 		money10centsButton.setBackground(Color.DARK_GRAY);
-		money10centsButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				payAction(10);
-			}
-		});
+		money10centsButton.addActionListener(actionEvent -> payAction(10));
 		panel.add(money10centsButton);
 
 		JPanel panel_1 = new JPanel();
