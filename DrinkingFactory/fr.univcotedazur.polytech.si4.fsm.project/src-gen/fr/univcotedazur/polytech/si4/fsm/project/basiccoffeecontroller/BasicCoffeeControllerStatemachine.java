@@ -361,6 +361,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		main_region_ChoiceState_r1_CancelDisplay,
 		main_region_Begin,
 		main_region_Clean,
+		main_region_WaitChange,
 		payment_NotPaid,
 		payment_Paid,
 		activity_Present,
@@ -374,7 +375,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[2];
+	private final boolean[] timeEvents = new boolean[3];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -457,6 +458,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				break;
 			case main_region_Clean:
 				main_region_Clean_react(true);
+				break;
+			case main_region_WaitChange:
+				main_region_WaitChange_react(true);
 				break;
 			case payment_NotPaid:
 				payment_NotPaid_react(true);
@@ -553,6 +557,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			return stateVector[0] == State.main_region_Begin;
 		case main_region_Clean:
 			return stateVector[0] == State.main_region_Clean;
+		case main_region_WaitChange:
+			return stateVector[0] == State.main_region_WaitChange;
 		case payment_NotPaid:
 			return stateVector[1] == State.payment_NotPaid;
 		case payment_Paid:
@@ -674,9 +680,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		timer.setTimer(this, 0, (5 * 1000), false);
 	}
 	
+	/* Entry action for state 'WaitChange'. */
+	private void entryAction_main_region_WaitChange() {
+		timer.setTimer(this, 1, 100, false);
+	}
+	
 	/* Entry action for state 'Present'. */
 	private void entryAction_activity_Present() {
-		timer.setTimer(this, 1, (30 * 1000), false);
+		timer.setTimer(this, 2, (30 * 1000), false);
 	}
 	
 	/* Exit action for state 'CancelDisplay'. */
@@ -684,9 +695,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		timer.unsetTimer(this, 0);
 	}
 	
+	/* Exit action for state 'WaitChange'. */
+	private void exitAction_main_region_WaitChange() {
+		timer.unsetTimer(this, 1);
+	}
+	
 	/* Exit action for state 'Present'. */
 	private void exitAction_activity_Present() {
-		timer.unsetTimer(this, 1);
+		timer.unsetTimer(this, 2);
 	}
 	
 	/* 'default' enter sequence for state Chosen */
@@ -730,6 +746,13 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	private void enterSequence_main_region_Clean_default() {
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_Clean;
+	}
+	
+	/* 'default' enter sequence for state WaitChange */
+	private void enterSequence_main_region_WaitChange_default() {
+		entryAction_main_region_WaitChange();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_WaitChange;
 	}
 	
 	/* 'default' enter sequence for state NotPaid */
@@ -821,6 +844,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[0] = State.$NullState$;
 	}
 	
+	/* Default exit sequence for state WaitChange */
+	private void exitSequence_main_region_WaitChange() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_WaitChange();
+	}
+	
 	/* Default exit sequence for state NotPaid */
 	private void exitSequence_payment_NotPaid() {
 		nextStateIndex = 1;
@@ -870,6 +901,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			break;
 		case main_region_Clean:
 			exitSequence_main_region_Clean();
+			break;
+		case main_region_WaitChange:
+			exitSequence_main_region_WaitChange();
 			break;
 		default:
 			break;
@@ -1087,6 +1121,20 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (sCInterface.reset) {
 				exitSequence_main_region_Clean();
+				enterSequence_main_region_WaitChange_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_WaitChange_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[1]) {
+				exitSequence_main_region_WaitChange();
 				sCInterface.raiseRestart();
 				
 				enterSequence_main_region_ChoiceState_r1_Initial_default();
@@ -1147,7 +1195,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[1]) {
+			if (timeEvents[2]) {
 				exitSequence_activity_Present();
 				sCInterface.raiseTimesup();
 				

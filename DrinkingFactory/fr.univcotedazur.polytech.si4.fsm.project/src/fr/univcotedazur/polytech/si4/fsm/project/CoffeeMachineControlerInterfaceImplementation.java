@@ -25,7 +25,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
-        int change = 42;
+        int change = theDfm.money - theDfm.choice.price;
     	theDfm.lblChange.setText("Change : " + change);
         theDfm.timerChange();
     }
@@ -39,7 +39,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onCancelRaised() {
-    	
     }
 
     @Override
@@ -51,7 +50,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onCleanRaised() {
-    	theDfm.messagesToUser.setText("Commande terminée, nettoyage");
+    	theDfm.messagesToUser.setText("<html>Commande terminée,<br>Nettoyage ...");
     	theDfm.clean();
     }
 
