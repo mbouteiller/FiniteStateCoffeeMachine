@@ -29,10 +29,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.Timer;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
+import fr.univcotedazur.polytech.si4.fsm.project.products.*;
 
 public class DrinkFactoryMachine extends JFrame {
 	protected static BasicCoffeeControllerStatemachine theFSM;
-	protected Products choice;
+	protected Product choice;
+	protected final Product NONE = new None();
 	protected int money;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange;
@@ -84,7 +86,7 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBarValue=0;
 		stopTimer=0;
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
-		choice = Products.NONE;
+		choice = NONE;
 
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
@@ -120,7 +122,7 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(Products.COFFEE);
+				chooseAction(new Coffee());
 			}
 		});
 		contentPane.add(coffeeButton);
@@ -132,7 +134,7 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(Products.EXPRESSO);
+				chooseAction(new Expresso());
 			}
 		});
 		contentPane.add(expressoButton);
@@ -144,7 +146,7 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(Products.TEA);
+				chooseAction(new Tea());
 			}
 		});
 		contentPane.add(teaButton);
@@ -156,7 +158,7 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(Products.SOUP);
+				chooseAction(new Soup());
 			}
 		});
 		contentPane.add(soupButton);
@@ -168,7 +170,7 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				chooseAction(Products.ICETEA);
+				chooseAction(new IceTea());
 			}
 		});
 		contentPane.add(icedTeaButton);
@@ -357,30 +359,16 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	boolean enoughMoney(){
-		switch (choice){
-			case TEA:
-				return money>=40;
-			case SOUP:
-				return money>=75;
-			case COFFEE:
-				return money>=35;
-			case ICETEA:
-				return money>=800;
-			case EXPRESSO:
-				return money>=50;
-			case NONE:
-				return  false;
-		}
-		return false;
+		return (choice.price <= money);
 	}
 
 	void updateConsole(){
-		consoleMessage = "<html>Votre choix : " + choice.toString().toLowerCase() + "<br>" + "Solde : " + money;
+		consoleMessage = "<html>Votre choix : " + choice.toString() + "<br>" + "Solde : " + money;
 		JLabel console = (JLabel)(contentPane.getComponent(0));
 		console.setText(consoleMessage);
 	}
 
-	void chooseAction(Products p) {
+	void chooseAction(Product p) {
 		choice = p;
 		updateConsole();
 		theFSM.raiseChoice();

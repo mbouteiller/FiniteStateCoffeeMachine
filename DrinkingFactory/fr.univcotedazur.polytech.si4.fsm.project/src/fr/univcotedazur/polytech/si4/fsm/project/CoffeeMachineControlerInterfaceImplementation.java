@@ -57,8 +57,8 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRestartRaised() {
-    	theDfm.choice=Products.NONE;
-    	theDfm.money=0;
+    	theDfm.choice = theDfm.NONE;
+    	theDfm.money = 0;
     	theDfm.messagesToUser.setText("Veuillez faire votre choix");
     }
 
