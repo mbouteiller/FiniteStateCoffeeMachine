@@ -45,25 +45,54 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     public void onStartRecipeRaised() {
         String choiceDescription = "<html>Commande en préparation :<br>";
 
+        choiceDescription += getTemperatureString();
+        choiceDescription += getSizeString();
+        choiceDescription += theDfm.finalChoice;
+        choiceDescription += "<br> with " + theDfm.nbSugar + " pieces of sugar";
+
+        System.out.println("lets go le " + theDfm.finalChoice + " lets go");
+
+        theDfm.messagesToUser.setText(choiceDescription);
+        theDfm.makeDrink();
+    }
+
+    private String getSizeString() {
+        String size = "";
         switch (theDfm.size) {
             case 0:
-                choiceDescription += "Short ";
+                size += "short ";
                 break;
             case 1:
-                choiceDescription += "Medium ";
+                size += "medium ";
                 break;
             case 2:
-                choiceDescription += "Large ";
+                size += "large ";
                 break;
             default:
                 break;
         }
+        return size;
+    }
 
-        System.out.println("lets go le café lets go");
-        choiceDescription += theDfm.choice;
-
-        theDfm.messagesToUser.setText(choiceDescription);
-        theDfm.makeDrink();
+    private String getTemperatureString() {
+        String temperature = "";
+        switch (theDfm.temperature) {
+            case 0:
+                temperature += "Ambient ";
+                break;
+            case 1:
+                temperature += "Gentle ";
+                break;
+            case 2:
+                temperature += "Hot ";
+                break;
+            case 3:
+                temperature += "Very hot ";
+                break;
+            default:
+                break;
+        }
+        return temperature;
     }
 
     @Override

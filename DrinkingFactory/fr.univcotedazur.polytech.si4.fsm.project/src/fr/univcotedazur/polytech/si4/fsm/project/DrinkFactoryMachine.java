@@ -35,11 +35,11 @@ public class DrinkFactoryMachine extends JFrame {
 	protected static BasicCoffeeControllerStatemachine theFSM;
 	protected Product choice, finalChoice;
 	protected final Product NONE = new None();
-	protected int money, size;
+	protected int money, size, temperature, nbSugar;
 	protected boolean recipeStarted = false;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange;
-	JSlider sizeSlider;
+	JSlider sizeSlider, temperatureSlider, sugarSlider;
 	Timer timer, timerClean, timerChange;
 	float progressBarValue;
 	int stopTimer;
@@ -158,7 +158,7 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBar.setBounds(12, 254, 622, 26);
 		contentPane.add(progressBar);
 
-		JSlider sugarSlider = new JSlider();
+		sugarSlider = new JSlider();
 		sugarSlider.setValue(1);
 		sugarSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sugarSlider.setBackground(Color.DARK_GRAY);
@@ -182,7 +182,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setBounds(301, 125, 200, 36);
 		contentPane.add(sizeSlider);
 
-		JSlider temperatureSlider = new JSlider();
+		temperatureSlider = new JSlider();
 		temperatureSlider.setPaintLabels(true);
 		temperatureSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		temperatureSlider.setValue(2);
@@ -359,6 +359,8 @@ public class DrinkFactoryMachine extends JFrame {
 		recipeStarted = true;
 		finalChoice = choice;
 		size = sizeSlider.getValue();
+		temperature = temperatureSlider.getValue();
+		nbSugar = sugarSlider.getValue();
 		theFSM.raiseAmountVerified();
 	}
 	
