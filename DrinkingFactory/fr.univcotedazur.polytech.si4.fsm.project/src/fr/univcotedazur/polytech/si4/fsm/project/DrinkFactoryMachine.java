@@ -33,11 +33,13 @@ import fr.univcotedazur.polytech.si4.fsm.project.products.*;
 
 public class DrinkFactoryMachine extends JFrame {
 	protected static BasicCoffeeControllerStatemachine theFSM;
-	protected Product choice;
+	protected Product choice, finalChoice;
 	protected final Product NONE = new None();
-	protected int money;
+	protected int money, size;
+	protected boolean recipeStarted = false;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange;
+	JSlider sizeSlider;
 	Timer timer, timerClean, timerChange;
 	float progressBarValue;
 	int stopTimer;
@@ -168,7 +170,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setBounds(301, 51, 200, 36);
 		contentPane.add(sugarSlider);
 
-		JSlider sizeSlider = new JSlider();
+		sizeSlider = new JSlider();
 		sizeSlider.setPaintTicks(true);
 		sizeSlider.setValue(1);
 		sizeSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -328,14 +330,18 @@ public class DrinkFactoryMachine extends JFrame {
 
 	void chooseAction(Product p) {
 		choice = p;
-		updateConsole();
+		if (!recipeStarted) {
+			updateConsole();
+		}
 		theFSM.raiseChoice();
 		theFSM.raiseAny();
 	}
 
 	void payAction(int money) {
 		this.money += money;
-		updateConsole();
+		if (!recipeStarted) {
+			updateConsole();
+		}
 		theFSM.raisePaid();
 		theFSM.raiseMoneyGiven();
 		theFSM.raiseAny();
@@ -350,14 +356,18 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void raiseAmountVerified() {
+		recipeStarted = true;
+		finalChoice = choice;
+		size = sizeSlider.getValue();
 		theFSM.raiseAmountVerified();
 	}
 	
 	void makeDrink() {
-		timer=new Timer(10,ready);
+		timer=new Timer(10, ready);
 		timer.start();
 		theFSM.raiseAny();
 	}
+
 	ActionListener ready = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -379,7 +389,6 @@ public class DrinkFactoryMachine extends JFrame {
 		
 		timerClean.start();
 		theFSM.raiseAny();
-		//theFSM.raiseReset();
 	}
 
 	ActionListener readyToRestart = new ActionListener() {

@@ -13,6 +13,6 @@ public class None extends Product {
 
     @Override
     public String toString() {
-        return "None";
+        return "none";
     }
 }

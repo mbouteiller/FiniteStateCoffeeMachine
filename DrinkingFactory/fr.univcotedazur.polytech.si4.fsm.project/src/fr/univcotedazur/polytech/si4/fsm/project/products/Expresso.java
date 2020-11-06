@@ -13,6 +13,6 @@ public class Expresso extends Product {
 
     @Override
     public String toString() {
-        return "Expresso";
+        return "expresso";
     }
 }

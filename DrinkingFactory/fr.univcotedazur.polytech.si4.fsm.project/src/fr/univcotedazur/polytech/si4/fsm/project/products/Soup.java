@@ -13,6 +13,6 @@ public class Soup extends Product {
 
     @Override
     public String toString() {
-        return "Soup";
+        return "soup";
     }
 }

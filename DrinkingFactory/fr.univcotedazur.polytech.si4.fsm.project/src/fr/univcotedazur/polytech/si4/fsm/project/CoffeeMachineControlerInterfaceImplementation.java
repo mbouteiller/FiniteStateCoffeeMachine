@@ -25,7 +25,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
-        int change = theDfm.money - theDfm.choice.price;
+        int change = theDfm.money - theDfm.finalChoice.price;
     	theDfm.lblChange.setText("Change : " + change);
         theDfm.timerChange();
     }
@@ -43,8 +43,26 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onStartRecipeRaised() {
+        String choiceDescription = "<html>Commande en préparation :<br>";
+
+        switch (theDfm.size) {
+            case 0:
+                choiceDescription += "Short ";
+                break;
+            case 1:
+                choiceDescription += "Medium ";
+                break;
+            case 2:
+                choiceDescription += "Large ";
+                break;
+            default:
+                break;
+        }
+
         System.out.println("lets go le café lets go");
-        theDfm.messagesToUser.setText("Commande en préparation");
+        choiceDescription += theDfm.choice;
+
+        theDfm.messagesToUser.setText(choiceDescription);
         theDfm.makeDrink();
     }
 
@@ -58,6 +76,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     public void onRestartRaised() {
     	theDfm.choice = theDfm.NONE;
     	theDfm.money = 0;
+    	theDfm.recipeStarted = false;
     	theDfm.messagesToUser.setText("Veuillez faire votre choix");
     }
 
