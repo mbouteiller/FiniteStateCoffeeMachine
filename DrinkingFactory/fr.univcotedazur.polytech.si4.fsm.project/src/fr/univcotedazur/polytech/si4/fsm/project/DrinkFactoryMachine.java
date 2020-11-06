@@ -35,9 +35,8 @@ public class DrinkFactoryMachine extends JFrame {
 	protected Products choice;
 	protected int money;
 	protected String consoleMessage;
-	JLabel messagesToUser;
-	Timer timer;
-	Timer timer2;
+	JLabel messagesToUser, lblChange;
+	Timer timer, timerClean, timerChange;
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
@@ -315,6 +314,13 @@ public class DrinkFactoryMachine extends JFrame {
 		addCupButton.setBounds(45, 336, 96, 25);
 		contentPane.add(addCupButton);
 
+		lblChange = new JLabel("0");
+		lblChange.setForeground(Color.WHITE);
+		lblChange.setBackground(Color.DARK_GRAY);
+		lblChange.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChange.setBounds(450, 560, 200, 15);
+		contentPane.add(lblChange);
+
 		BufferedImage myPicture = null;
 		try {
 			myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
@@ -379,26 +385,26 @@ public class DrinkFactoryMachine extends JFrame {
 		updateConsole();
 		theFSM.raiseChoice();
 		theFSM.raiseAny();
-
-		if(enoughMoney()){
-			theFSM.raiseAmountVerified();
-		}
-
 	}
 
 	void payAction(int money) {
 		this.money += money;
 		updateConsole();
 		theFSM.raisePaid();
+		theFSM.raiseMoneyGiven();
 		theFSM.raiseAny();
-
-		if(enoughMoney()){
-			theFSM.raiseAmountVerified();
-		}
 	}
 	
-	void raiseCancel() {
+	void raiseCanceled() {
 		theFSM.raiseCanceled();
+	}
+
+	void raisePaid() {
+		theFSM.raisePaid();
+	}
+
+	void raiseAmountVerified() {
+		theFSM.raiseAmountVerified();
 	}
 	
 	void makeDrink() {
@@ -421,19 +427,33 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		}
 	};
+
 	void clean() {
-		timer2=new Timer(2000,readytorestart);
+		timerClean = new Timer(2000, readyToRestart);
 		
-		timer2.start();
+		timerClean.start();
 		theFSM.raiseAny();
 		//theFSM.raiseReset();
 	}
-	ActionListener readytorestart = new ActionListener() {
+
+	ActionListener readyToRestart = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("truc");
 			theFSM.raiseReset();
-			timer2.stop();
+			timerClean.stop();
+		}
+	};
+
+	void timerChange() {
+		timerChange = new Timer(2000,changeReset);
+		timerChange.restart();
+	}
+
+	ActionListener changeReset = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblChange.setText("Change : nothing");
+			timerChange.stop();
 		}
 	};
 }

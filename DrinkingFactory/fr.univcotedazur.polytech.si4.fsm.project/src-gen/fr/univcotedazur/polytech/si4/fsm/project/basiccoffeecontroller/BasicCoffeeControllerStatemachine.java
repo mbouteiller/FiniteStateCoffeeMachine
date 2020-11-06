@@ -1130,7 +1130,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				
 				enterSequence_payment_NotPaid_default();
 			} else {
-				did_transition = false;
+				if (sCInterface.moneyGiven) {
+					exitSequence_payment_Paid();
+					sCInterface.raiseCheckAmount();
+					
+					enterSequence_payment_Paid_default();
+				} else {
+					did_transition = false;
+				}
 			}
 		}
 		return did_transition;
