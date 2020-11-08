@@ -35,7 +35,8 @@ public class DrinkFactoryMachine extends JFrame {
 	protected static BasicCoffeeControllerStatemachine theFSM;
 	protected Product choice, finalChoice;
 	protected final Product NONE = new None();
-	protected int money, size, temperature, nbSugar;
+	protected long money;
+	protected int size, temperature, nbSugar;
 	protected boolean recipeStarted = false;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange;
@@ -82,10 +83,10 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
-		money = 0;
 		progressBarValue=0;
 		stopTimer=0;
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
+		money = 0;
 		choice = NONE;
 
 		setForeground(Color.WHITE);
@@ -119,35 +120,35 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setForeground(Color.WHITE);
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
-		coffeeButton.addActionListener(actionEvent -> chooseAction(new Coffee()));
+		coffeeButton.addActionListener(actionEvent -> updateChoice(new Coffee()));
 		contentPane.add(coffeeButton);
 
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
 		expressoButton.setBounds(12, 71, 96, 25);
-		expressoButton.addActionListener(actionEvent -> chooseAction(new Expresso()));
+		expressoButton.addActionListener(actionEvent -> updateChoice(new Expresso()));
 		contentPane.add(expressoButton);
 
 		JButton teaButton = new JButton("Tea");
 		teaButton.setForeground(Color.WHITE);
 		teaButton.setBackground(Color.DARK_GRAY);
 		teaButton.setBounds(12, 108, 96, 25);
-		teaButton.addActionListener(actionEvent -> chooseAction(new Tea()));
+		teaButton.addActionListener(actionEvent -> updateChoice(new Tea()));
 		contentPane.add(teaButton);
 
 		JButton soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
-		soupButton.addActionListener(actionEvent -> chooseAction(new Soup()));
+		soupButton.addActionListener(actionEvent -> updateChoice(new Soup()));
 		contentPane.add(soupButton);
 
 		JButton icedTeaButton = new JButton("Iced Tea");
 		icedTeaButton.setForeground(Color.WHITE);
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
-		icedTeaButton.addActionListener(actionEvent -> chooseAction(new IceTea()));
+		icedTeaButton.addActionListener(actionEvent -> updateChoice(new IceTea()));
 		contentPane.add(icedTeaButton);
 
 		progressBar = new JProgressBar();
@@ -235,19 +236,19 @@ public class DrinkFactoryMachine extends JFrame {
 		JButton money50centsButton = new JButton("0.50 €");
 		money50centsButton.setForeground(Color.WHITE);
 		money50centsButton.setBackground(Color.DARK_GRAY);
-		money50centsButton.addActionListener(actionEvent -> payAction(50));
+		money50centsButton.addActionListener(actionEvent -> updateMoney(50));
 		panel.add(money50centsButton);
 
 		JButton money25centsButton = new JButton("0.25 €");
 		money25centsButton.setForeground(Color.WHITE);
 		money25centsButton.setBackground(Color.DARK_GRAY);
-		money25centsButton.addActionListener(actionEvent -> payAction(25));
+		money25centsButton.addActionListener(actionEvent -> updateMoney(25));
 		panel.add(money25centsButton);
 
 		JButton money10centsButton = new JButton("0.10 €");
 		money10centsButton.setForeground(Color.WHITE);
 		money10centsButton.setBackground(Color.DARK_GRAY);
-		money10centsButton.addActionListener(actionEvent -> payAction(10));
+		money10centsButton.addActionListener(actionEvent -> updateMoney(10));
 		panel.add(money10centsButton);
 
 		JPanel panel_1 = new JPanel();
@@ -318,50 +319,10 @@ public class DrinkFactoryMachine extends JFrame {
 		});
 	}
 
-	boolean enoughMoney(){
-		return (choice.price <= money);
-	}
-
 	void updateConsole(){
-		consoleMessage = "<html>Votre choix : " + choice.toString() + "<br>" + "Solde : " + money;
+		consoleMessage = "<html>Votre choix : " + choice.toString() + "<br>" + "Solde : " + theFSM.getMoney();
 		JLabel console = (JLabel)(contentPane.getComponent(0));
 		console.setText(consoleMessage);
-	}
-
-	void chooseAction(Product p) {
-		choice = p;
-		if (!recipeStarted) {
-			updateConsole();
-		}
-		theFSM.raiseChoice();
-		theFSM.raiseAny();
-	}
-
-	void payAction(int money) {
-		this.money += money;
-		if (!recipeStarted) {
-			updateConsole();
-		}
-		theFSM.raisePaid();
-		theFSM.raiseMoneyGiven();
-		theFSM.raiseAny();
-	}
-	
-	void raiseCanceled() {
-		theFSM.raiseCanceled();
-	}
-
-	void raisePaid() {
-		theFSM.raisePaid();
-	}
-
-	void raiseAmountVerified() {
-		recipeStarted = true;
-		finalChoice = choice;
-		size = sizeSlider.getValue();
-		temperature = temperatureSlider.getValue();
-		nbSugar = sugarSlider.getValue();
-		theFSM.raiseAmountVerified();
 	}
 	
 	void makeDrink() {
@@ -386,13 +347,6 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 	};
 
-	void clean() {
-		timerClean = new Timer(2000, readyToRestart);
-		
-		timerClean.start();
-		theFSM.raiseAny();
-	}
-
 	ActionListener readyToRestart = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -413,4 +367,42 @@ public class DrinkFactoryMachine extends JFrame {
 			timerChange.stop();
 		}
 	};
+
+//	###################################################################
+
+	void updateChoice(Product p) {
+		choice = p;
+		theFSM.setPrice(p.price);
+		if (!recipeStarted) {
+			updateConsole();
+		}
+		theFSM.setChoice(p.name);
+		theFSM.raiseChose();
+		theFSM.raiseAny();
+	}
+
+	void updateMoney(long amount) {
+		theFSM.setMoney(this.money + amount);
+		this.money += amount;
+		if (!recipeStarted) {
+			updateConsole();
+		}
+		theFSM.raiseMoneyGiven();
+		theFSM.raiseAny();
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

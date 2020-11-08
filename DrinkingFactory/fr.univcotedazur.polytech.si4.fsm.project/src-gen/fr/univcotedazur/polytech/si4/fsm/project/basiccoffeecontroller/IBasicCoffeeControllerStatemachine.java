@@ -12,19 +12,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterface {
 	
-		public void raiseChoice();
-		
-		public void raiseAmountVerified();
-		
-		public void raiseCanceled();
+		public void raiseChose();
 		
 		public void raiseMoneyGiven();
 		
 		public void raiseAny();
 		
-		public void raiseReset();
+		public void raiseCancel();
 		
-		public void raisePaid();
+		public void raiseReset();
 		
 		public void raiseFinish();
 		
@@ -34,17 +30,35 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public boolean isRaisedGiveChange();
 		
-		public boolean isRaisedCheckAmount();
-		
-		public boolean isRaisedCancel();
-		
 		public boolean isRaisedStartRecipe();
 		
-		public boolean isRaisedClean();
-		
-		public boolean isRaisedRestart();
-		
 		public boolean isRaisedTimesup();
+		
+		public boolean isRaisedOrderVerified();
+		
+		public String getChoice();
+		
+		public void setChoice(String value);
+		
+		public long getPrice();
+		
+		public void setPrice(long value);
+		
+		public long getMoney();
+		
+		public void setMoney(long value);
+		
+		public long getSucre();
+		
+		public void setSucre(long value);
+		
+		public long getTaille();
+		
+		public void setTaille(long value);
+		
+		public long getTemperature();
+		
+		public void setTemperature(long value);
 		
 	public List<SCInterfaceListener> getListeners();
 	}
@@ -54,12 +68,9 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public void onPayRaised();
 		public void onRefundRaised();
 		public void onGiveChangeRaised();
-		public void onCheckAmountRaised();
-		public void onCancelRaised();
 		public void onStartRecipeRaised();
-		public void onCleanRaised();
-		public void onRestartRaised();
 		public void onTimesupRaised();
+		public void onOrderVerifiedRaised();
 		}
 	
 	public SCInterface getSCInterface();

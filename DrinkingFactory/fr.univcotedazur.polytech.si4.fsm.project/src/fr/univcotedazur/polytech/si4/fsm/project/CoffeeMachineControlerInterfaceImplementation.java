@@ -8,37 +8,28 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     public CoffeeMachineControlerInterfaceImplementation(DrinkFactoryMachine dfm) {
         theDfm = dfm;
     }
-    
+
     @Override
     public void onPayRaised() {
-        theDfm.raisePaid();
+
     }
 
     @Override
     public void onRefundRaised() {
-    	String message="<html>Commande annulée<br>";
-    	if (theDfm.money!=0) {
-    		message+="Récuperez vos : <br> "+theDfm.money+" centimes";
-    	}
-    	theDfm.messagesToUser.setText(message);
     }
 
     @Override
     public void onGiveChangeRaised() {
-        int change = theDfm.money - theDfm.finalChoice.price;
-    	theDfm.lblChange.setText("Change : " + change);
-        theDfm.timerChange();
+
     }
 
     @Override
-    public void onCheckAmountRaised() {
-        if (theDfm.enoughMoney()) {
-            theDfm.raiseAmountVerified();
-        }
-    }
-
-    @Override
-    public void onCancelRaised() {
+    public void onOrderVerifiedRaised() {
+        theDfm.recipeStarted = true;
+        theDfm.finalChoice = theDfm.choice;
+        theDfm.size = theDfm.sizeSlider.getValue();
+        theDfm.temperature = theDfm.temperatureSlider.getValue();
+        theDfm.nbSugar = theDfm.sugarSlider.getValue();
     }
 
     @Override
@@ -95,24 +86,8 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         return temperature;
     }
 
-    @Override
-    public void onCleanRaised() {
-    	theDfm.messagesToUser.setText("<html>Commande terminée,<br>Nettoyage ...");
-    	theDfm.clean();
-    }
-
-    @Override
-    public void onRestartRaised() {
-    	theDfm.choice = theDfm.NONE;
-    	theDfm.money = 0;
-    	theDfm.recipeStarted = false;
-    	theDfm.messagesToUser.setText("Veuillez faire votre choix");
-    }
-
 	@Override
 	public void onTimesupRaised() {
 		System.out.println("commande annulée");
-		theDfm.raiseCanceled();
-		
 	}
 }
