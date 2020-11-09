@@ -45,6 +45,8 @@ public class DrinkFactoryMachine extends JFrame {
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
+
+	Thread t;
 	
 	/**
 	 * 
@@ -63,16 +65,16 @@ public class DrinkFactoryMachine extends JFrame {
 
 		EventQueue.invokeLater(() -> {
 			try {
-				DrinkFactoryMachine frame = new DrinkFactoryMachine();
-
 				theFSM = new BasicCoffeeControllerStatemachine();
 				TimerService timer = new TimerService();
 				theFSM.setTimer(timer);
-				theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(frame));
 				theFSM.init();
 				theFSM.enter();
 
+				DrinkFactoryMachine frame = new DrinkFactoryMachine();
 				frame.setVisible(true);
+
+				theFSM.getSCInterface().getListeners().add(new CoffeeMachineControlerInterfaceImplementation(frame));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -83,6 +85,24 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
+		Runnable r = new Runnable() {
+
+			@Override
+			public void run() {
+				while(true) {
+					theFSM.runCycle();
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		};
+		t = new Thread(r);
+		t.start();
+
 		progressBarValue=0;
 		stopTimer=0;
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
@@ -389,6 +409,22 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		theFSM.raiseMoneyGiven();
 		theFSM.raiseAny();
+	}
+
+	void updateSliders() {
+		theFSM.setSucre(this.nbSugar);
+		theFSM.setTaille(this.size);
+		theFSM.setTemperature(this.temperature);
+	}
+
+	String printTemperature() {
+		return "" + theFSM.getTemperature();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		t.stop();
 	}
 
 

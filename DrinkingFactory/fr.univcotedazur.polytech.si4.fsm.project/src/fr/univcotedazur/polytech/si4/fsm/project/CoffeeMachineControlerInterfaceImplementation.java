@@ -30,6 +30,12 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         theDfm.size = theDfm.sizeSlider.getValue();
         theDfm.temperature = theDfm.temperatureSlider.getValue();
         theDfm.nbSugar = theDfm.sugarSlider.getValue();
+        theDfm.updateSliders();
+    }
+
+    @Override
+    public void onFiniRaised() {
+        System.out.println("fini");
     }
 
     @Override

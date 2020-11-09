@@ -3,7 +3,7 @@ package fr.univcotedazur.polytech.si4.fsm.project.products;
 public class Coffee extends Product {
 
     public Coffee() {
-        super("Coffee", 35);
+        super("coffee", 35);
     }
 
     @Override

@@ -3,11 +3,7 @@ package fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller;
 
 import fr.univcotedazur.polytech.si4.fsm.project.IStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.ITimerCallback;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterface {
@@ -35,6 +31,8 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public boolean isRaisedTimesup();
 		
 		public boolean isRaisedOrderVerified();
+		
+		public boolean isRaisedFini();
 		
 		public String getChoice();
 		
@@ -71,6 +69,7 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public void onStartRecipeRaised();
 		public void onTimesupRaised();
 		public void onOrderVerifiedRaised();
+		public void onFiniRaised();
 		}
 	
 	public SCInterface getSCInterface();
