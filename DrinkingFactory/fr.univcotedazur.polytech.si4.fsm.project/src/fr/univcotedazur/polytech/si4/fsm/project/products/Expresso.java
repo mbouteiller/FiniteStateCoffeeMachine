@@ -3,7 +3,7 @@ package fr.univcotedazur.polytech.si4.fsm.project.products;
 public class Expresso extends Product {
 
     public Expresso() {
-        super("Expresso", 50);
+        super("expresso", 50);
     }
 
     @Override

@@ -29,6 +29,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.Timer;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
+import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.IBasicCoffeeControllerStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.products.*;
 
 public class DrinkFactoryMachine extends JFrame {
@@ -68,6 +69,25 @@ public class DrinkFactoryMachine extends JFrame {
 				theFSM = new BasicCoffeeControllerStatemachine();
 				TimerService timer = new TimerService();
 				theFSM.setTimer(timer);
+
+				IBasicCoffeeControllerStatemachine.SCInterfaceOperationCallback callback = new IBasicCoffeeControllerStatemachine.SCInterfaceOperationCallback() {
+					@Override
+					public boolean isCoffee() {
+						return theFSM.getChoice().equals("coffee");
+					}
+
+					@Override
+					public boolean isTea() {
+						return theFSM.getChoice().equals("tea");
+					}
+
+					@Override
+					public boolean isExpresso() {
+						return theFSM.getChoice().equals("expresso");
+					}
+				};
+				theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
+
 				theFSM.init();
 				theFSM.enter();
 

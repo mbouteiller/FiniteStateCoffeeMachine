@@ -34,8 +34,14 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     }
 
     @Override
-    public void onFiniRaised() {
-        System.out.println("fini");
+    public void onRestartRaised() {
+        System.out.println("restart");
+        theDfm.recipeStarted = false;
+    }
+
+    @Override
+    public void onWaitTakeOrderRaised() {
+        System.out.println("You can retrieve your drink");
     }
 
     @Override
