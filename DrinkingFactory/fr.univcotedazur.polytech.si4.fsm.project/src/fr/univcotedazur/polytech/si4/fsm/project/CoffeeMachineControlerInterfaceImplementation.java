@@ -30,7 +30,8 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
-
+    	theDfm.lblChange.setText(String.valueOf(theDfm.money));
+    	theDfm.money=0;
     }
 
     @Override

@@ -391,6 +391,12 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
+		
+		lblChange.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				lblChange.setText("0");
+			}
+		});
 	}
 
 	void updateConsole(){
@@ -400,6 +406,9 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	void makeDrink() {
+		System.out.println(finalChoice.price);
+		money-=finalChoice.price;
+		theFSM.setMoney(money);
 		timer=new Timer(10, ready);
 		timer.start();
 		theFSM.raiseAny();
@@ -424,7 +433,6 @@ public class DrinkFactoryMachine extends JFrame {
 	ActionListener readyToRestart = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			theFSM.raiseReset();
 			timerClean.stop();
 		}
 	};
@@ -491,6 +499,7 @@ public class DrinkFactoryMachine extends JFrame {
 		if(expressoStockInt==0) {
 			expressoButton.setEnabled(false);
 		}
+		theFSM.setMoney(0);
 	}
 	
 	void takeCup() {

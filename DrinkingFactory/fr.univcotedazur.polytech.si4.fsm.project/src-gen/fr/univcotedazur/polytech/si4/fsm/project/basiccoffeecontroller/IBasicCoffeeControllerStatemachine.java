@@ -18,8 +18,6 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void raiseTakeOrder();
 		
-		public void raiseReset();
-		
 		public void raiseFinish();
 		
 		public boolean isRaisedPay();

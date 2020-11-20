@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;in event reset&#xA;in event finish&#xA;&#xA;out event pay&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
+  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;&#xA;in event finish&#xA;&#xA;out event pay&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;internal :&#xA;event reset&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
     <regions xmi:id="_JIF3cCGvEeuHSLcleLT0Yw" name="main region">
       <vertices xsi:type="sgraph:State" xmi:id="_J0gRgCGvEeuHSLcleLT0Yw" name="Main" incomingTransitions="_iyh1UCGvEeuHSLcleLT0Yw _SiiCgCG4EeuHSLcleLT0Yw _81ukwCHsEeuUNNvsZTlSZA _8BgiACJ6EeuE6K6PuOeeTQ _yReHoCsHEeuAKcS0cMi2CQ">
         <outgoingTransitions xmi:id="_SiiCgCG4EeuHSLcleLT0Yw" specification="cancel / raise refund" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
@@ -181,7 +181,7 @@
         <outgoingTransitions xmi:id="_B7r9QCKCEeuVRPrEkay1ZA" specification="" target="_OGsIsCINEeuobfgD16IJXQ"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_d83wECKCEeuVRPrEkay1ZA" specification="after 100 ms / raise waitTakeOrder" name="AttenteRecuperation" incomingTransitions="_gQ0EcCKJEeuVRPrEkay1ZA _vXdTcCKJEeuVRPrEkay1ZA">
-        <outgoingTransitions xmi:id="_8BgiACJ6EeuE6K6PuOeeTQ" specification="takeOrder / raise restart" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
+        <outgoingTransitions xmi:id="_8BgiACJ6EeuE6K6PuOeeTQ" specification="takeOrder / raise restart; raise giveChange" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
       </vertices>
       <vertices xsi:type="sgraph:Synchronization" xmi:id="_8FAPACKHEeuVRPrEkay1ZA" incomingTransitions="_ViAb0CHuEeuUNNvsZTlSZA">
         <outgoingTransitions xmi:id="_HEQK0CKIEeuVRPrEkay1ZA" specification="" target="_0PjVsCKHEeuVRPrEkay1ZA"/>
@@ -1050,7 +1050,7 @@
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHspCGvEeuHSLcleLT0Yw"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_JIHFkSGvEeuHSLcleLT0Yw" fontName="Verdana" fillColor="16448250" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHFkiGvEeuHSLcleLT0Yw" y="205" width="6848" height="5970"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHFkiGvEeuHSLcleLT0Yw" x="-16" y="209" width="6848" height="5970"/>
     </children>
     <styles xsi:type="notation:BooleanValueStyle" xmi:id="_zYfakQoMEeuLfff9QNBocQ" name="inlineDefinitionSection"/>
     <styles xsi:type="notation:DiagramStyle" xmi:id="_zYfakgoMEeuLfff9QNBocQ"/>
