@@ -1,5 +1,12 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.IBasicCoffeeControllerStatemachine.SCInterfaceListener;
 
 public class CoffeeMachineControlerInterfaceImplementation implements SCInterfaceListener {
@@ -44,6 +51,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onWaitTakeOrderRaised() {
         System.out.println("You can retrieve your drink");
+        theDfm.messagesToUser.setText("Veuillez recuperer votre commande");
         theDfm.reset();
     }
 
@@ -55,6 +63,13 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         choiceDescription += getSizeString();
         choiceDescription += theDfm.finalChoice;
         choiceDescription += "<br> with " + theDfm.nbSugar + " pieces of sugar";
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
+		} catch (IOException ee) {
+			ee.printStackTrace();
+		}
+		theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
 
         System.out.println("lets go le " + theDfm.finalChoice + " lets go");
 

@@ -48,6 +48,8 @@ public class DrinkFactoryMachine extends JFrame {
 	JProgressBar progressBar;
 	int coffeeStockInt;
 	JButton coffeeButton;
+	JLabel labelForPictures;
+	
 
 	Thread t;
 	
@@ -336,7 +338,7 @@ public class DrinkFactoryMachine extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		JLabel labelForPictures = new JLabel(new ImageIcon(myPicture));
+		labelForPictures = new JLabel(new ImageIcon(myPicture));
 		labelForPictures.setBounds(175, 319, 286, 260);
 		contentPane.add(labelForPictures);
 
@@ -367,6 +369,13 @@ public class DrinkFactoryMachine extends JFrame {
 		labelForPictures.addMouseListener(new MouseAdapter() {
 			public void mouseClicked (MouseEvent e) {
 				theFSM.raiseTakeOrder();
+				BufferedImage myPicture = null;
+				try {
+					myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+				} catch (IOException ee) {
+					ee.printStackTrace();
+				}
+				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
 	}
