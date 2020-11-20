@@ -363,6 +363,12 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
+		
+		labelForPictures.addMouseListener(new MouseAdapter() {
+			public void mouseClicked (MouseEvent e) {
+				theFSM.raiseTakeOrder();
+			}
+		});
 	}
 
 	void updateConsole(){

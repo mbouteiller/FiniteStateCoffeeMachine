@@ -16,6 +16,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRefundRaised() {
+    	
     }
 
     @Override
@@ -37,6 +38,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     public void onRestartRaised() {
         System.out.println("restart");
         theDfm.recipeStarted = false;
+        theDfm.messagesToUser.setText("Veuillez faire votre choix");
     }
 
     @Override
