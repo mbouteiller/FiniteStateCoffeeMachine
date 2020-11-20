@@ -310,6 +310,20 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private long coffeeStock;
+		
+		public synchronized long getCoffeeStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return coffeeStock;
+			}
+		}
+		
+		public void setCoffeeStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.coffeeStock = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			chose = false;
 			moneyGiven = false;
@@ -412,6 +426,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTaille(0);
 		
 		sCInterface.setTemperature(0);
+		
+		sCInterface.setCoffeeStock(0);
 	}
 	
 	public synchronized void enter() {
@@ -779,6 +795,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTemperature(value);
 	}
 	
+	public synchronized long getCoffeeStock() {
+		return sCInterface.getCoffeeStock();
+	}
+	
+	public synchronized void setCoffeeStock(long value) {
+		sCInterface.setCoffeeStock(value);
+	}
+	
 	private boolean check_main_region__choice_0_tr0_tr0() {
 		return sCInterface.operationCallback.isTea();
 	}
@@ -795,12 +819,16 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return sCInterface.operationCallback.isTea();
 	}
 	
+	private boolean check_main_region__choice_3_tr0_tr0() {
+		return sCInterface.getCoffeeStock()>0;
+	}
+	
 	private void effect_main_region__choice_0_tr0() {
 		react_main_region__sync8();
 	}
 	
 	private void effect_main_region__choice_0_tr2() {
-		react_main_region__sync1();
+		react_main_region__choice_3();
 	}
 	
 	private void effect_main_region__choice_0_tr1() {
@@ -821,6 +849,18 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private void effect_main_region__choice_2_tr0() {
 		enterSequence_main_region_AttenteRecuperation_default();
+	}
+	
+	private void effect_main_region__choice_3_tr0() {
+		sCInterface.coffeeStock--;
+		
+		react_main_region__sync1();
+	}
+	
+	private void effect_main_region__choice_3_tr1() {
+		sCInterface.raiseRefund();
+		
+		enterSequence_main_region_Main_default();
 	}
 	
 	/* Entry action for state 'Present'. */
@@ -1756,6 +1796,15 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			effect_main_region__choice_2_tr1();
 		} else {
 			effect_main_region__choice_2_tr0();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__choice_3() {
+		if (check_main_region__choice_3_tr0_tr0()) {
+			effect_main_region__choice_3_tr0();
+		} else {
+			effect_main_region__choice_3_tr1();
 		}
 	}
 	

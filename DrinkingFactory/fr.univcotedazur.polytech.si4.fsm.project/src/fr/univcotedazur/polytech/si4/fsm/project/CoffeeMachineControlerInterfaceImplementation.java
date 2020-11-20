@@ -42,6 +42,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onWaitTakeOrderRaised() {
         System.out.println("You can retrieve your drink");
+        theDfm.reset();
     }
 
     @Override

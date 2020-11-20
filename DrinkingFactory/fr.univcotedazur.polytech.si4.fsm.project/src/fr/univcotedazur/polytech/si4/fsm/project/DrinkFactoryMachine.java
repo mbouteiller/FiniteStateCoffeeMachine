@@ -40,12 +40,14 @@ public class DrinkFactoryMachine extends JFrame {
 	protected int size, temperature, nbSugar;
 	protected boolean recipeStarted = false;
 	protected String consoleMessage;
-	JLabel messagesToUser, lblChange;
+	JLabel messagesToUser, lblChange, lblCoffeeStock;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
 	Timer timer, timerClean, timerChange;
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
+	int coffeeStockInt;
+	JButton coffeeButton;
 
 	Thread t;
 	
@@ -128,6 +130,9 @@ public class DrinkFactoryMachine extends JFrame {
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
 		money = 0;
 		choice = NONE;
+		coffeeStockInt = 0;
+		theFSM.setCoffeeStock(coffeeStockInt);
+		
 
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
@@ -156,13 +161,14 @@ public class DrinkFactoryMachine extends JFrame {
 		lblCoins.setBounds(538, 12, 44, 15);
 		contentPane.add(lblCoins);
 
-		JButton coffeeButton = new JButton("Coffee");
+		coffeeButton = new JButton(String.valueOf(coffeeStockInt) + " Coffee");
 		coffeeButton.setForeground(Color.WHITE);
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
 		coffeeButton.addActionListener(actionEvent -> updateChoice(new Coffee()));
 		contentPane.add(coffeeButton);
-
+		
+		
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
@@ -441,6 +447,14 @@ public class DrinkFactoryMachine extends JFrame {
 		return "" + theFSM.getTemperature();
 	}
 
+	void reset() {
+		coffeeStockInt = (int)theFSM.getCoffeeStock();
+		coffeeButton.setText(String.valueOf(coffeeStockInt) + " Coffee");
+	}
+	
+	void takeCup() {
+		theFSM.raiseTakeOrder();
+	}
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();

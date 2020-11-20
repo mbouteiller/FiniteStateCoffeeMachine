@@ -62,6 +62,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setTemperature(long value);
 		
+		public long getCoffeeStock();
+		
+		public void setCoffeeStock(long value);
+		
 	public List<SCInterfaceListener> getListeners();
 		public void setSCInterfaceOperationCallback(SCInterfaceOperationCallback operationCallback);
 	
