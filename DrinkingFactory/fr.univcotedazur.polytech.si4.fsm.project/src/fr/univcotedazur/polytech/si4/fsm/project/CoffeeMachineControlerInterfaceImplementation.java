@@ -23,7 +23,9 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRefundRaised() {
-    	
+    	theDfm.lblChange.setText(String.valueOf(theDfm.money));
+    	theDfm.money=0;
+    	theDfm.messagesToUser.setText("Recuperez votre monnaie et faites un choix");
     }
 
     @Override

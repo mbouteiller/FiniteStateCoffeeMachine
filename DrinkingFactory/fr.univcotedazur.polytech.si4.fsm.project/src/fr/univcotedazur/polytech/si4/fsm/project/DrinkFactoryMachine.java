@@ -132,7 +132,7 @@ public class DrinkFactoryMachine extends JFrame {
 		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
 		money = 0;
 		choice = NONE;
-		coffeeStockInt = 0;
+		coffeeStockInt = 1;
 		theFSM.setCoffeeStock(coffeeStockInt);
 		
 
@@ -465,6 +465,9 @@ public class DrinkFactoryMachine extends JFrame {
 	void reset() {
 		coffeeStockInt = (int)theFSM.getCoffeeStock();
 		coffeeButton.setText(String.valueOf(coffeeStockInt) + " Coffee");
+		if(coffeeStockInt==0) {
+			coffeeButton.setEnabled(false);
+		}
 	}
 	
 	void takeCup() {

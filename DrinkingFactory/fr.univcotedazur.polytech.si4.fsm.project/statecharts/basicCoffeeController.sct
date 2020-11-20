@@ -203,7 +203,7 @@
       </vertices>
       <vertices xsi:type="sgraph:Choice" xmi:id="_eb2oECsHEeuAKcS0cMi2CQ" incomingTransitions="_MNUu8CHvEeuUNNvsZTlSZA">
         <outgoingTransitions xmi:id="_iljoYCsHEeuAKcS0cMi2CQ" specification="[coffeeStock>0] / coffeeStock--" target="_Hp1VoCHvEeuUNNvsZTlSZA"/>
-        <outgoingTransitions xmi:id="_yReHoCsHEeuAKcS0cMi2CQ" specification="else /raise refund" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
+        <outgoingTransitions xmi:id="_yReHoCsHEeuAKcS0cMi2CQ" specification="else" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
       </vertices>
     </regions>
   </sgraph:Statechart>

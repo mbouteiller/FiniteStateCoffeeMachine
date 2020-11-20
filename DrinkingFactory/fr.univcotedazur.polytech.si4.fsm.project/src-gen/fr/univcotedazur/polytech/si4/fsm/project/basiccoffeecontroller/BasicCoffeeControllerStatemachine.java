@@ -858,8 +858,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	}
 	
 	private void effect_main_region__choice_3_tr1() {
-		sCInterface.raiseRefund();
-		
 		enterSequence_main_region_Main_default();
 	}
 	
