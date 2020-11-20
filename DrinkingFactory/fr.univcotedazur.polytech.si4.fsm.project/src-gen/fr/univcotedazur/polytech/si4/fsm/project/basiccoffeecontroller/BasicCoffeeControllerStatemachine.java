@@ -324,6 +324,62 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private long teaStock;
+		
+		public synchronized long getTeaStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return teaStock;
+			}
+		}
+		
+		public void setTeaStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.teaStock = value;
+			}
+		}
+		
+		private long iceTeaStock;
+		
+		public synchronized long getIceTeaStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return iceTeaStock;
+			}
+		}
+		
+		public void setIceTeaStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.iceTeaStock = value;
+			}
+		}
+		
+		private long soupStock;
+		
+		public synchronized long getSoupStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return soupStock;
+			}
+		}
+		
+		public void setSoupStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.soupStock = value;
+			}
+		}
+		
+		private long expressoStock;
+		
+		public synchronized long getExpressoStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return expressoStock;
+			}
+		}
+		
+		public void setExpressoStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.expressoStock = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			chose = false;
 			moneyGiven = false;
@@ -428,6 +484,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTemperature(0);
 		
 		sCInterface.setCoffeeStock(0);
+		
+		sCInterface.setTeaStock(0);
+		
+		sCInterface.setIceTeaStock(0);
+		
+		sCInterface.setSoupStock(0);
+		
+		sCInterface.setExpressoStock(0);
 	}
 	
 	public synchronized void enter() {
@@ -803,6 +867,38 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setCoffeeStock(value);
 	}
 	
+	public synchronized long getTeaStock() {
+		return sCInterface.getTeaStock();
+	}
+	
+	public synchronized void setTeaStock(long value) {
+		sCInterface.setTeaStock(value);
+	}
+	
+	public synchronized long getIceTeaStock() {
+		return sCInterface.getIceTeaStock();
+	}
+	
+	public synchronized void setIceTeaStock(long value) {
+		sCInterface.setIceTeaStock(value);
+	}
+	
+	public synchronized long getSoupStock() {
+		return sCInterface.getSoupStock();
+	}
+	
+	public synchronized void setSoupStock(long value) {
+		sCInterface.setSoupStock(value);
+	}
+	
+	public synchronized long getExpressoStock() {
+		return sCInterface.getExpressoStock();
+	}
+	
+	public synchronized void setExpressoStock(long value) {
+		sCInterface.setExpressoStock(value);
+	}
+	
 	private boolean check_main_region__choice_0_tr0_tr0() {
 		return sCInterface.operationCallback.isTea();
 	}
@@ -824,6 +920,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	}
 	
 	private void effect_main_region__choice_0_tr0() {
+		sCInterface.teaStock--;
+		
 		react_main_region__sync8();
 	}
 	
@@ -836,6 +934,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	}
 	
 	private void effect_main_region__choice_1_tr0() {
+		sCInterface.expressoStock--;
+		
 		react_main_region__sync5();
 	}
 	

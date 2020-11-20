@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;in event reset&#xA;in event finish&#xA;&#xA;out event pay&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
+  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;in event reset&#xA;in event finish&#xA;&#xA;out event pay&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
     <regions xmi:id="_JIF3cCGvEeuHSLcleLT0Yw" name="main region">
       <vertices xsi:type="sgraph:State" xmi:id="_J0gRgCGvEeuHSLcleLT0Yw" name="Main" incomingTransitions="_iyh1UCGvEeuHSLcleLT0Yw _SiiCgCG4EeuHSLcleLT0Yw _81ukwCHsEeuUNNvsZTlSZA _8BgiACJ6EeuE6K6PuOeeTQ _yReHoCsHEeuAKcS0cMi2CQ">
         <outgoingTransitions xmi:id="_SiiCgCG4EeuHSLcleLT0Yw" specification="cancel / raise refund" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
@@ -50,7 +50,7 @@
         <outgoingTransitions xmi:id="_QPgAYCHuEeuUNNvsZTlSZA" specification="after 200 ms" target="_PTTd4CHuEeuUNNvsZTlSZA"/>
       </vertices>
       <vertices xsi:type="sgraph:Choice" xmi:id="_PTTd4CHuEeuUNNvsZTlSZA" incomingTransitions="_QPgAYCHuEeuUNNvsZTlSZA">
-        <outgoingTransitions xmi:id="_ViAb0CHuEeuUNNvsZTlSZA" specification="[isTea()]" target="_8FAPACKHEeuVRPrEkay1ZA"/>
+        <outgoingTransitions xmi:id="_ViAb0CHuEeuUNNvsZTlSZA" specification="[isTea()] / teaStock--" target="_8FAPACKHEeuVRPrEkay1ZA"/>
         <outgoingTransitions xmi:id="_WXIF8CHuEeuUNNvsZTlSZA" specification="else" target="_AKUDECJ-EeuE6K6PuOeeTQ"/>
         <outgoingTransitions xmi:id="_MNUu8CHvEeuUNNvsZTlSZA" specification="[isCoffee()]" target="_eb2oECsHEeuAKcS0cMi2CQ"/>
       </vertices>
@@ -166,7 +166,7 @@
         <outgoingTransitions xmi:id="_flPX4CKJEeuVRPrEkay1ZA" specification="" target="_eJJ0YCKJEeuVRPrEkay1ZA"/>
       </vertices>
       <vertices xsi:type="sgraph:Choice" xmi:id="_AKUDECJ-EeuE6K6PuOeeTQ" incomingTransitions="_WXIF8CHuEeuUNNvsZTlSZA">
-        <outgoingTransitions xmi:id="_GReOkCJ-EeuE6K6PuOeeTQ" specification="[isExpresso()]" target="_YyIQ4CJ_EeuVRPrEkay1ZA"/>
+        <outgoingTransitions xmi:id="_GReOkCJ-EeuE6K6PuOeeTQ" specification="[isExpresso()] / expressoStock--" target="_YyIQ4CJ_EeuVRPrEkay1ZA"/>
         <outgoingTransitions xmi:id="_VaTZcCJ_EeuVRPrEkay1ZA" specification="else" target="_URiakCJ_EeuVRPrEkay1ZA"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_URiakCJ_EeuVRPrEkay1ZA" name="Else" incomingTransitions="_VaTZcCJ_EeuVRPrEkay1ZA"/>

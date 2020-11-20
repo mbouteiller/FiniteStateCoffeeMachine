@@ -47,7 +47,11 @@ public class DrinkFactoryMachine extends JFrame {
 	int stopTimer;
 	JProgressBar progressBar;
 	int coffeeStockInt;
-	JButton coffeeButton;
+	int teaStockInt;
+	int expressoStockInt;
+	int soupStockInt;
+	int iceTeaStockInt;
+	JButton coffeeButton, teaButton, expressoButton, soupButton, icedTeaButton;
 	JLabel labelForPictures;
 	
 
@@ -133,7 +137,14 @@ public class DrinkFactoryMachine extends JFrame {
 		money = 0;
 		choice = NONE;
 		coffeeStockInt = 1;
+		teaStockInt = 4;
+		soupStockInt = 7;
+		iceTeaStockInt = 4;
+		expressoStockInt = 2;
+		
 		theFSM.setCoffeeStock(coffeeStockInt);
+		theFSM.setTeaStock(teaStockInt);
+		theFSM.setExpressoStock(expressoStockInt);
 		
 
 		setForeground(Color.WHITE);
@@ -171,32 +182,34 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(coffeeButton);
 		
 		
-		JButton expressoButton = new JButton("Expresso");
+		expressoButton = new JButton(String.valueOf(expressoStockInt) + " Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
 		expressoButton.setBounds(12, 71, 96, 25);
 		expressoButton.addActionListener(actionEvent -> updateChoice(new Expresso()));
 		contentPane.add(expressoButton);
 
-		JButton teaButton = new JButton("Tea");
+		teaButton = new JButton(String.valueOf(teaStockInt) + " Tea");
 		teaButton.setForeground(Color.WHITE);
 		teaButton.setBackground(Color.DARK_GRAY);
 		teaButton.setBounds(12, 108, 96, 25);
 		teaButton.addActionListener(actionEvent -> updateChoice(new Tea()));
 		contentPane.add(teaButton);
 
-		JButton soupButton = new JButton("Soup");
+		soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
 		soupButton.addActionListener(actionEvent -> updateChoice(new Soup()));
+		soupButton.setEnabled(false);
 		contentPane.add(soupButton);
 
-		JButton icedTeaButton = new JButton("Iced Tea");
+		icedTeaButton = new JButton("Iced Tea");
 		icedTeaButton.setForeground(Color.WHITE);
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
 		icedTeaButton.addActionListener(actionEvent -> updateChoice(new IceTea()));
+		icedTeaButton.setEnabled(false);
 		contentPane.add(icedTeaButton);
 
 		progressBar = new JProgressBar();
@@ -467,6 +480,16 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setText(String.valueOf(coffeeStockInt) + " Coffee");
 		if(coffeeStockInt==0) {
 			coffeeButton.setEnabled(false);
+		}
+		teaStockInt = (int)theFSM.getTeaStock();
+		teaButton.setText(String.valueOf(teaStockInt) + " Tea");
+		if(teaStockInt==0) {
+			teaButton.setEnabled(false);
+		}
+		expressoStockInt = (int)theFSM.getExpressoStock();
+		expressoButton.setText(String.valueOf(expressoStockInt) + " Expresso");
+		if(expressoStockInt==0) {
+			expressoButton.setEnabled(false);
 		}
 	}
 	
