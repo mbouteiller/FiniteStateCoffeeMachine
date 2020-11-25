@@ -20,8 +20,6 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void raiseFinish();
 		
-		public boolean isRaisedPay();
-		
 		public boolean isRaisedRefund();
 		
 		public boolean isRaisedGiveChange();
@@ -87,7 +85,6 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 	
 	public interface SCInterfaceListener {
 	
-		public void onPayRaised();
 		public void onRefundRaised();
 		public void onGiveChangeRaised();
 		public void onStartRecipeRaised();

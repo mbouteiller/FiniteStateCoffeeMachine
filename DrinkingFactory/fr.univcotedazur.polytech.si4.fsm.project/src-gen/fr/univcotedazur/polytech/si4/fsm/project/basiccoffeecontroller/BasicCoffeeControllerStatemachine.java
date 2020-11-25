@@ -73,24 +73,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
-		private boolean pay;
-		
-		
-		public boolean isRaisedPay() {
-			synchronized(BasicCoffeeControllerStatemachine.this) {
-				return pay;
-			}
-		}
-		
-		protected void raisePay() {
-			synchronized(BasicCoffeeControllerStatemachine.this) {
-				pay = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onPayRaised();
-				}
-			}
-		}
-		
 		private boolean refund;
 		
 		
@@ -381,7 +363,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		}
 		protected void clearOutEvents() {
 		
-		pay = false;
 		refund = false;
 		giveChange = false;
 		startRecipe = false;
@@ -771,10 +752,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public synchronized void raiseFinish() {
 		sCInterface.raiseFinish();
-	}
-	
-	public synchronized boolean isRaisedPay() {
-		return sCInterface.isRaisedPay();
 	}
 	
 	public synchronized boolean isRaisedRefund() {
@@ -2083,8 +2060,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (sCInterface.moneyGiven) {
 				exitSequence_main_region_Main_payment_NotPaid();
-				sCInterface.raisePay();
-				
 				enterSequence_main_region_Main_payment_Paid_default();
 			} else {
 				did_transition = false;

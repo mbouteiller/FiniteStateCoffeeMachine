@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;&#xA;in event finish&#xA;&#xA;out event pay&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;internal :&#xA;event reset&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
+  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(100)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;&#xA;&#xA;in event finish&#xA;&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;&#xA;out event restart&#xA;out event waitTakeOrder&#xA;&#xA;internal :&#xA;event reset&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" name="basicCoffeeController">
     <regions xmi:id="_JIF3cCGvEeuHSLcleLT0Yw" name="main region">
       <vertices xsi:type="sgraph:State" xmi:id="_J0gRgCGvEeuHSLcleLT0Yw" name="Main" incomingTransitions="_iyh1UCGvEeuHSLcleLT0Yw _SiiCgCG4EeuHSLcleLT0Yw _81ukwCHsEeuUNNvsZTlSZA _8BgiACJ6EeuE6K6PuOeeTQ _yReHoCsHEeuAKcS0cMi2CQ">
         <outgoingTransitions xmi:id="_SiiCgCG4EeuHSLcleLT0Yw" specification="cancel / raise refund" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
@@ -24,7 +24,7 @@
             <outgoingTransitions xmi:id="_Fv1I4CG0EeuHSLcleLT0Yw" specification="[money >= price]" target="_4uVogCGzEeuHSLcleLT0Yw"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_k4rFkAoNEeuLfff9QNBocQ" name="NotPaid" incomingTransitions="_0pBY4AoNEeuLfff9QNBocQ _yA8mkAoREeuLfff9QNBocQ">
-            <outgoingTransitions xmi:id="_5FAcAAoNEeuLfff9QNBocQ" specification="moneyGiven / raise pay" target="_2WSL8AoNEeuLfff9QNBocQ"/>
+            <outgoingTransitions xmi:id="_5FAcAAoNEeuLfff9QNBocQ" specification="moneyGiven" target="_2WSL8AoNEeuLfff9QNBocQ"/>
           </vertices>
         </regions>
         <regions xmi:id="_UpCyICGvEeuHSLcleLT0Yw" name="activity">
@@ -1067,7 +1067,7 @@
     <edges xmi:id="_5FBqIAoNEeuLfff9QNBocQ" type="Transition" element="_5FAcAAoNEeuLfff9QNBocQ" source="_rNrGqyG4EeuHSLcleLT0Yw" target="_rNrGnyG4EeuHSLcleLT0Yw">
       <children xsi:type="notation:DecorationNode" xmi:id="_5FCRMAoNEeuLfff9QNBocQ" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_5FCRMQoNEeuLfff9QNBocQ"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_5FCRMgoNEeuLfff9QNBocQ" x="2" y="-91"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_5FCRMgoNEeuLfff9QNBocQ" x="1" y="-54"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_5FBqIQoNEeuLfff9QNBocQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_5FBqIwoNEeuLfff9QNBocQ" fontName="Verdana"/>
@@ -1732,7 +1732,7 @@
     <edges xmi:id="_illdkCsHEeuAKcS0cMi2CQ" type="Transition" element="_iljoYCsHEeuAKcS0cMi2CQ" source="_eb8usCsHEeuAKcS0cMi2CQ" target="_Hp2jwCHvEeuUNNvsZTlSZA">
       <children xsi:type="notation:DecorationNode" xmi:id="_il5moCsHEeuAKcS0cMi2CQ" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_il5moSsHEeuAKcS0cMi2CQ"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_il5moisHEeuAKcS0cMi2CQ" y="10"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_il5moisHEeuAKcS0cMi2CQ" x="47" y="10"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_illdkSsHEeuAKcS0cMi2CQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_ilmEoCsHEeuAKcS0cMi2CQ" fontName="Verdana"/>

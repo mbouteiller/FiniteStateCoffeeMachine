@@ -2,7 +2,6 @@ package fr.univcotedazur.polytech.si4.fsm.project;
 
 import java.awt.Color;
 
-
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -363,6 +362,7 @@ public class DrinkFactoryMachine extends JFrame {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setForeground(Color.WHITE);
 		cancelButton.setBackground(Color.DARK_GRAY);
+		cancelButton.addActionListener(actionEvent -> theFSM.raiseCancel());
 		panel_2.add(cancelButton);
 
 		// listeners
