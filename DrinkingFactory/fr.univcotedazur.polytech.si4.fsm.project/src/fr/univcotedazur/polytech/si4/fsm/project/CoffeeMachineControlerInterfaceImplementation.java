@@ -117,6 +117,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
 	@Override
 	public void onTimesupRaised() {
-		System.out.println("Commande annulée");
+		System.out.println("Commande annulée pour cause d'inactivité");
+		theDfm.reset();
 	}
 }

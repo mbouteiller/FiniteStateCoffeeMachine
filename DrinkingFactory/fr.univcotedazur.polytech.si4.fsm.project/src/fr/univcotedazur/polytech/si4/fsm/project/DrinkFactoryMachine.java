@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.Timer;
+import javax.swing.event.ChangeListener;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.IBasicCoffeeControllerStatemachine;
@@ -228,6 +229,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setMinorTickSpacing(1);
 		sugarSlider.setMajorTickSpacing(1);
 		sugarSlider.setMaximum(4);
+		sugarSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
 		sugarSlider.setBounds(301, 51, 200, 36);
 		contentPane.add(sugarSlider);
 
@@ -239,6 +241,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setForeground(Color.WHITE);
 		sizeSlider.setMinorTickSpacing(1);
 		sizeSlider.setMaximum(2);
+		sizeSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
 		sizeSlider.setMajorTickSpacing(1);
 		sizeSlider.setBounds(301, 125, 200, 36);
 		contentPane.add(sizeSlider);
@@ -252,6 +255,7 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setPaintTicks(true);
 		temperatureSlider.setMajorTickSpacing(1);
 		temperatureSlider.setMaximum(3);
+		temperatureSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
 		temperatureSlider.setBounds(301, 188, 200, 54);
 
 		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
@@ -484,6 +488,10 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void reset() {
+		sugarSlider.setValue(1);
+		sizeSlider.setValue(1);
+		temperatureSlider.setValue(2);
+
 		coffeeStockInt = (int)theFSM.getCoffeeStock();
 		coffeeButton.setText(String.valueOf(coffeeStockInt) + " Coffee");
 		if(coffeeStockInt==0) {

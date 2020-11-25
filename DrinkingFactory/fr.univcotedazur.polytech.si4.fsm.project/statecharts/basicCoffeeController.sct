@@ -33,7 +33,7 @@
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_LDA5sAoOEeuLfff9QNBocQ" name="Present" incomingTransitions="_Pk1fEAoOEeuLfff9QNBocQ _Qzo0gAoOEeuLfff9QNBocQ">
             <outgoingTransitions xmi:id="_Qzo0gAoOEeuLfff9QNBocQ" specification="any" target="_LDA5sAoOEeuLfff9QNBocQ"/>
-            <outgoingTransitions xmi:id="_81ukwCHsEeuUNNvsZTlSZA" specification="after 45 s / raise timesup" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
+            <outgoingTransitions xmi:id="_81ukwCHsEeuUNNvsZTlSZA" specification="after 5 s / raise timesup" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_UasawAoOEeuLfff9QNBocQ">
             <outgoingTransitions xmi:id="_U5P_AAoOEeuLfff9QNBocQ" specification="" target="_NbLD4AoOEeuLfff9QNBocQ"/>
