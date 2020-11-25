@@ -18,8 +18,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRefundRaised() {
-    	theDfm.lblChange.setText(String.valueOf(theDfm.money));
-    	theDfm.money=0;
     	theDfm.messagesToUser.setText("Abandon de la commande recuperez votre monnaie");
         theDfm.reset();
     }
@@ -44,7 +42,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     public void onRestartRaised() {
         System.out.println("restart");
         theDfm.recipeStarted = false;
-        theDfm.messagesToUser.setText("Veuillez faire votre choix");
+        theDfm.messagesToUser.setText("<html>Welcome<br>You may take order");
     }
 
     @Override

@@ -40,17 +40,13 @@ public class DrinkFactoryMachine extends JFrame {
 	protected int size, temperature, nbSugar;
 	protected boolean recipeStarted = false;
 	protected String consoleMessage;
-	JLabel messagesToUser, lblChange, lblCoffeeStock;
+	JLabel messagesToUser, lblChange;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
 	Timer timer, timerClean, timerChange;
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
-	int coffeeStockInt;
-	int teaStockInt;
-	int expressoStockInt;
-	int soupStockInt;
-	int iceTeaStockInt;
+	int coffeeStockInt, teaStockInt, expressoStockInt, soupStockInt, iceTeaStockInt;
 	JButton coffeeButton, teaButton, expressoButton, soupButton, icedTeaButton;
 	JLabel labelForPictures;
 	
@@ -120,7 +116,7 @@ public class DrinkFactoryMachine extends JFrame {
 				while(true) {
 					theFSM.runCycle();
 					try {
-						Thread.sleep(200);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -133,7 +129,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 		progressBarValue=0;
 		stopTimer=0;
-		consoleMessage = "<html>This is<br>place to communicate <br> with the user";
+		consoleMessage = "<html>Welcome<br>You may take order";
 		money = 0;
 		choice = NONE;
 		coffeeStockInt = 1;
@@ -404,7 +400,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void updateConsole(){
-		consoleMessage = "<html>Votre choix : " + choice.toString() + "<br>" + "Solde : " + theFSM.getMoney();
+		consoleMessage = "<html>Your choice : " + choice.toString() + "<br>" + "Money : " + theFSM.getMoney();
 		JLabel console = (JLabel)(contentPane.getComponent(0));
 		console.setText(consoleMessage);
 	}
@@ -468,13 +464,13 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void updateMoney(long amount) {
-		theFSM.setMoney(this.money + amount);
-		this.money += amount;
 		if (!recipeStarted) {
+			theFSM.setMoney(this.money + amount);
+			this.money += amount;
 			updateConsole();
+			theFSM.raiseMoneyGiven();
+			theFSM.raiseAny();
 		}
-		theFSM.raiseMoneyGiven();
-		theFSM.raiseAny();
 	}
 
 	void updateSliders() {
@@ -491,6 +487,9 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setValue(1);
 		sizeSlider.setValue(1);
 		temperatureSlider.setValue(2);
+
+		consoleMessage = "<html>Welcome<br>You may take order";
+		messagesToUser.setText(consoleMessage);
 
 		coffeeStockInt = (int)theFSM.getCoffeeStock();
 		coffeeButton.setText(String.valueOf(coffeeStockInt) + " Coffee");
