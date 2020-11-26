@@ -19,17 +19,23 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onRefundRaised() {
     	theDfm.messagesToUser.setText("Abandon de la commande recuperez votre monnaie");
+    	theDfm.change = (int) theDfm.money;
+        theDfm.lblChange.setText(String.valueOf(theDfm.change));
         theDfm.reset();
     }
 
     @Override
     public void onGiveChangeRaised() {
-        if (theDfm.ownCup) {
-            theDfm.lblChange.setText(String.valueOf(theDfm.change + 10));
-        }
-        else {
-            theDfm.lblChange.setText(String.valueOf(theDfm.change));
-        }
+        theDfm.change = (int) theDfm.money;
+        theDfm.lblChange.setText(String.valueOf(theDfm.change));
+    }
+
+    @Override
+    public void onTimesupRaised() {
+        System.out.println("Commande annulée pour cause d'inactivité");
+        theDfm.change = (int) theDfm.money;
+        theDfm.lblChange.setText(String.valueOf(theDfm.change));
+        theDfm.reset();
     }
 
     @Override
@@ -124,10 +130,4 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         }
         return temperature;
     }
-
-	@Override
-	public void onTimesupRaised() {
-		System.out.println("Commande annulée pour cause d'inactivité");
-		theDfm.reset();
-	}
 }

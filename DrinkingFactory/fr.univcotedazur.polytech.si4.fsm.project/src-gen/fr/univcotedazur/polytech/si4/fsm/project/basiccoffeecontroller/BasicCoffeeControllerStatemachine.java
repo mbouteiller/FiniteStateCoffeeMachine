@@ -429,7 +429,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private final boolean[] timeEvents = new boolean[16];
 	
-	private boolean reset;
 	public BasicCoffeeControllerStatemachine() {
 		sCInterface = new SCInterfaceImpl();
 	}
@@ -619,7 +618,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	*/
 	protected void clearEvents() {
 		sCInterface.clearEvents();
-		reset = false;
 		for (int i=0; i<timeEvents.length; i++) {
 			timeEvents[i] = false;
 		}
@@ -750,12 +748,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public SCInterface getSCInterface() {
 		return sCInterface;
-	}
-	
-	private void raiseReset() {
-		synchronized(BasicCoffeeControllerStatemachine.this) {
-			reset = true;
-		}
 	}
 	
 	public synchronized void raiseChose() {
@@ -2141,8 +2133,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				exitSequence_main_region_Main();
 				sCInterface.raiseRefund();
 				
-				sCInterface.raiseGiveChange();
-				
 				enterSequence_main_region_Main_default();
 				react();
 			} else {
@@ -2187,18 +2177,11 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (reset) {
-				exitSequence_main_region_Main_payment_Paid();
-				sCInterface.raiseGiveChange();
-				
-				enterSequence_main_region_Main_payment_NotPaid_default();
+			if (((sCInterface.getMoney()>=sCInterface.getPrice() && isStateActive(State.main_region_Main_choice_Chosen)) && true)) {
+				exitSequence_main_region_Main();
+				react_main_region__sync0();
 			} else {
-				if (((sCInterface.getMoney()>=sCInterface.getPrice() && isStateActive(State.main_region_Main_choice_Chosen)) && true)) {
-					exitSequence_main_region_Main();
-					react_main_region__sync0();
-				} else {
-					did_transition = false;
-				}
+				did_transition = false;
 			}
 		}
 		return did_transition;
@@ -2248,8 +2231,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				if (timeEvents[0]) {
 					exitSequence_main_region_Main();
 					sCInterface.raiseTimesup();
-					
-					sCInterface.raiseGiveChange();
 					
 					enterSequence_main_region_Main_default();
 					react();
