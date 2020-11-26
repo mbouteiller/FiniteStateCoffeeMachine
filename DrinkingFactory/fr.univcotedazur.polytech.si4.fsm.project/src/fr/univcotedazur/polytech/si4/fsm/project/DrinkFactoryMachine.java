@@ -38,7 +38,8 @@ public class DrinkFactoryMachine extends JFrame {
 	protected final Product NONE = new None();
 	protected long money;
 	protected int size, temperature, nbSugar;
-	protected boolean recipeStarted = false;
+	protected int change;
+	protected boolean recipeStarted = false, ownCup = false;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
@@ -371,6 +372,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				BufferedImage myPicture = null;
 				try {
+					ownCup = true;
 					myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
 				} catch (IOException ee) {
 					ee.printStackTrace();
@@ -382,6 +384,7 @@ public class DrinkFactoryMachine extends JFrame {
 		labelForPictures.addMouseListener(new MouseAdapter() {
 			public void mouseClicked (MouseEvent e) {
 				theFSM.raiseTakeOrder();
+				ownCup = false;
 				BufferedImage myPicture = null;
 				try {
 					myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
@@ -394,7 +397,8 @@ public class DrinkFactoryMachine extends JFrame {
 		
 		lblChange.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				lblChange.setText("0");
+				change = 0;
+				lblChange.setText(String.valueOf(change));
 			}
 		});
 	}
@@ -445,7 +449,7 @@ public class DrinkFactoryMachine extends JFrame {
 	ActionListener changeReset = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			lblChange.setText("Change : nothing");
+			lblChange.setText("Change : " + change);
 			timerChange.stop();
 		}
 	};
@@ -479,10 +483,6 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.setTemperature(this.temperature);
 	}
 
-	String printTemperature() {
-		return "" + theFSM.getTemperature();
-	}
-
 	void reset() {
 		sugarSlider.setValue(1);
 		sizeSlider.setValue(1);
@@ -506,6 +506,8 @@ public class DrinkFactoryMachine extends JFrame {
 		if(expressoStockInt==0) {
 			expressoButton.setEnabled(false);
 		}
+
+		money = 0;
 		theFSM.setMoney(0);
 	}
 	
@@ -517,19 +519,4 @@ public class DrinkFactoryMachine extends JFrame {
 		super.finalize();
 		t.stop();
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

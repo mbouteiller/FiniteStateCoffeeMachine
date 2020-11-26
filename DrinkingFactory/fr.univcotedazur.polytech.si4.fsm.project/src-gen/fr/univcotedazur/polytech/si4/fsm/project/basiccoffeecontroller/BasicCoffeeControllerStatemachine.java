@@ -413,6 +413,11 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		main_region_AttenteRecuperation,
 		main_region_AttenteInfusion,
 		main_region_RetraitSachet,
+		main_region_PreparationReset,
+		main_region_PreparationReset_r1_AttenteRecup,
+		main_region_PreparationReset_r1_RecupDone,
+		main_region_PreparationReset_r2_Nettoyage,
+		main_region_PreparationReset_r2_NettoyageDone,
 		$NullState$
 	};
 	
@@ -422,7 +427,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[15];
+	private final boolean[] timeEvents = new boolean[16];
 	
 	private boolean reset;
 	public BasicCoffeeControllerStatemachine() {
@@ -572,6 +577,18 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			case main_region_RetraitSachet:
 				main_region_RetraitSachet_react(true);
 				break;
+			case main_region_PreparationReset_r1_AttenteRecup:
+				main_region_PreparationReset_r1_AttenteRecup_react(true);
+				break;
+			case main_region_PreparationReset_r1_RecupDone:
+				main_region_PreparationReset_r1_RecupDone_react(true);
+				break;
+			case main_region_PreparationReset_r2_Nettoyage:
+				main_region_PreparationReset_r2_Nettoyage_react(true);
+				break;
+			case main_region_PreparationReset_r2_NettoyageDone:
+				main_region_PreparationReset_r2_NettoyageDone_react(true);
+				break;
 			default:
 				// $NullState$
 			}
@@ -691,6 +708,17 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			return stateVector[0] == State.main_region_AttenteInfusion;
 		case main_region_RetraitSachet:
 			return stateVector[0] == State.main_region_RetraitSachet;
+		case main_region_PreparationReset:
+			return stateVector[0].ordinal() >= State.
+					main_region_PreparationReset.ordinal()&& stateVector[0].ordinal() <= State.main_region_PreparationReset_r2_NettoyageDone.ordinal();
+		case main_region_PreparationReset_r1_AttenteRecup:
+			return stateVector[0] == State.main_region_PreparationReset_r1_AttenteRecup;
+		case main_region_PreparationReset_r1_RecupDone:
+			return stateVector[0] == State.main_region_PreparationReset_r1_RecupDone;
+		case main_region_PreparationReset_r2_Nettoyage:
+			return stateVector[1] == State.main_region_PreparationReset_r2_Nettoyage;
+		case main_region_PreparationReset_r2_NettoyageDone:
+			return stateVector[1] == State.main_region_PreparationReset_r2_NettoyageDone;
 		default:
 			return false;
 		}
@@ -1004,6 +1032,11 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		timer.setTimer(this, 14, (2 * 1000), false);
 	}
 	
+	/* Entry action for state 'Nettoyage'. */
+	private void entryAction_main_region_PreparationReset_r2_Nettoyage() {
+		timer.setTimer(this, 15, (5 * 1000), false);
+	}
+	
 	/* Exit action for state 'Present'. */
 	private void exitAction_main_region_Main_activity_Present() {
 		timer.unsetTimer(this, 0);
@@ -1074,6 +1107,11 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	/* Exit action for state 'RetraitSachet'. */
 	private void exitAction_main_region_RetraitSachet() {
 		timer.unsetTimer(this, 14);
+	}
+	
+	/* Exit action for state 'Nettoyage'. */
+	private void exitAction_main_region_PreparationReset_r2_Nettoyage() {
+		timer.unsetTimer(this, 15);
 	}
 	
 	/* 'default' enter sequence for state Main */
@@ -1282,6 +1320,31 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		entryAction_main_region_RetraitSachet();
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_RetraitSachet;
+	}
+	
+	/* 'default' enter sequence for state AttenteRecup */
+	private void enterSequence_main_region_PreparationReset_r1_AttenteRecup_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_PreparationReset_r1_AttenteRecup;
+	}
+	
+	/* 'default' enter sequence for state RecupDone */
+	private void enterSequence_main_region_PreparationReset_r1_RecupDone_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_PreparationReset_r1_RecupDone;
+	}
+	
+	/* 'default' enter sequence for state Nettoyage */
+	private void enterSequence_main_region_PreparationReset_r2_Nettoyage_default() {
+		entryAction_main_region_PreparationReset_r2_Nettoyage();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_PreparationReset_r2_Nettoyage;
+	}
+	
+	/* 'default' enter sequence for state NettoyageDone */
+	private void enterSequence_main_region_PreparationReset_r2_NettoyageDone_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_PreparationReset_r2_NettoyageDone;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -1559,6 +1622,38 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		exitAction_main_region_RetraitSachet();
 	}
 	
+	/* Default exit sequence for state PreparationReset */
+	private void exitSequence_main_region_PreparationReset() {
+		exitSequence_main_region_PreparationReset_r1();
+		exitSequence_main_region_PreparationReset_r2();
+	}
+	
+	/* Default exit sequence for state AttenteRecup */
+	private void exitSequence_main_region_PreparationReset_r1_AttenteRecup() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state RecupDone */
+	private void exitSequence_main_region_PreparationReset_r1_RecupDone() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Nettoyage */
+	private void exitSequence_main_region_PreparationReset_r2_Nettoyage() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_PreparationReset_r2_Nettoyage();
+	}
+	
+	/* Default exit sequence for state NettoyageDone */
+	private void exitSequence_main_region_PreparationReset_r2_NettoyageDone() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1601,6 +1696,12 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		case main_region_RetraitSachet:
 			exitSequence_main_region_RetraitSachet();
 			break;
+		case main_region_PreparationReset_r1_AttenteRecup:
+			exitSequence_main_region_PreparationReset_r1_AttenteRecup();
+			break;
+		case main_region_PreparationReset_r1_RecupDone:
+			exitSequence_main_region_PreparationReset_r1_RecupDone();
+			break;
 		default:
 			break;
 		}
@@ -1629,6 +1730,12 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			break;
 		case main_region_Step3_r2_WaitEcoulementEau:
 			exitSequence_main_region_Step3_r2_WaitEcoulementEau();
+			break;
+		case main_region_PreparationReset_r2_Nettoyage:
+			exitSequence_main_region_PreparationReset_r2_Nettoyage();
+			break;
+		case main_region_PreparationReset_r2_NettoyageDone:
+			exitSequence_main_region_PreparationReset_r2_NettoyageDone();
 			break;
 		default:
 			break;
@@ -1837,6 +1944,34 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		}
 	}
 	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_PreparationReset_r1() {
+		switch (stateVector[0]) {
+		case main_region_PreparationReset_r1_AttenteRecup:
+			exitSequence_main_region_PreparationReset_r1_AttenteRecup();
+			break;
+		case main_region_PreparationReset_r1_RecupDone:
+			exitSequence_main_region_PreparationReset_r1_RecupDone();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_PreparationReset_r2() {
+		switch (stateVector[1]) {
+		case main_region_PreparationReset_r2_Nettoyage:
+			exitSequence_main_region_PreparationReset_r2_Nettoyage();
+			break;
+		case main_region_PreparationReset_r2_NettoyageDone:
+			exitSequence_main_region_PreparationReset_r2_NettoyageDone();
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/* The reactions of state null. */
 	private void react_main_region__choice_0() {
 		if (check_main_region__choice_0_tr0_tr0()) {
@@ -1979,6 +2114,19 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		enterSequence_main_region_Step2_r1_PositionnementGobelet_default();
 		enterSequence_main_region_Step2_r2_BonneTemperature_default();
 		enterSequence_main_region_Step2_r3_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync10() {
+		sCInterface.raiseRestart();
+		
+		enterSequence_main_region_Main_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync11() {
+		enterSequence_main_region_PreparationReset_r1_AttenteRecup_default();
+		enterSequence_main_region_PreparationReset_r2_Nettoyage_default();
 	}
 	
 	private boolean react() {
@@ -2481,22 +2629,16 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.takeOrder) {
+			if (timeEvents[12]) {
 				exitSequence_main_region_AttenteRecuperation();
-				sCInterface.raiseRestart();
-				
-				sCInterface.raiseGiveChange();
-				
-				enterSequence_main_region_Main_default();
-				react();
+				react_main_region__sync11();
 			} else {
 				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			if (timeEvents[12]) {
-				sCInterface.raiseWaitTakeOrder();
-			}
+			sCInterface.raiseWaitTakeOrder();
+			
 			did_transition = react();
 		}
 		return did_transition;
@@ -2534,6 +2676,83 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		}
 		if (did_transition==false) {
 			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_PreparationReset_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_PreparationReset_r1_AttenteRecup_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.takeOrder) {
+				exitSequence_main_region_PreparationReset_r1_AttenteRecup();
+				sCInterface.raiseGiveChange();
+				
+				enterSequence_main_region_PreparationReset_r1_RecupDone_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_PreparationReset_r1_RecupDone_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_PreparationReset_r2_NettoyageDone)) && true)) {
+				exitSequence_main_region_PreparationReset();
+				react_main_region__sync10();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_PreparationReset_r2_Nettoyage_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[15]) {
+				exitSequence_main_region_PreparationReset_r2_Nettoyage();
+				enterSequence_main_region_PreparationReset_r2_NettoyageDone_default();
+				main_region_PreparationReset_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_PreparationReset_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_PreparationReset_r2_NettoyageDone_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_PreparationReset_r1_RecupDone)) && true)) {
+				exitSequence_main_region_PreparationReset();
+				react_main_region__sync10();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_PreparationReset_react(try_transition);
 		}
 		return did_transition;
 	}

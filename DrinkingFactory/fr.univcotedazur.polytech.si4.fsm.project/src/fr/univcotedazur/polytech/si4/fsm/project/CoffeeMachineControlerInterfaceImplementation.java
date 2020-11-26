@@ -24,37 +24,49 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onGiveChangeRaised() {
-    	theDfm.lblChange.setText(String.valueOf(theDfm.money));
-    	theDfm.money=0;
+        if (theDfm.ownCup) {
+            theDfm.lblChange.setText(String.valueOf(theDfm.change + 10));
+        }
+        else {
+            theDfm.lblChange.setText(String.valueOf(theDfm.change));
+        }
     }
 
     @Override
     public void onOrderVerifiedRaised() {
         theDfm.recipeStarted = true;
         theDfm.finalChoice = theDfm.choice;
+        theDfm.choice = theDfm.NONE;
         theDfm.size = theDfm.sizeSlider.getValue();
         theDfm.temperature = theDfm.temperatureSlider.getValue();
         theDfm.nbSugar = theDfm.sugarSlider.getValue();
         theDfm.updateSliders();
+        System.out.println(theDfm.ownCup);
+
+        if (theDfm.ownCup) {
+            theDfm.change += (theDfm.money - theDfm.finalChoice.price) + 10;
+        }
+        else {
+            theDfm.change += (theDfm.money - theDfm.finalChoice.price);
+        }
     }
 
     @Override
     public void onRestartRaised() {
         System.out.println("restart");
         theDfm.recipeStarted = false;
-        theDfm.messagesToUser.setText("<html>Welcome<br>You may take order");
+        theDfm.reset();
     }
 
     @Override
     public void onWaitTakeOrderRaised() {
         System.out.println("You can retrieve your drink");
-        theDfm.messagesToUser.setText("Veuillez recuperer votre commande");
-        theDfm.reset();
+        theDfm.messagesToUser.setText("<html>Please retrieve<br>your drink");
     }
 
     @Override
     public void onStartRecipeRaised() {
-        String choiceDescription = "<html>Commande en préparation :<br>";
+        String choiceDescription = "<html>Preparing order :<br>";
 
         choiceDescription += getTemperatureString();
         choiceDescription += getSizeString();
