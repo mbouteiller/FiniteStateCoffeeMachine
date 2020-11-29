@@ -90,6 +90,16 @@ public class DrinkFactoryMachine extends JFrame {
 					public boolean isExpresso() {
 						return theFSM.getChoice().equals("expresso");
 					}
+
+					@Override
+					public boolean isSoup() {
+						return theFSM.getChoice().equals("soup");
+					}
+
+					@Override
+					public boolean isIceTea() {
+						return theFSM.getChoice().equals("icetea");
+					}
 				};
 				theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
 

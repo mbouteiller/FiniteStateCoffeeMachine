@@ -283,6 +283,20 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private long epice;
+		
+		public synchronized long getEpice() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return epice;
+			}
+		}
+		
+		public void setEpice(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.epice = value;
+			}
+		}
+		
 		private long coffeeStock;
 		
 		public synchronized long getCoffeeStock() {
@@ -409,7 +423,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		main_region_Step3_r1_WaitSucre,
 		main_region_Step3_r2_EcoulementEau,
 		main_region_Step3_r2_WaitEcoulementEau,
-		main_region_Else,
 		main_region_AttenteRecuperation,
 		main_region_AttenteInfusion,
 		main_region_RetraitSachet,
@@ -418,6 +431,38 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		main_region_PreparationReset_r1_RecupDone,
 		main_region_PreparationReset_r2_Nettoyage,
 		main_region_PreparationReset_r2_NettoyageDone,
+		main_region_Step4,
+		main_region_Step4_r1_PositionnementGobelet,
+		main_region_Step4_r1_WaitPositionnementGobelet,
+		main_region_Step4_r2_ChauffageEau,
+		main_region_Step4_r2_WaitChauffageEau,
+		main_region_Step5,
+		main_region_Step5_r1_BonneTemperature,
+		main_region_Step5_r1_WaitBonneTemperature,
+		main_region_Step5_r2_PositionnementDosette,
+		main_region_Step5_r2_WaitPositionnementDosette,
+		main_region_Step5_r3_Epice,
+		main_region_Step5_r3_WaitEpice,
+		main_region_EcoulementEau,
+		main_region_Step6,
+		main_region_Step6_r1_PositionnementDosette,
+		main_region_Step6_r1_WaitPositionnementDosette,
+		main_region_Step6_r2_ChauffageEau,
+		main_region_Step6_r2_WaitChauffageEau,
+		main_region_Step7,
+		main_region_Step7_r1_HotTemperature,
+		main_region_Step7_r1_WaitHotTemperature,
+		main_region_Step7_r2_PositionnementGobelet,
+		main_region_Step7_r2_WaitPositionnementGobelet,
+		main_region_Step8,
+		main_region_Step8_r1_Sucre,
+		main_region_Step8_r1_WaitSucre,
+		main_region_Step8_r2_EcoulementEau,
+		main_region_Step8_r2_WaitEcoulementEau,
+		main_region_AttenteInfusion2,
+		main_region_VerrouillagePorte,
+		main_region_InjectionAzote,
+		main_region_DeverrouillagePorte,
 		$NullState$
 	};
 	
@@ -427,7 +472,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[16];
+	private final boolean[] timeEvents = new boolean[32];
 	
 	public BasicCoffeeControllerStatemachine() {
 		sCInterface = new SCInterfaceImpl();
@@ -458,6 +503,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTaille(0);
 		
 		sCInterface.setTemperature(0);
+		
+		sCInterface.setEpice(0);
 		
 		sCInterface.setCoffeeStock(0);
 		
@@ -564,9 +611,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			case main_region_Step3_r2_WaitEcoulementEau:
 				main_region_Step3_r2_WaitEcoulementEau_react(true);
 				break;
-			case main_region_Else:
-				main_region_Else_react(true);
-				break;
 			case main_region_AttenteRecuperation:
 				main_region_AttenteRecuperation_react(true);
 				break;
@@ -587,6 +631,87 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				break;
 			case main_region_PreparationReset_r2_NettoyageDone:
 				main_region_PreparationReset_r2_NettoyageDone_react(true);
+				break;
+			case main_region_Step4_r1_PositionnementGobelet:
+				main_region_Step4_r1_PositionnementGobelet_react(true);
+				break;
+			case main_region_Step4_r1_WaitPositionnementGobelet:
+				main_region_Step4_r1_WaitPositionnementGobelet_react(true);
+				break;
+			case main_region_Step4_r2_ChauffageEau:
+				main_region_Step4_r2_ChauffageEau_react(true);
+				break;
+			case main_region_Step4_r2_WaitChauffageEau:
+				main_region_Step4_r2_WaitChauffageEau_react(true);
+				break;
+			case main_region_Step5_r1_BonneTemperature:
+				main_region_Step5_r1_BonneTemperature_react(true);
+				break;
+			case main_region_Step5_r1_WaitBonneTemperature:
+				main_region_Step5_r1_WaitBonneTemperature_react(true);
+				break;
+			case main_region_Step5_r2_PositionnementDosette:
+				main_region_Step5_r2_PositionnementDosette_react(true);
+				break;
+			case main_region_Step5_r2_WaitPositionnementDosette:
+				main_region_Step5_r2_WaitPositionnementDosette_react(true);
+				break;
+			case main_region_Step5_r3_Epice:
+				main_region_Step5_r3_Epice_react(true);
+				break;
+			case main_region_Step5_r3_WaitEpice:
+				main_region_Step5_r3_WaitEpice_react(true);
+				break;
+			case main_region_EcoulementEau:
+				main_region_EcoulementEau_react(true);
+				break;
+			case main_region_Step6_r1_PositionnementDosette:
+				main_region_Step6_r1_PositionnementDosette_react(true);
+				break;
+			case main_region_Step6_r1_WaitPositionnementDosette:
+				main_region_Step6_r1_WaitPositionnementDosette_react(true);
+				break;
+			case main_region_Step6_r2_ChauffageEau:
+				main_region_Step6_r2_ChauffageEau_react(true);
+				break;
+			case main_region_Step6_r2_WaitChauffageEau:
+				main_region_Step6_r2_WaitChauffageEau_react(true);
+				break;
+			case main_region_Step7_r1_HotTemperature:
+				main_region_Step7_r1_HotTemperature_react(true);
+				break;
+			case main_region_Step7_r1_WaitHotTemperature:
+				main_region_Step7_r1_WaitHotTemperature_react(true);
+				break;
+			case main_region_Step7_r2_PositionnementGobelet:
+				main_region_Step7_r2_PositionnementGobelet_react(true);
+				break;
+			case main_region_Step7_r2_WaitPositionnementGobelet:
+				main_region_Step7_r2_WaitPositionnementGobelet_react(true);
+				break;
+			case main_region_Step8_r1_Sucre:
+				main_region_Step8_r1_Sucre_react(true);
+				break;
+			case main_region_Step8_r1_WaitSucre:
+				main_region_Step8_r1_WaitSucre_react(true);
+				break;
+			case main_region_Step8_r2_EcoulementEau:
+				main_region_Step8_r2_EcoulementEau_react(true);
+				break;
+			case main_region_Step8_r2_WaitEcoulementEau:
+				main_region_Step8_r2_WaitEcoulementEau_react(true);
+				break;
+			case main_region_AttenteInfusion2:
+				main_region_AttenteInfusion2_react(true);
+				break;
+			case main_region_VerrouillagePorte:
+				main_region_VerrouillagePorte_react(true);
+				break;
+			case main_region_InjectionAzote:
+				main_region_InjectionAzote_react(true);
+				break;
+			case main_region_DeverrouillagePorte:
+				main_region_DeverrouillagePorte_react(true);
 				break;
 			default:
 				// $NullState$
@@ -698,8 +823,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			return stateVector[1] == State.main_region_Step3_r2_EcoulementEau;
 		case main_region_Step3_r2_WaitEcoulementEau:
 			return stateVector[1] == State.main_region_Step3_r2_WaitEcoulementEau;
-		case main_region_Else:
-			return stateVector[0] == State.main_region_Else;
 		case main_region_AttenteRecuperation:
 			return stateVector[0] == State.main_region_AttenteRecuperation;
 		case main_region_AttenteInfusion:
@@ -717,6 +840,75 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			return stateVector[1] == State.main_region_PreparationReset_r2_Nettoyage;
 		case main_region_PreparationReset_r2_NettoyageDone:
 			return stateVector[1] == State.main_region_PreparationReset_r2_NettoyageDone;
+		case main_region_Step4:
+			return stateVector[0].ordinal() >= State.
+					main_region_Step4.ordinal()&& stateVector[0].ordinal() <= State.main_region_Step4_r2_WaitChauffageEau.ordinal();
+		case main_region_Step4_r1_PositionnementGobelet:
+			return stateVector[0] == State.main_region_Step4_r1_PositionnementGobelet;
+		case main_region_Step4_r1_WaitPositionnementGobelet:
+			return stateVector[0] == State.main_region_Step4_r1_WaitPositionnementGobelet;
+		case main_region_Step4_r2_ChauffageEau:
+			return stateVector[1] == State.main_region_Step4_r2_ChauffageEau;
+		case main_region_Step4_r2_WaitChauffageEau:
+			return stateVector[1] == State.main_region_Step4_r2_WaitChauffageEau;
+		case main_region_Step5:
+			return stateVector[0].ordinal() >= State.
+					main_region_Step5.ordinal()&& stateVector[0].ordinal() <= State.main_region_Step5_r3_WaitEpice.ordinal();
+		case main_region_Step5_r1_BonneTemperature:
+			return stateVector[0] == State.main_region_Step5_r1_BonneTemperature;
+		case main_region_Step5_r1_WaitBonneTemperature:
+			return stateVector[0] == State.main_region_Step5_r1_WaitBonneTemperature;
+		case main_region_Step5_r2_PositionnementDosette:
+			return stateVector[1] == State.main_region_Step5_r2_PositionnementDosette;
+		case main_region_Step5_r2_WaitPositionnementDosette:
+			return stateVector[1] == State.main_region_Step5_r2_WaitPositionnementDosette;
+		case main_region_Step5_r3_Epice:
+			return stateVector[2] == State.main_region_Step5_r3_Epice;
+		case main_region_Step5_r3_WaitEpice:
+			return stateVector[2] == State.main_region_Step5_r3_WaitEpice;
+		case main_region_EcoulementEau:
+			return stateVector[0] == State.main_region_EcoulementEau;
+		case main_region_Step6:
+			return stateVector[0].ordinal() >= State.
+					main_region_Step6.ordinal()&& stateVector[0].ordinal() <= State.main_region_Step6_r2_WaitChauffageEau.ordinal();
+		case main_region_Step6_r1_PositionnementDosette:
+			return stateVector[0] == State.main_region_Step6_r1_PositionnementDosette;
+		case main_region_Step6_r1_WaitPositionnementDosette:
+			return stateVector[0] == State.main_region_Step6_r1_WaitPositionnementDosette;
+		case main_region_Step6_r2_ChauffageEau:
+			return stateVector[1] == State.main_region_Step6_r2_ChauffageEau;
+		case main_region_Step6_r2_WaitChauffageEau:
+			return stateVector[1] == State.main_region_Step6_r2_WaitChauffageEau;
+		case main_region_Step7:
+			return stateVector[0].ordinal() >= State.
+					main_region_Step7.ordinal()&& stateVector[0].ordinal() <= State.main_region_Step7_r2_WaitPositionnementGobelet.ordinal();
+		case main_region_Step7_r1_HotTemperature:
+			return stateVector[0] == State.main_region_Step7_r1_HotTemperature;
+		case main_region_Step7_r1_WaitHotTemperature:
+			return stateVector[0] == State.main_region_Step7_r1_WaitHotTemperature;
+		case main_region_Step7_r2_PositionnementGobelet:
+			return stateVector[1] == State.main_region_Step7_r2_PositionnementGobelet;
+		case main_region_Step7_r2_WaitPositionnementGobelet:
+			return stateVector[1] == State.main_region_Step7_r2_WaitPositionnementGobelet;
+		case main_region_Step8:
+			return stateVector[0].ordinal() >= State.
+					main_region_Step8.ordinal()&& stateVector[0].ordinal() <= State.main_region_Step8_r2_WaitEcoulementEau.ordinal();
+		case main_region_Step8_r1_Sucre:
+			return stateVector[0] == State.main_region_Step8_r1_Sucre;
+		case main_region_Step8_r1_WaitSucre:
+			return stateVector[0] == State.main_region_Step8_r1_WaitSucre;
+		case main_region_Step8_r2_EcoulementEau:
+			return stateVector[1] == State.main_region_Step8_r2_EcoulementEau;
+		case main_region_Step8_r2_WaitEcoulementEau:
+			return stateVector[1] == State.main_region_Step8_r2_WaitEcoulementEau;
+		case main_region_AttenteInfusion2:
+			return stateVector[0] == State.main_region_AttenteInfusion2;
+		case main_region_VerrouillagePorte:
+			return stateVector[0] == State.main_region_VerrouillagePorte;
+		case main_region_InjectionAzote:
+			return stateVector[0] == State.main_region_InjectionAzote;
+		case main_region_DeverrouillagePorte:
+			return stateVector[0] == State.main_region_DeverrouillagePorte;
 		default:
 			return false;
 		}
@@ -850,6 +1042,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTemperature(value);
 	}
 	
+	public synchronized long getEpice() {
+		return sCInterface.getEpice();
+	}
+	
+	public synchronized void setEpice(long value) {
+		sCInterface.setEpice(value);
+	}
+	
 	public synchronized long getCoffeeStock() {
 		return sCInterface.getCoffeeStock();
 	}
@@ -902,12 +1102,16 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return sCInterface.operationCallback.isExpresso();
 	}
 	
-	private boolean check_main_region__choice_2_tr1_tr1() {
-		return sCInterface.operationCallback.isTea();
+	private boolean check_main_region__choice_1_tr1_tr1() {
+		return sCInterface.operationCallback.isSoup();
 	}
 	
-	private boolean check_main_region__choice_3_tr0_tr0() {
-		return sCInterface.getCoffeeStock()>0;
+	private boolean check_main_region__choice_1_tr2_tr2() {
+		return sCInterface.operationCallback.isIceTea();
+	}
+	
+	private boolean check_main_region__choice_2_tr1_tr1() {
+		return sCInterface.operationCallback.isTea();
 	}
 	
 	private void effect_main_region__choice_0_tr0() {
@@ -917,7 +1121,9 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	}
 	
 	private void effect_main_region__choice_0_tr2() {
-		react_main_region__choice_3();
+		sCInterface.coffeeStock--;
+		
+		react_main_region__sync1();
 	}
 	
 	private void effect_main_region__choice_0_tr1() {
@@ -931,7 +1137,15 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	}
 	
 	private void effect_main_region__choice_1_tr1() {
-		enterSequence_main_region_Else_default();
+		sCInterface.soupStock--;
+		
+		react_main_region__sync12();
+	}
+	
+	private void effect_main_region__choice_1_tr2() {
+		sCInterface.iceTeaStock--;
+		
+		react_main_region__sync15();
 	}
 	
 	private void effect_main_region__choice_2_tr1() {
@@ -940,16 +1154,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	private void effect_main_region__choice_2_tr0() {
 		enterSequence_main_region_AttenteRecuperation_default();
-	}
-	
-	private void effect_main_region__choice_3_tr0() {
-		sCInterface.coffeeStock--;
-		
-		react_main_region__sync1();
-	}
-	
-	private void effect_main_region__choice_3_tr1() {
-		enterSequence_main_region_Main_default();
 	}
 	
 	/* Entry action for state 'Present'. */
@@ -1029,6 +1233,86 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		timer.setTimer(this, 15, (5 * 1000), false);
 	}
 	
+	/* Entry action for state 'PositionnementGobelet'. */
+	private void entryAction_main_region_Step4_r1_PositionnementGobelet() {
+		timer.setTimer(this, 16, (2 * 1000), false);
+	}
+	
+	/* Entry action for state 'ChauffageEau'. */
+	private void entryAction_main_region_Step4_r2_ChauffageEau() {
+		timer.setTimer(this, 17, ((sCInterface.getTemperature() * 3) * 1000), false);
+	}
+	
+	/* Entry action for state 'BonneTemperature'. */
+	private void entryAction_main_region_Step5_r1_BonneTemperature() {
+		timer.setTimer(this, 18, ((sCInterface.getTemperature() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'PositionnementDosette'. */
+	private void entryAction_main_region_Step5_r2_PositionnementDosette() {
+		timer.setTimer(this, 19, (2 * 1000), false);
+	}
+	
+	/* Entry action for state 'Epice'. */
+	private void entryAction_main_region_Step5_r3_Epice() {
+		timer.setTimer(this, 20, ((sCInterface.getEpice() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'EcoulementEau'. */
+	private void entryAction_main_region_EcoulementEau() {
+		timer.setTimer(this, 21, ((sCInterface.getTaille() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'PositionnementDosette'. */
+	private void entryAction_main_region_Step6_r1_PositionnementDosette() {
+		timer.setTimer(this, 22, (2 * 1000), false);
+	}
+	
+	/* Entry action for state 'ChauffageEau'. */
+	private void entryAction_main_region_Step6_r2_ChauffageEau() {
+		timer.setTimer(this, 23, ((sCInterface.getTemperature() * 3) * 1000), false);
+	}
+	
+	/* Entry action for state 'HotTemperature'. */
+	private void entryAction_main_region_Step7_r1_HotTemperature() {
+		timer.setTimer(this, 24, (2 * 1000), false);
+	}
+	
+	/* Entry action for state 'PositionnementGobelet'. */
+	private void entryAction_main_region_Step7_r2_PositionnementGobelet() {
+		timer.setTimer(this, 25, (2 * 1000), false);
+	}
+	
+	/* Entry action for state 'Sucre'. */
+	private void entryAction_main_region_Step8_r1_Sucre() {
+		timer.setTimer(this, 26, ((sCInterface.getSucre() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'EcoulementEau'. */
+	private void entryAction_main_region_Step8_r2_EcoulementEau() {
+		timer.setTimer(this, 27, ((sCInterface.getTaille() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'AttenteInfusion2'. */
+	private void entryAction_main_region_AttenteInfusion2() {
+		timer.setTimer(this, 28, (4 * 1000), false);
+	}
+	
+	/* Entry action for state 'VerrouillagePorte'. */
+	private void entryAction_main_region_VerrouillagePorte() {
+		timer.setTimer(this, 29, (1 * 1000), false);
+	}
+	
+	/* Entry action for state 'InjectionAzote'. */
+	private void entryAction_main_region_InjectionAzote() {
+		timer.setTimer(this, 30, ((sCInterface.getTemperature() * 1) * 1000), false);
+	}
+	
+	/* Entry action for state 'DeverrouillagePorte'. */
+	private void entryAction_main_region_DeverrouillagePorte() {
+		timer.setTimer(this, 31, (1 * 1000), false);
+	}
+	
 	/* Exit action for state 'Present'. */
 	private void exitAction_main_region_Main_activity_Present() {
 		timer.unsetTimer(this, 0);
@@ -1104,6 +1388,86 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	/* Exit action for state 'Nettoyage'. */
 	private void exitAction_main_region_PreparationReset_r2_Nettoyage() {
 		timer.unsetTimer(this, 15);
+	}
+	
+	/* Exit action for state 'PositionnementGobelet'. */
+	private void exitAction_main_region_Step4_r1_PositionnementGobelet() {
+		timer.unsetTimer(this, 16);
+	}
+	
+	/* Exit action for state 'ChauffageEau'. */
+	private void exitAction_main_region_Step4_r2_ChauffageEau() {
+		timer.unsetTimer(this, 17);
+	}
+	
+	/* Exit action for state 'BonneTemperature'. */
+	private void exitAction_main_region_Step5_r1_BonneTemperature() {
+		timer.unsetTimer(this, 18);
+	}
+	
+	/* Exit action for state 'PositionnementDosette'. */
+	private void exitAction_main_region_Step5_r2_PositionnementDosette() {
+		timer.unsetTimer(this, 19);
+	}
+	
+	/* Exit action for state 'Epice'. */
+	private void exitAction_main_region_Step5_r3_Epice() {
+		timer.unsetTimer(this, 20);
+	}
+	
+	/* Exit action for state 'EcoulementEau'. */
+	private void exitAction_main_region_EcoulementEau() {
+		timer.unsetTimer(this, 21);
+	}
+	
+	/* Exit action for state 'PositionnementDosette'. */
+	private void exitAction_main_region_Step6_r1_PositionnementDosette() {
+		timer.unsetTimer(this, 22);
+	}
+	
+	/* Exit action for state 'ChauffageEau'. */
+	private void exitAction_main_region_Step6_r2_ChauffageEau() {
+		timer.unsetTimer(this, 23);
+	}
+	
+	/* Exit action for state 'HotTemperature'. */
+	private void exitAction_main_region_Step7_r1_HotTemperature() {
+		timer.unsetTimer(this, 24);
+	}
+	
+	/* Exit action for state 'PositionnementGobelet'. */
+	private void exitAction_main_region_Step7_r2_PositionnementGobelet() {
+		timer.unsetTimer(this, 25);
+	}
+	
+	/* Exit action for state 'Sucre'. */
+	private void exitAction_main_region_Step8_r1_Sucre() {
+		timer.unsetTimer(this, 26);
+	}
+	
+	/* Exit action for state 'EcoulementEau'. */
+	private void exitAction_main_region_Step8_r2_EcoulementEau() {
+		timer.unsetTimer(this, 27);
+	}
+	
+	/* Exit action for state 'AttenteInfusion2'. */
+	private void exitAction_main_region_AttenteInfusion2() {
+		timer.unsetTimer(this, 28);
+	}
+	
+	/* Exit action for state 'VerrouillagePorte'. */
+	private void exitAction_main_region_VerrouillagePorte() {
+		timer.unsetTimer(this, 29);
+	}
+	
+	/* Exit action for state 'InjectionAzote'. */
+	private void exitAction_main_region_InjectionAzote() {
+		timer.unsetTimer(this, 30);
+	}
+	
+	/* Exit action for state 'DeverrouillagePorte'. */
+	private void exitAction_main_region_DeverrouillagePorte() {
+		timer.unsetTimer(this, 31);
 	}
 	
 	/* 'default' enter sequence for state Main */
@@ -1287,12 +1651,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[1] = State.main_region_Step3_r2_WaitEcoulementEau;
 	}
 	
-	/* 'default' enter sequence for state Else */
-	private void enterSequence_main_region_Else_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Else;
-	}
-	
 	/* 'default' enter sequence for state AttenteRecuperation */
 	private void enterSequence_main_region_AttenteRecuperation_default() {
 		entryAction_main_region_AttenteRecuperation();
@@ -1339,6 +1697,196 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[1] = State.main_region_PreparationReset_r2_NettoyageDone;
 	}
 	
+	/* 'default' enter sequence for state PositionnementGobelet */
+	private void enterSequence_main_region_Step4_r1_PositionnementGobelet_default() {
+		entryAction_main_region_Step4_r1_PositionnementGobelet();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step4_r1_PositionnementGobelet;
+	}
+	
+	/* 'default' enter sequence for state WaitPositionnementGobelet */
+	private void enterSequence_main_region_Step4_r1_WaitPositionnementGobelet_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step4_r1_WaitPositionnementGobelet;
+	}
+	
+	/* 'default' enter sequence for state ChauffageEau */
+	private void enterSequence_main_region_Step4_r2_ChauffageEau_default() {
+		entryAction_main_region_Step4_r2_ChauffageEau();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step4_r2_ChauffageEau;
+	}
+	
+	/* 'default' enter sequence for state WaitChauffageEau */
+	private void enterSequence_main_region_Step4_r2_WaitChauffageEau_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step4_r2_WaitChauffageEau;
+	}
+	
+	/* 'default' enter sequence for state BonneTemperature */
+	private void enterSequence_main_region_Step5_r1_BonneTemperature_default() {
+		entryAction_main_region_Step5_r1_BonneTemperature();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step5_r1_BonneTemperature;
+	}
+	
+	/* 'default' enter sequence for state WaitBonneTemperature */
+	private void enterSequence_main_region_Step5_r1_WaitBonneTemperature_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step5_r1_WaitBonneTemperature;
+	}
+	
+	/* 'default' enter sequence for state PositionnementDosette */
+	private void enterSequence_main_region_Step5_r2_PositionnementDosette_default() {
+		entryAction_main_region_Step5_r2_PositionnementDosette();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step5_r2_PositionnementDosette;
+	}
+	
+	/* 'default' enter sequence for state WaitPositionnementDosette */
+	private void enterSequence_main_region_Step5_r2_WaitPositionnementDosette_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step5_r2_WaitPositionnementDosette;
+	}
+	
+	/* 'default' enter sequence for state Epice */
+	private void enterSequence_main_region_Step5_r3_Epice_default() {
+		entryAction_main_region_Step5_r3_Epice();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_Step5_r3_Epice;
+	}
+	
+	/* 'default' enter sequence for state WaitEpice */
+	private void enterSequence_main_region_Step5_r3_WaitEpice_default() {
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_Step5_r3_WaitEpice;
+	}
+	
+	/* 'default' enter sequence for state EcoulementEau */
+	private void enterSequence_main_region_EcoulementEau_default() {
+		entryAction_main_region_EcoulementEau();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_EcoulementEau;
+	}
+	
+	/* 'default' enter sequence for state PositionnementDosette */
+	private void enterSequence_main_region_Step6_r1_PositionnementDosette_default() {
+		entryAction_main_region_Step6_r1_PositionnementDosette();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step6_r1_PositionnementDosette;
+	}
+	
+	/* 'default' enter sequence for state WaitPositionnementDosette */
+	private void enterSequence_main_region_Step6_r1_WaitPositionnementDosette_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step6_r1_WaitPositionnementDosette;
+	}
+	
+	/* 'default' enter sequence for state ChauffageEau */
+	private void enterSequence_main_region_Step6_r2_ChauffageEau_default() {
+		entryAction_main_region_Step6_r2_ChauffageEau();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step6_r2_ChauffageEau;
+	}
+	
+	/* 'default' enter sequence for state WaitChauffageEau */
+	private void enterSequence_main_region_Step6_r2_WaitChauffageEau_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step6_r2_WaitChauffageEau;
+	}
+	
+	/* 'default' enter sequence for state Step7 */
+	private void enterSequence_main_region_Step7_default() {
+		enterSequence_main_region_Step7_r1_default();
+		enterSequence_main_region_Step7_r2_default();
+	}
+	
+	/* 'default' enter sequence for state HotTemperature */
+	private void enterSequence_main_region_Step7_r1_HotTemperature_default() {
+		entryAction_main_region_Step7_r1_HotTemperature();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step7_r1_HotTemperature;
+	}
+	
+	/* 'default' enter sequence for state WaitHotTemperature */
+	private void enterSequence_main_region_Step7_r1_WaitHotTemperature_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step7_r1_WaitHotTemperature;
+	}
+	
+	/* 'default' enter sequence for state PositionnementGobelet */
+	private void enterSequence_main_region_Step7_r2_PositionnementGobelet_default() {
+		entryAction_main_region_Step7_r2_PositionnementGobelet();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step7_r2_PositionnementGobelet;
+	}
+	
+	/* 'default' enter sequence for state WaitPositionnementGobelet */
+	private void enterSequence_main_region_Step7_r2_WaitPositionnementGobelet_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step7_r2_WaitPositionnementGobelet;
+	}
+	
+	/* 'default' enter sequence for state Step8 */
+	private void enterSequence_main_region_Step8_default() {
+		enterSequence_main_region_Step8_r1_default();
+		enterSequence_main_region_Step8_r2_default();
+	}
+	
+	/* 'default' enter sequence for state Sucre */
+	private void enterSequence_main_region_Step8_r1_Sucre_default() {
+		entryAction_main_region_Step8_r1_Sucre();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step8_r1_Sucre;
+	}
+	
+	/* 'default' enter sequence for state WaitSucre */
+	private void enterSequence_main_region_Step8_r1_WaitSucre_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step8_r1_WaitSucre;
+	}
+	
+	/* 'default' enter sequence for state EcoulementEau */
+	private void enterSequence_main_region_Step8_r2_EcoulementEau_default() {
+		entryAction_main_region_Step8_r2_EcoulementEau();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step8_r2_EcoulementEau;
+	}
+	
+	/* 'default' enter sequence for state WaitEcoulementEau */
+	private void enterSequence_main_region_Step8_r2_WaitEcoulementEau_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_Step8_r2_WaitEcoulementEau;
+	}
+	
+	/* 'default' enter sequence for state AttenteInfusion2 */
+	private void enterSequence_main_region_AttenteInfusion2_default() {
+		entryAction_main_region_AttenteInfusion2();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_AttenteInfusion2;
+	}
+	
+	/* 'default' enter sequence for state VerrouillagePorte */
+	private void enterSequence_main_region_VerrouillagePorte_default() {
+		entryAction_main_region_VerrouillagePorte();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_VerrouillagePorte;
+	}
+	
+	/* 'default' enter sequence for state InjectionAzote */
+	private void enterSequence_main_region_InjectionAzote_default() {
+		entryAction_main_region_InjectionAzote();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_InjectionAzote;
+	}
+	
+	/* 'default' enter sequence for state DeverrouillagePorte */
+	private void enterSequence_main_region_DeverrouillagePorte_default() {
+		entryAction_main_region_DeverrouillagePorte();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_DeverrouillagePorte;
+	}
+	
 	/* 'default' enter sequence for region main region */
 	private void enterSequence_main_region_default() {
 		react_main_region__entry_Default();
@@ -1382,6 +1930,26 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	/* 'default' enter sequence for region r2 */
 	private void enterSequence_main_region_Step3_r2_default() {
 		react_main_region_Step3_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r1 */
+	private void enterSequence_main_region_Step7_r1_default() {
+		react_main_region_Step7_r1__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r2 */
+	private void enterSequence_main_region_Step7_r2_default() {
+		react_main_region_Step7_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r1 */
+	private void enterSequence_main_region_Step8_r1_default() {
+		react_main_region_Step8_r1__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r2 */
+	private void enterSequence_main_region_Step8_r2_default() {
+		react_main_region_Step8_r2__entry_Default();
 	}
 	
 	/* Default exit sequence for state Main */
@@ -1584,12 +2152,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[1] = State.$NullState$;
 	}
 	
-	/* Default exit sequence for state Else */
-	private void exitSequence_main_region_Else() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-	
 	/* Default exit sequence for state AttenteRecuperation */
 	private void exitSequence_main_region_AttenteRecuperation() {
 		nextStateIndex = 0;
@@ -1646,6 +2208,231 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		stateVector[1] = State.$NullState$;
 	}
 	
+	/* Default exit sequence for state Step4 */
+	private void exitSequence_main_region_Step4() {
+		exitSequence_main_region_Step4_r1();
+		exitSequence_main_region_Step4_r2();
+	}
+	
+	/* Default exit sequence for state PositionnementGobelet */
+	private void exitSequence_main_region_Step4_r1_PositionnementGobelet() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Step4_r1_PositionnementGobelet();
+	}
+	
+	/* Default exit sequence for state WaitPositionnementGobelet */
+	private void exitSequence_main_region_Step4_r1_WaitPositionnementGobelet() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state ChauffageEau */
+	private void exitSequence_main_region_Step4_r2_ChauffageEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_Step4_r2_ChauffageEau();
+	}
+	
+	/* Default exit sequence for state WaitChauffageEau */
+	private void exitSequence_main_region_Step4_r2_WaitChauffageEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step5 */
+	private void exitSequence_main_region_Step5() {
+		exitSequence_main_region_Step5_r1();
+		exitSequence_main_region_Step5_r2();
+		exitSequence_main_region_Step5_r3();
+	}
+	
+	/* Default exit sequence for state BonneTemperature */
+	private void exitSequence_main_region_Step5_r1_BonneTemperature() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Step5_r1_BonneTemperature();
+	}
+	
+	/* Default exit sequence for state WaitBonneTemperature */
+	private void exitSequence_main_region_Step5_r1_WaitBonneTemperature() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state PositionnementDosette */
+	private void exitSequence_main_region_Step5_r2_PositionnementDosette() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_Step5_r2_PositionnementDosette();
+	}
+	
+	/* Default exit sequence for state WaitPositionnementDosette */
+	private void exitSequence_main_region_Step5_r2_WaitPositionnementDosette() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Epice */
+	private void exitSequence_main_region_Step5_r3_Epice() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+		
+		exitAction_main_region_Step5_r3_Epice();
+	}
+	
+	/* Default exit sequence for state WaitEpice */
+	private void exitSequence_main_region_Step5_r3_WaitEpice() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state EcoulementEau */
+	private void exitSequence_main_region_EcoulementEau() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_EcoulementEau();
+	}
+	
+	/* Default exit sequence for state Step6 */
+	private void exitSequence_main_region_Step6() {
+		exitSequence_main_region_Step6_r1();
+		exitSequence_main_region_Step6_r2();
+	}
+	
+	/* Default exit sequence for state PositionnementDosette */
+	private void exitSequence_main_region_Step6_r1_PositionnementDosette() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Step6_r1_PositionnementDosette();
+	}
+	
+	/* Default exit sequence for state WaitPositionnementDosette */
+	private void exitSequence_main_region_Step6_r1_WaitPositionnementDosette() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state ChauffageEau */
+	private void exitSequence_main_region_Step6_r2_ChauffageEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_Step6_r2_ChauffageEau();
+	}
+	
+	/* Default exit sequence for state WaitChauffageEau */
+	private void exitSequence_main_region_Step6_r2_WaitChauffageEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step7 */
+	private void exitSequence_main_region_Step7() {
+		exitSequence_main_region_Step7_r1();
+		exitSequence_main_region_Step7_r2();
+	}
+	
+	/* Default exit sequence for state HotTemperature */
+	private void exitSequence_main_region_Step7_r1_HotTemperature() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Step7_r1_HotTemperature();
+	}
+	
+	/* Default exit sequence for state WaitHotTemperature */
+	private void exitSequence_main_region_Step7_r1_WaitHotTemperature() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state PositionnementGobelet */
+	private void exitSequence_main_region_Step7_r2_PositionnementGobelet() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_Step7_r2_PositionnementGobelet();
+	}
+	
+	/* Default exit sequence for state WaitPositionnementGobelet */
+	private void exitSequence_main_region_Step7_r2_WaitPositionnementGobelet() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step8 */
+	private void exitSequence_main_region_Step8() {
+		exitSequence_main_region_Step8_r1();
+		exitSequence_main_region_Step8_r2();
+	}
+	
+	/* Default exit sequence for state Sucre */
+	private void exitSequence_main_region_Step8_r1_Sucre() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Step8_r1_Sucre();
+	}
+	
+	/* Default exit sequence for state WaitSucre */
+	private void exitSequence_main_region_Step8_r1_WaitSucre() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state EcoulementEau */
+	private void exitSequence_main_region_Step8_r2_EcoulementEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_Step8_r2_EcoulementEau();
+	}
+	
+	/* Default exit sequence for state WaitEcoulementEau */
+	private void exitSequence_main_region_Step8_r2_WaitEcoulementEau() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state AttenteInfusion2 */
+	private void exitSequence_main_region_AttenteInfusion2() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_AttenteInfusion2();
+	}
+	
+	/* Default exit sequence for state VerrouillagePorte */
+	private void exitSequence_main_region_VerrouillagePorte() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_VerrouillagePorte();
+	}
+	
+	/* Default exit sequence for state InjectionAzote */
+	private void exitSequence_main_region_InjectionAzote() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_InjectionAzote();
+	}
+	
+	/* Default exit sequence for state DeverrouillagePorte */
+	private void exitSequence_main_region_DeverrouillagePorte() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_DeverrouillagePorte();
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1676,9 +2463,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		case main_region_Step3_r1_WaitSucre:
 			exitSequence_main_region_Step3_r1_WaitSucre();
 			break;
-		case main_region_Else:
-			exitSequence_main_region_Else();
-			break;
 		case main_region_AttenteRecuperation:
 			exitSequence_main_region_AttenteRecuperation();
 			break;
@@ -1693,6 +2477,51 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			break;
 		case main_region_PreparationReset_r1_RecupDone:
 			exitSequence_main_region_PreparationReset_r1_RecupDone();
+			break;
+		case main_region_Step4_r1_PositionnementGobelet:
+			exitSequence_main_region_Step4_r1_PositionnementGobelet();
+			break;
+		case main_region_Step4_r1_WaitPositionnementGobelet:
+			exitSequence_main_region_Step4_r1_WaitPositionnementGobelet();
+			break;
+		case main_region_Step5_r1_BonneTemperature:
+			exitSequence_main_region_Step5_r1_BonneTemperature();
+			break;
+		case main_region_Step5_r1_WaitBonneTemperature:
+			exitSequence_main_region_Step5_r1_WaitBonneTemperature();
+			break;
+		case main_region_EcoulementEau:
+			exitSequence_main_region_EcoulementEau();
+			break;
+		case main_region_Step6_r1_PositionnementDosette:
+			exitSequence_main_region_Step6_r1_PositionnementDosette();
+			break;
+		case main_region_Step6_r1_WaitPositionnementDosette:
+			exitSequence_main_region_Step6_r1_WaitPositionnementDosette();
+			break;
+		case main_region_Step7_r1_HotTemperature:
+			exitSequence_main_region_Step7_r1_HotTemperature();
+			break;
+		case main_region_Step7_r1_WaitHotTemperature:
+			exitSequence_main_region_Step7_r1_WaitHotTemperature();
+			break;
+		case main_region_Step8_r1_Sucre:
+			exitSequence_main_region_Step8_r1_Sucre();
+			break;
+		case main_region_Step8_r1_WaitSucre:
+			exitSequence_main_region_Step8_r1_WaitSucre();
+			break;
+		case main_region_AttenteInfusion2:
+			exitSequence_main_region_AttenteInfusion2();
+			break;
+		case main_region_VerrouillagePorte:
+			exitSequence_main_region_VerrouillagePorte();
+			break;
+		case main_region_InjectionAzote:
+			exitSequence_main_region_InjectionAzote();
+			break;
+		case main_region_DeverrouillagePorte:
+			exitSequence_main_region_DeverrouillagePorte();
 			break;
 		default:
 			break;
@@ -1729,6 +2558,36 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		case main_region_PreparationReset_r2_NettoyageDone:
 			exitSequence_main_region_PreparationReset_r2_NettoyageDone();
 			break;
+		case main_region_Step4_r2_ChauffageEau:
+			exitSequence_main_region_Step4_r2_ChauffageEau();
+			break;
+		case main_region_Step4_r2_WaitChauffageEau:
+			exitSequence_main_region_Step4_r2_WaitChauffageEau();
+			break;
+		case main_region_Step5_r2_PositionnementDosette:
+			exitSequence_main_region_Step5_r2_PositionnementDosette();
+			break;
+		case main_region_Step5_r2_WaitPositionnementDosette:
+			exitSequence_main_region_Step5_r2_WaitPositionnementDosette();
+			break;
+		case main_region_Step6_r2_ChauffageEau:
+			exitSequence_main_region_Step6_r2_ChauffageEau();
+			break;
+		case main_region_Step6_r2_WaitChauffageEau:
+			exitSequence_main_region_Step6_r2_WaitChauffageEau();
+			break;
+		case main_region_Step7_r2_PositionnementGobelet:
+			exitSequence_main_region_Step7_r2_PositionnementGobelet();
+			break;
+		case main_region_Step7_r2_WaitPositionnementGobelet:
+			exitSequence_main_region_Step7_r2_WaitPositionnementGobelet();
+			break;
+		case main_region_Step8_r2_EcoulementEau:
+			exitSequence_main_region_Step8_r2_EcoulementEau();
+			break;
+		case main_region_Step8_r2_WaitEcoulementEau:
+			exitSequence_main_region_Step8_r2_WaitEcoulementEau();
+			break;
 		default:
 			break;
 		}
@@ -1751,6 +2610,12 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			break;
 		case main_region_Step2_r3_WaitTassageGrains:
 			exitSequence_main_region_Step2_r3_WaitTassageGrains();
+			break;
+		case main_region_Step5_r3_Epice:
+			exitSequence_main_region_Step5_r3_Epice();
+			break;
+		case main_region_Step5_r3_WaitEpice:
+			exitSequence_main_region_Step5_r3_WaitEpice();
 			break;
 		default:
 			break;
@@ -1964,6 +2829,160 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		}
 	}
 	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_Step4_r1() {
+		switch (stateVector[0]) {
+		case main_region_Step4_r1_PositionnementGobelet:
+			exitSequence_main_region_Step4_r1_PositionnementGobelet();
+			break;
+		case main_region_Step4_r1_WaitPositionnementGobelet:
+			exitSequence_main_region_Step4_r1_WaitPositionnementGobelet();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_Step4_r2() {
+		switch (stateVector[1]) {
+		case main_region_Step4_r2_ChauffageEau:
+			exitSequence_main_region_Step4_r2_ChauffageEau();
+			break;
+		case main_region_Step4_r2_WaitChauffageEau:
+			exitSequence_main_region_Step4_r2_WaitChauffageEau();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_Step5_r1() {
+		switch (stateVector[0]) {
+		case main_region_Step5_r1_BonneTemperature:
+			exitSequence_main_region_Step5_r1_BonneTemperature();
+			break;
+		case main_region_Step5_r1_WaitBonneTemperature:
+			exitSequence_main_region_Step5_r1_WaitBonneTemperature();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_Step5_r2() {
+		switch (stateVector[1]) {
+		case main_region_Step5_r2_PositionnementDosette:
+			exitSequence_main_region_Step5_r2_PositionnementDosette();
+			break;
+		case main_region_Step5_r2_WaitPositionnementDosette:
+			exitSequence_main_region_Step5_r2_WaitPositionnementDosette();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r3 */
+	private void exitSequence_main_region_Step5_r3() {
+		switch (stateVector[2]) {
+		case main_region_Step5_r3_Epice:
+			exitSequence_main_region_Step5_r3_Epice();
+			break;
+		case main_region_Step5_r3_WaitEpice:
+			exitSequence_main_region_Step5_r3_WaitEpice();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_Step6_r1() {
+		switch (stateVector[0]) {
+		case main_region_Step6_r1_PositionnementDosette:
+			exitSequence_main_region_Step6_r1_PositionnementDosette();
+			break;
+		case main_region_Step6_r1_WaitPositionnementDosette:
+			exitSequence_main_region_Step6_r1_WaitPositionnementDosette();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_Step6_r2() {
+		switch (stateVector[1]) {
+		case main_region_Step6_r2_ChauffageEau:
+			exitSequence_main_region_Step6_r2_ChauffageEau();
+			break;
+		case main_region_Step6_r2_WaitChauffageEau:
+			exitSequence_main_region_Step6_r2_WaitChauffageEau();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_Step7_r1() {
+		switch (stateVector[0]) {
+		case main_region_Step7_r1_HotTemperature:
+			exitSequence_main_region_Step7_r1_HotTemperature();
+			break;
+		case main_region_Step7_r1_WaitHotTemperature:
+			exitSequence_main_region_Step7_r1_WaitHotTemperature();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_Step7_r2() {
+		switch (stateVector[1]) {
+		case main_region_Step7_r2_PositionnementGobelet:
+			exitSequence_main_region_Step7_r2_PositionnementGobelet();
+			break;
+		case main_region_Step7_r2_WaitPositionnementGobelet:
+			exitSequence_main_region_Step7_r2_WaitPositionnementGobelet();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_Step8_r1() {
+		switch (stateVector[0]) {
+		case main_region_Step8_r1_Sucre:
+			exitSequence_main_region_Step8_r1_Sucre();
+			break;
+		case main_region_Step8_r1_WaitSucre:
+			exitSequence_main_region_Step8_r1_WaitSucre();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_Step8_r2() {
+		switch (stateVector[1]) {
+		case main_region_Step8_r2_EcoulementEau:
+			exitSequence_main_region_Step8_r2_EcoulementEau();
+			break;
+		case main_region_Step8_r2_WaitEcoulementEau:
+			exitSequence_main_region_Step8_r2_WaitEcoulementEau();
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/* The reactions of state null. */
 	private void react_main_region__choice_0() {
 		if (check_main_region__choice_0_tr0_tr0()) {
@@ -1982,7 +3001,13 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (check_main_region__choice_1_tr0_tr0()) {
 			effect_main_region__choice_1_tr0();
 		} else {
-			effect_main_region__choice_1_tr1();
+			if (check_main_region__choice_1_tr1_tr1()) {
+				effect_main_region__choice_1_tr1();
+			} else {
+				if (check_main_region__choice_1_tr2_tr2()) {
+					effect_main_region__choice_1_tr2();
+				}
+			}
 		}
 	}
 	
@@ -1992,15 +3017,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			effect_main_region__choice_2_tr1();
 		} else {
 			effect_main_region__choice_2_tr0();
-		}
-	}
-	
-	/* The reactions of state null. */
-	private void react_main_region__choice_3() {
-		if (check_main_region__choice_3_tr0_tr0()) {
-			effect_main_region__choice_3_tr0();
-		} else {
-			effect_main_region__choice_3_tr1();
 		}
 	}
 	
@@ -2047,6 +3063,26 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	/* Default react sequence for initial entry  */
 	private void react_main_region_Step3_r2__entry_Default() {
 		enterSequence_main_region_Step3_r2_EcoulementEau_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Step7_r1__entry_Default() {
+		enterSequence_main_region_Step7_r1_HotTemperature_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Step7_r2__entry_Default() {
+		enterSequence_main_region_Step7_r2_PositionnementGobelet_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Step8_r1__entry_Default() {
+		enterSequence_main_region_Step8_r1_Sucre_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Step8_r2__entry_Default() {
+		enterSequence_main_region_Step8_r2_EcoulementEau_default();
 	}
 	
 	/* The reactions of state null. */
@@ -2119,6 +3155,45 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	private void react_main_region__sync11() {
 		enterSequence_main_region_PreparationReset_r1_AttenteRecup_default();
 		enterSequence_main_region_PreparationReset_r2_Nettoyage_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync12() {
+		enterSequence_main_region_Step4_r1_PositionnementGobelet_default();
+		enterSequence_main_region_Step4_r2_ChauffageEau_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync13() {
+		enterSequence_main_region_Step5_r1_BonneTemperature_default();
+		enterSequence_main_region_Step5_r2_PositionnementDosette_default();
+		enterSequence_main_region_Step5_r3_Epice_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync14() {
+		enterSequence_main_region_EcoulementEau_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync15() {
+		enterSequence_main_region_Step6_r1_PositionnementDosette_default();
+		enterSequence_main_region_Step6_r2_ChauffageEau_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync16() {
+		enterSequence_main_region_Step7_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync17() {
+		enterSequence_main_region_Step8_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync18() {
+		enterSequence_main_region_AttenteInfusion2_default();
 	}
 	
 	private boolean react() {
@@ -2594,18 +3669,6 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return did_transition;
 	}
 	
-	private boolean main_region_Else_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			did_transition = false;
-		}
-		if (did_transition==false) {
-			did_transition = react();
-		}
-		return did_transition;
-	}
-	
 	private boolean main_region_AttenteRecuperation_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
@@ -2734,6 +3797,499 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		}
 		if (did_transition==false) {
 			did_transition = main_region_PreparationReset_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step4_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step4_r1_PositionnementGobelet_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[16]) {
+				exitSequence_main_region_Step4_r1_PositionnementGobelet();
+				enterSequence_main_region_Step4_r1_WaitPositionnementGobelet_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step4_r1_WaitPositionnementGobelet_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step4_r2_WaitChauffageEau)) && true)) {
+				exitSequence_main_region_Step4();
+				react_main_region__sync13();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step4_r2_ChauffageEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[17]) {
+				exitSequence_main_region_Step4_r2_ChauffageEau();
+				enterSequence_main_region_Step4_r2_WaitChauffageEau_default();
+				main_region_Step4_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step4_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step4_r2_WaitChauffageEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step4_r1_WaitPositionnementGobelet)) && true)) {
+				exitSequence_main_region_Step4();
+				react_main_region__sync13();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step4_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r1_BonneTemperature_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[18]) {
+				exitSequence_main_region_Step5_r1_BonneTemperature();
+				enterSequence_main_region_Step5_r1_WaitBonneTemperature_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r1_WaitBonneTemperature_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((((true && isStateActive(State.main_region_Step5_r2_WaitPositionnementDosette)) && true) && isStateActive(State.main_region_Step5_r3_WaitEpice)) && true)) {
+				exitSequence_main_region_Step5();
+				react_main_region__sync14();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r2_PositionnementDosette_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[19]) {
+				exitSequence_main_region_Step5_r2_PositionnementDosette();
+				enterSequence_main_region_Step5_r2_WaitPositionnementDosette_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r2_WaitPositionnementDosette_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((((true && isStateActive(State.main_region_Step5_r1_WaitBonneTemperature)) && true) && isStateActive(State.main_region_Step5_r3_WaitEpice)) && true)) {
+				exitSequence_main_region_Step5();
+				react_main_region__sync14();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r3_Epice_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[20]) {
+				exitSequence_main_region_Step5_r3_Epice();
+				enterSequence_main_region_Step5_r3_WaitEpice_default();
+				main_region_Step5_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step5_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step5_r3_WaitEpice_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((((true && isStateActive(State.main_region_Step5_r1_WaitBonneTemperature)) && true) && isStateActive(State.main_region_Step5_r2_WaitPositionnementDosette)) && true)) {
+				exitSequence_main_region_Step5();
+				react_main_region__sync14();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step5_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_EcoulementEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[21]) {
+				exitSequence_main_region_EcoulementEau();
+				enterSequence_main_region_AttenteRecuperation_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step6_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step6_r1_PositionnementDosette_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[22]) {
+				exitSequence_main_region_Step6_r1_PositionnementDosette();
+				enterSequence_main_region_Step6_r1_WaitPositionnementDosette_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step6_r1_WaitPositionnementDosette_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step6_r2_WaitChauffageEau)) && true)) {
+				exitSequence_main_region_Step6();
+				react_main_region__sync16();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step6_r2_ChauffageEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[23]) {
+				exitSequence_main_region_Step6_r2_ChauffageEau();
+				enterSequence_main_region_Step6_r2_WaitChauffageEau_default();
+				main_region_Step6_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step6_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step6_r2_WaitChauffageEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step6_r1_WaitPositionnementDosette)) && true)) {
+				exitSequence_main_region_Step6();
+				react_main_region__sync16();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step6_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step7_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step7_r1_HotTemperature_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[24]) {
+				exitSequence_main_region_Step7_r1_HotTemperature();
+				enterSequence_main_region_Step7_r1_WaitHotTemperature_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step7_r1_WaitHotTemperature_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step7_r2_WaitPositionnementGobelet)) && true)) {
+				exitSequence_main_region_Step7();
+				react_main_region__sync17();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step7_r2_PositionnementGobelet_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[25]) {
+				exitSequence_main_region_Step7_r2_PositionnementGobelet();
+				enterSequence_main_region_Step7_r2_WaitPositionnementGobelet_default();
+				main_region_Step7_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step7_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step7_r2_WaitPositionnementGobelet_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step7_r1_WaitHotTemperature)) && true)) {
+				exitSequence_main_region_Step7();
+				react_main_region__sync17();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step7_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step8_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step8_r1_Sucre_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[26]) {
+				exitSequence_main_region_Step8_r1_Sucre();
+				enterSequence_main_region_Step8_r1_WaitSucre_default();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step8_r1_WaitSucre_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step8_r2_WaitEcoulementEau)) && true)) {
+				exitSequence_main_region_Step8();
+				react_main_region__sync18();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step8_r2_EcoulementEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[27]) {
+				exitSequence_main_region_Step8_r2_EcoulementEau();
+				enterSequence_main_region_Step8_r2_WaitEcoulementEau_default();
+				main_region_Step8_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step8_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step8_r2_WaitEcoulementEau_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((true && isStateActive(State.main_region_Step8_r1_WaitSucre)) && true)) {
+				exitSequence_main_region_Step8();
+				react_main_region__sync18();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_Step8_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_AttenteInfusion2_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[28]) {
+				exitSequence_main_region_AttenteInfusion2();
+				enterSequence_main_region_VerrouillagePorte_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_VerrouillagePorte_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[29]) {
+				exitSequence_main_region_VerrouillagePorte();
+				enterSequence_main_region_InjectionAzote_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_InjectionAzote_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[30]) {
+				exitSequence_main_region_InjectionAzote();
+				enterSequence_main_region_DeverrouillagePorte_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_DeverrouillagePorte_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[31]) {
+				exitSequence_main_region_DeverrouillagePorte();
+				enterSequence_main_region_AttenteRecuperation_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
 		}
 		return did_transition;
 	}

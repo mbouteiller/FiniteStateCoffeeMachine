@@ -58,6 +58,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setTemperature(long value);
 		
+		public long getEpice();
+		
+		public void setEpice(long value);
+		
 		public long getCoffeeStock();
 		
 		public void setCoffeeStock(long value);
@@ -101,6 +105,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public boolean isTea();
 		
 		public boolean isExpresso();
+		
+		public boolean isSoup();
+		
+		public boolean isIceTea();
 		
 	}
 	
