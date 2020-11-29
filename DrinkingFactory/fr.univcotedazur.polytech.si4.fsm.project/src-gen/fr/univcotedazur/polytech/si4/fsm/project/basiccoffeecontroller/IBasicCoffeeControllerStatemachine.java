@@ -34,6 +34,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public boolean isRaisedWaitTakeOrder();
 		
+		public boolean isRaisedCloseDoor();
+		
+		public boolean isRaisedOpenDoor();
+		
 		public String getChoice();
 		
 		public void setChoice(String value);
@@ -45,6 +49,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public long getMoney();
 		
 		public void setMoney(long value);
+		
+		public long getOwnCup();
+		
+		public void setOwnCup(long value);
 		
 		public long getSucre();
 		
@@ -61,6 +69,22 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public long getEpice();
 		
 		public void setEpice(long value);
+		
+		public boolean getLait();
+		
+		public void setLait(boolean value);
+		
+		public boolean getCroutons();
+		
+		public void setCroutons(boolean value);
+		
+		public boolean getSirop();
+		
+		public void setSirop(boolean value);
+		
+		public boolean getGlace();
+		
+		public void setGlace(boolean value);
 		
 		public long getCoffeeStock();
 		
@@ -96,6 +120,8 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public void onOrderVerifiedRaised();
 		public void onRestartRaised();
 		public void onWaitTakeOrderRaised();
+		public void onCloseDoorRaised();
+		public void onOpenDoorRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {

@@ -199,6 +199,42 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private boolean closeDoor;
+		
+		
+		public boolean isRaisedCloseDoor() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return closeDoor;
+			}
+		}
+		
+		protected void raiseCloseDoor() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				closeDoor = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onCloseDoorRaised();
+				}
+			}
+		}
+		
+		private boolean openDoor;
+		
+		
+		public boolean isRaisedOpenDoor() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return openDoor;
+			}
+		}
+		
+		protected void raiseOpenDoor() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				openDoor = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onOpenDoorRaised();
+				}
+			}
+		}
+		
 		private String choice;
 		
 		public synchronized String getChoice() {
@@ -238,6 +274,20 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		public void setMoney(long value) {
 			synchronized(BasicCoffeeControllerStatemachine.this) {
 				this.money = value;
+			}
+		}
+		
+		private long ownCup;
+		
+		public synchronized long getOwnCup() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return ownCup;
+			}
+		}
+		
+		public void setOwnCup(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.ownCup = value;
 			}
 		}
 		
@@ -294,6 +344,62 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		public void setEpice(long value) {
 			synchronized(BasicCoffeeControllerStatemachine.this) {
 				this.epice = value;
+			}
+		}
+		
+		private boolean lait;
+		
+		public synchronized boolean getLait() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return lait;
+			}
+		}
+		
+		public void setLait(boolean value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.lait = value;
+			}
+		}
+		
+		private boolean croutons;
+		
+		public synchronized boolean getCroutons() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return croutons;
+			}
+		}
+		
+		public void setCroutons(boolean value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.croutons = value;
+			}
+		}
+		
+		private boolean sirop;
+		
+		public synchronized boolean getSirop() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return sirop;
+			}
+		}
+		
+		public void setSirop(boolean value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.sirop = value;
+			}
+		}
+		
+		private boolean glace;
+		
+		public synchronized boolean getGlace() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return glace;
+			}
+		}
+		
+		public void setGlace(boolean value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.glace = value;
 			}
 		}
 		
@@ -384,6 +490,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		orderVerified = false;
 		restart = false;
 		waitTakeOrder = false;
+		closeDoor = false;
+		openDoor = false;
 		}
 		
 	}
@@ -498,6 +606,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		
 		sCInterface.setMoney(0);
 		
+		sCInterface.setOwnCup(0);
+		
 		sCInterface.setSucre(0);
 		
 		sCInterface.setTaille(0);
@@ -505,6 +615,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setTemperature(0);
 		
 		sCInterface.setEpice(-1);
+		
+		sCInterface.setLait(false);
+		
+		sCInterface.setCroutons(false);
+		
+		sCInterface.setSirop(false);
+		
+		sCInterface.setGlace(false);
 		
 		sCInterface.setCoffeeStock(0);
 		
@@ -994,6 +1112,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		return sCInterface.isRaisedWaitTakeOrder();
 	}
 	
+	public synchronized boolean isRaisedCloseDoor() {
+		return sCInterface.isRaisedCloseDoor();
+	}
+	
+	public synchronized boolean isRaisedOpenDoor() {
+		return sCInterface.isRaisedOpenDoor();
+	}
+	
 	public synchronized String getChoice() {
 		return sCInterface.getChoice();
 	}
@@ -1016,6 +1142,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public synchronized void setMoney(long value) {
 		sCInterface.setMoney(value);
+	}
+	
+	public synchronized long getOwnCup() {
+		return sCInterface.getOwnCup();
+	}
+	
+	public synchronized void setOwnCup(long value) {
+		sCInterface.setOwnCup(value);
 	}
 	
 	public synchronized long getSucre() {
@@ -1048,6 +1182,38 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public synchronized void setEpice(long value) {
 		sCInterface.setEpice(value);
+	}
+	
+	public synchronized boolean getLait() {
+		return sCInterface.getLait();
+	}
+	
+	public synchronized void setLait(boolean value) {
+		sCInterface.setLait(value);
+	}
+	
+	public synchronized boolean getCroutons() {
+		return sCInterface.getCroutons();
+	}
+	
+	public synchronized void setCroutons(boolean value) {
+		sCInterface.setCroutons(value);
+	}
+	
+	public synchronized boolean getSirop() {
+		return sCInterface.getSirop();
+	}
+	
+	public synchronized void setSirop(boolean value) {
+		sCInterface.setSirop(value);
+	}
+	
+	public synchronized boolean getGlace() {
+		return sCInterface.getGlace();
+	}
+	
+	public synchronized void setGlace(boolean value) {
+		sCInterface.setGlace(value);
 	}
 	
 	public synchronized long getCoffeeStock() {
@@ -3238,7 +3404,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((((!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1) && isStateActive(State.main_region_Main_payment_Paid)) && sCInterface.getMoney()>=sCInterface.getPrice())) {
+			if ((((!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1) && isStateActive(State.main_region_Main_payment_Paid)) && sCInterface.getMoney()>=(sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))))) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {
@@ -3252,7 +3418,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((sCInterface.getMoney()>=sCInterface.getPrice() && isStateActive(State.main_region_Main_choice_Chosen)) && (!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1))) {
+			if (((sCInterface.getMoney()>=(sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))) && isStateActive(State.main_region_Main_choice_Chosen)) && (!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1))) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {
@@ -4253,6 +4419,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		if (did_transition==false) {
+			sCInterface.raiseCloseDoor();
+			
 			did_transition = react();
 		}
 		return did_transition;
@@ -4289,6 +4457,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		if (did_transition==false) {
+			sCInterface.raiseOpenDoor();
+			
 			did_transition = react();
 		}
 		return did_transition;

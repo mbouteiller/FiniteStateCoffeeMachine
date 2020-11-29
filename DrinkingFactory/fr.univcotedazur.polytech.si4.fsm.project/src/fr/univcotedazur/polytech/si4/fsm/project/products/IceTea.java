@@ -6,6 +6,10 @@ public class IceTea extends Product {
         super("icetea", 50);
     }
 
+    public IceTea(int price) {
+        super("icetea", price);
+    }
+
     @Override
     public String toString() {
         return "icetea";

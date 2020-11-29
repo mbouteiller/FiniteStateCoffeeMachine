@@ -11,7 +11,14 @@ public abstract class Product {
 
     public abstract String toString();
 
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
     public boolean isSoup() {
         return this.name.equals("soup");
+    };
+    public boolean isIceTea() {
+        return this.name.equals("icetea");
     };
 }

@@ -38,13 +38,13 @@ public class DrinkFactoryMachine extends JFrame {
 	protected Product choice, finalChoice;
 	protected final Product NONE = new None();
 	protected long money;
-	protected int size, temperature, nbSugar, nbEpice;
+	protected int size, temperature, nbSugar;
 	protected int change;
 	protected boolean recipeStarted = false, ownCup = false;
 	protected String consoleMessage;
-	JLabel messagesToUser, lblChange, lblSugar;
+	JLabel messagesToUser, lblChange, lblSugar, lblTemperature;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
-	Timer timer, timerClean, timerChange;
+	Timer timer;
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
@@ -216,7 +216,6 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
 		icedTeaButton.addActionListener(actionEvent -> updateChoice(new IceTea()));
-		icedTeaButton.setEnabled(false);
 		contentPane.add(icedTeaButton);
 
 		progressBar = new JProgressBar();
@@ -256,7 +255,22 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setForeground(Color.WHITE);
 		sizeSlider.setMinorTickSpacing(1);
 		sizeSlider.setMaximum(2);
-		sizeSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
+		sizeSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent changeEvent) {
+				theFSM.raiseAny();
+				if (choice.isIceTea()) {
+					if (sizeSlider.getValue() == 0) {
+						choice = new IceTea(50);
+						theFSM.setPrice(choice.price);
+					}
+					if (sizeSlider.getValue() == 1) {
+						choice = new IceTea(75);
+						theFSM.setPrice(choice.price);
+					}
+				}
+			}
+		});
 		sizeSlider.setMajorTickSpacing(1);
 		sizeSlider.setBounds(301, 125, 200, 36);
 		contentPane.add(sizeSlider);
@@ -270,7 +284,7 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setPaintTicks(true);
 		temperatureSlider.setMajorTickSpacing(1);
 		temperatureSlider.setMaximum(3);
-		temperatureSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
+		temperatureSlider.addChangeListener((changeEvent -> theFSM.raiseAny()));
 		temperatureSlider.setBounds(301, 188, 200, 54);
 
 		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
@@ -299,7 +313,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblSize.setBounds(380, 113, 44, 15);
 		contentPane.add(lblSize);
 
-		JLabel lblTemperature = new JLabel("Temperature");
+		lblTemperature = new JLabel("Temperature");
 		lblTemperature.setForeground(Color.WHITE);
 		lblTemperature.setBackground(Color.DARK_GRAY);
 		lblTemperature.setHorizontalAlignment(SwingConstants.CENTER);
@@ -389,27 +403,32 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				BufferedImage myPicture = null;
-				try {
-					ownCup = true;
-					myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
-				} catch (IOException ee) {
-					ee.printStackTrace();
+				if (!recipeStarted) {
+					try {
+						theFSM.setOwnCup(1);
+						myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
+					} catch (IOException ee) {
+						ee.printStackTrace();
+					}
+					labelForPictures.setIcon(new ImageIcon(myPicture));
 				}
-				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
 		
 		labelForPictures.addMouseListener(new MouseAdapter() {
 			public void mouseClicked (MouseEvent e) {
-				theFSM.raiseTakeOrder();
-				ownCup = false;
 				BufferedImage myPicture = null;
-				try {
-					myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
-				} catch (IOException ee) {
-					ee.printStackTrace();
+				if (!recipeStarted) {
+					try {
+						theFSM.raiseTakeOrder();
+						theFSM.setOwnCup(0);
+						myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+
+					} catch (IOException ee) {
+						ee.printStackTrace();
+					}
+					labelForPictures.setIcon(new ImageIcon(myPicture));
 				}
-				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
 		
@@ -429,11 +448,12 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	void makeDrink() {
 		System.out.println(finalChoice.price);
-		money-=finalChoice.price;
+		money-=finalChoice.price - theFSM.getOwnCup()*10;
 		theFSM.setMoney(money);
+		theFSM.raiseAny();
+		//TODO supprimer ce timer une fois la progress bar faite
 		timer=new Timer(10, ready);
 		timer.start();
-		theFSM.raiseAny();
 	}
 
 	ActionListener ready = new ActionListener() {
@@ -452,28 +472,6 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 	};
 
-	ActionListener readyToRestart = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			timerClean.stop();
-		}
-	};
-
-	void timerChange() {
-		timerChange = new Timer(2000,changeReset);
-		timerChange.restart();
-	}
-
-	ActionListener changeReset = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			lblChange.setText("Change : " + change);
-			timerChange.stop();
-		}
-	};
-
-//	###################################################################
-
 	void updateChoice(Product p) {
 		choice = p;
 		theFSM.setPrice(p.price);
@@ -484,6 +482,20 @@ public class DrinkFactoryMachine extends JFrame {
 
 		if (choice.isSoup()) {
 			lblSugar.setText("Spice");
+		}
+		if (choice.isIceTea()) {
+			Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
+			temperatureTable.put(0, new JLabel("2°C"));
+			temperatureTable.put(1, new JLabel("6°C"));
+			temperatureTable.put(2, new JLabel("10°C"));
+			temperatureTable.put(3, new JLabel("15°C"));
+			for (JLabel l : temperatureTable.values()) {
+				l.setForeground(Color.WHITE);
+			}
+			temperatureSlider.setLabelTable(temperatureTable);
+
+			sizeSlider.setMaximum(1);
+			sizeSlider.setValue(0);
 		}
 
 		theFSM.raiseChose();
@@ -545,14 +557,5 @@ public class DrinkFactoryMachine extends JFrame {
 
 		theFSM.setEpice(-1);
 		lblSugar.setText("Sugar");
-	}
-	
-	void takeCup() {
-		theFSM.raiseTakeOrder();
-	}
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		t.stop();
 	}
 }

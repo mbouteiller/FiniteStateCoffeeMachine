@@ -39,6 +39,12 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     }
 
     @Override
+    public void onRestartRaised() {
+        System.out.println("restart");
+        theDfm.reset();
+    }
+
+    @Override
     public void onOrderVerifiedRaised() {
         theDfm.recipeStarted = true;
         theDfm.finalChoice = theDfm.choice;
@@ -48,26 +54,35 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         theDfm.nbSugar = theDfm.sugarSlider.getValue();
         theDfm.updateSliders();
         System.out.println(theDfm.ownCup);
-
-        if (theDfm.ownCup) {
-            theDfm.change += (theDfm.money - theDfm.finalChoice.price) + 10;
-        }
-        else {
-            theDfm.change += (theDfm.money - theDfm.finalChoice.price);
-        }
-    }
-
-    @Override
-    public void onRestartRaised() {
-        System.out.println("restart");
-        theDfm.recipeStarted = false;
-        theDfm.reset();
     }
 
     @Override
     public void onWaitTakeOrderRaised() {
+        theDfm.recipeStarted = false;
         System.out.println("You can retrieve your drink");
         theDfm.messagesToUser.setText("<html>Please retrieve<br>your drink");
+    }
+
+    @Override
+    public void onCloseDoorRaised() {
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("./picts/closed.jpg"));
+        } catch (IOException ee) {
+            ee.printStackTrace();
+        }
+        theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
+    }
+
+    @Override
+    public void onOpenDoorRaised() {
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
+        } catch (IOException ee) {
+            ee.printStackTrace();
+        }
+        theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
     }
 
     @Override
