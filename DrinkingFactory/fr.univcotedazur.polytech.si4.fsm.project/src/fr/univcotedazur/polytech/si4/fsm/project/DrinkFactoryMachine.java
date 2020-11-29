@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
@@ -37,11 +38,11 @@ public class DrinkFactoryMachine extends JFrame {
 	protected Product choice, finalChoice;
 	protected final Product NONE = new None();
 	protected long money;
-	protected int size, temperature, nbSugar;
+	protected int size, temperature, nbSugar, nbEpice;
 	protected int change;
 	protected boolean recipeStarted = false, ownCup = false;
 	protected String consoleMessage;
-	JLabel messagesToUser, lblChange;
+	JLabel messagesToUser, lblChange, lblSugar;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
 	Timer timer, timerClean, timerChange;
 	float progressBarValue;
@@ -50,7 +51,6 @@ public class DrinkFactoryMachine extends JFrame {
 	int coffeeStockInt, teaStockInt, expressoStockInt, soupStockInt, iceTeaStockInt;
 	JButton coffeeButton, teaButton, expressoButton, soupButton, icedTeaButton;
 	JLabel labelForPictures;
-	
 
 	Thread t;
 	
@@ -152,7 +152,8 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.setCoffeeStock(coffeeStockInt);
 		theFSM.setTeaStock(teaStockInt);
 		theFSM.setExpressoStock(expressoStockInt);
-		
+		theFSM.setSoupStock(soupStockInt);
+		theFSM.setIceTeaStock(iceTeaStockInt);
 
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
@@ -203,15 +204,14 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(actionEvent -> updateChoice(new Tea()));
 		contentPane.add(teaButton);
 
-		soupButton = new JButton("Soup");
+		soupButton = new JButton(String.valueOf(soupStockInt) + " Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
 		soupButton.addActionListener(actionEvent -> updateChoice(new Soup()));
-		soupButton.setEnabled(false);
 		contentPane.add(soupButton);
 
-		icedTeaButton = new JButton("Iced Tea");
+		icedTeaButton = new JButton(String.valueOf(iceTeaStockInt) + " Ice Tea");
 		icedTeaButton.setForeground(Color.WHITE);
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
@@ -236,7 +236,15 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setMinorTickSpacing(1);
 		sugarSlider.setMajorTickSpacing(1);
 		sugarSlider.setMaximum(4);
-		sugarSlider.addChangeListener(ChangeListener -> theFSM.raiseAny());
+		sugarSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent changeEvent) {
+				theFSM.raiseAny();
+				if (choice.isSoup()) {
+					theFSM.setEpice(sugarSlider.getValue());
+				}
+			}
+		});
 		sugarSlider.setBounds(301, 51, 200, 36);
 		contentPane.add(sugarSlider);
 
@@ -277,7 +285,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 		contentPane.add(temperatureSlider);
 
-		JLabel lblSugar = new JLabel("Sugar");
+		lblSugar = new JLabel("Sugar");
 		lblSugar.setForeground(Color.WHITE);
 		lblSugar.setBackground(Color.DARK_GRAY);
 		lblSugar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -473,6 +481,11 @@ public class DrinkFactoryMachine extends JFrame {
 			updateConsole();
 		}
 		theFSM.setChoice(p.name);
+
+		if (choice.isSoup()) {
+			lblSugar.setText("Spice");
+		}
+
 		theFSM.raiseChose();
 		theFSM.raiseAny();
 	}
@@ -516,9 +529,22 @@ public class DrinkFactoryMachine extends JFrame {
 		if(expressoStockInt==0) {
 			expressoButton.setEnabled(false);
 		}
+		soupStockInt = (int)theFSM.getSoupStock();
+		soupButton.setText(String.valueOf(soupStockInt) + " Soup");
+		if(soupStockInt==0) {
+			soupButton.setEnabled(false);
+		}
+		iceTeaStockInt = (int)theFSM.getIceTeaStock();
+		icedTeaButton.setText(String.valueOf(iceTeaStockInt) + " Ice Tea");
+		if(iceTeaStockInt==0) {
+			icedTeaButton.setEnabled(false);
+		}
 
 		money = 0;
 		theFSM.setMoney(0);
+
+		theFSM.setEpice(-1);
+		lblSugar.setText("Sugar");
 	}
 	
 	void takeCup() {

@@ -504,7 +504,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		
 		sCInterface.setTemperature(0);
 		
-		sCInterface.setEpice(0);
+		sCInterface.setEpice(-1);
 		
 		sCInterface.setCoffeeStock(0);
 		
@@ -3238,7 +3238,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((true && isStateActive(State.main_region_Main_payment_Paid)) && sCInterface.getMoney()>=sCInterface.getPrice())) {
+			if ((((!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1) && isStateActive(State.main_region_Main_payment_Paid)) && sCInterface.getMoney()>=sCInterface.getPrice())) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {
@@ -3252,7 +3252,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((sCInterface.getMoney()>=sCInterface.getPrice() && isStateActive(State.main_region_Main_choice_Chosen)) && true)) {
+			if (((sCInterface.getMoney()>=sCInterface.getPrice() && isStateActive(State.main_region_Main_choice_Chosen)) && (!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1))) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {

@@ -7,11 +7,6 @@ public class Tea extends Product {
     }
 
     @Override
-    int prepareTime(int temperature, int size) {
-        return 0;
-    }
-
-    @Override
     public String toString() {
         return "tea";
     }

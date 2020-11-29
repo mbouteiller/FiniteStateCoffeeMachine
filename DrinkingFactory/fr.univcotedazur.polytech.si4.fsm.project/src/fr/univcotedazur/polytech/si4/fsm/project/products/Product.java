@@ -9,6 +9,9 @@ public abstract class Product {
         this.price = price;
     }
 
-    abstract int prepareTime(int temperature, int size);
     public abstract String toString();
+
+    public boolean isSoup() {
+        return this.name.equals("soup");
+    };
 }
