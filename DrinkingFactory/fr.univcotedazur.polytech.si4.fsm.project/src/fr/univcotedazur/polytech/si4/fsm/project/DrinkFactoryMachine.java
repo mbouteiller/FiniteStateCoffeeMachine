@@ -14,18 +14,9 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -40,10 +31,11 @@ public class DrinkFactoryMachine extends JFrame {
 	protected long money;
 	protected int size, temperature, nbSugar;
 	protected int change;
-	protected boolean recipeStarted = false, ownCup = false;
+	protected boolean recipeStarted = false;
 	protected String consoleMessage;
 	JLabel messagesToUser, lblChange, lblSugar, lblTemperature;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
+	JCheckBox checkLait, checkCroutons, checkSirop, checkGlace;
 	Timer timer;
 	float progressBarValue;
 	int stopTimer;
@@ -173,8 +165,80 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
 		messagesToUser.setToolTipText("message to the user");
 		messagesToUser.setBackground(Color.WHITE);
-		messagesToUser.setBounds(126, 34, 165, 175);
+		messagesToUser.setBounds(126, 34, 165, 35);
 		contentPane.add(messagesToUser);
+
+		checkLait = new JCheckBox();
+		checkLait.setText("Nuage de lait");
+		checkLait.setBounds(126, 100, 165, 25);
+		checkLait.setBackground(Color.DARK_GRAY);
+		checkLait.setForeground(Color.WHITE);
+		checkLait.addActionListener(e -> {
+			if (checkLait.isSelected()) {
+				theFSM.setLait(1);
+			}
+			else {
+				theFSM.setLait(0);
+			}
+
+		});
+		checkLait.setVisible(false);
+		checkLait.setEnabled(false);
+		contentPane.add(checkLait);
+
+		checkCroutons = new JCheckBox();
+		checkCroutons.setText("Croutons");
+		checkCroutons.setBounds(126, 125, 165, 25);
+		checkCroutons.setBackground(Color.DARK_GRAY);
+		checkCroutons.setForeground(Color.WHITE);
+		checkCroutons.addActionListener(e -> {
+			if (checkCroutons.isSelected()) {
+				theFSM.setCroutons(1);
+			}
+			else {
+				theFSM.setCroutons(0);
+			}
+		});
+		checkCroutons.setVisible(false);
+		checkCroutons.setEnabled(false);
+		contentPane.add(checkCroutons);
+
+		checkSirop = new JCheckBox();
+		checkSirop.setText("Sirop d'érable");
+		checkSirop.setBounds(126, 150, 165, 25);
+		checkSirop.setBackground(Color.DARK_GRAY);
+		checkSirop.setForeground(Color.WHITE);
+		checkSirop.addActionListener(e -> {
+			if (checkSirop.isSelected()) {
+				sugarSlider.setVisible(false);
+				theFSM.setSirop(1);
+			}
+			else {
+				theFSM.setSirop(0);
+				sugarSlider.setVisible(true);
+			}
+		});
+		checkSirop.setVisible(false);
+		checkSirop.setEnabled(false);
+		contentPane.add(checkSirop);
+
+		checkGlace = new JCheckBox();
+		checkGlace.setText("Glace vanille");
+		checkGlace.setBounds(126, 175, 165, 25);
+		checkGlace.setBackground(Color.DARK_GRAY);
+		checkGlace.setForeground(Color.WHITE);
+		checkGlace.addActionListener(e -> {
+			if (checkGlace.isSelected()) {
+				theFSM.setGlace(1);
+			}
+			else {
+				theFSM.setGlace(0);
+			}
+
+		});
+		checkGlace.setVisible(false);
+		checkGlace.setEnabled(false);
+		contentPane.add(checkGlace);
 
 		JLabel lblCoins = new JLabel("Coins");
 		lblCoins.setForeground(Color.WHITE);
@@ -310,7 +374,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblSize.setForeground(Color.WHITE);
 		lblSize.setBackground(Color.DARK_GRAY);
 		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSize.setBounds(380, 113, 44, 15);
+		lblSize.setBounds(380, 105, 44, 15);
 		contentPane.add(lblSize);
 
 		lblTemperature = new JLabel("Temperature");
@@ -473,33 +537,35 @@ public class DrinkFactoryMachine extends JFrame {
 	};
 
 	void updateChoice(Product p) {
-		choice = p;
-		theFSM.setPrice(p.price);
 		if (!recipeStarted) {
+			choice = p;
+			theFSM.setPrice(p.price);
+
 			updateConsole();
-		}
-		theFSM.setChoice(p.name);
 
-		if (choice.isSoup()) {
-			lblSugar.setText("Spice");
-		}
-		if (choice.isIceTea()) {
-			Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
-			temperatureTable.put(0, new JLabel("2°C"));
-			temperatureTable.put(1, new JLabel("6°C"));
-			temperatureTable.put(2, new JLabel("10°C"));
-			temperatureTable.put(3, new JLabel("15°C"));
-			for (JLabel l : temperatureTable.values()) {
-				l.setForeground(Color.WHITE);
+			theFSM.setChoice(p.name);
+
+			if (choice.isSoup()) {
+				lblSugar.setText("Spice");
 			}
-			temperatureSlider.setLabelTable(temperatureTable);
+			if (choice.isIceTea()) {
+				Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
+				temperatureTable.put(0, new JLabel("2°C"));
+				temperatureTable.put(1, new JLabel("6°C"));
+				temperatureTable.put(2, new JLabel("10°C"));
+				temperatureTable.put(3, new JLabel("15°C"));
+				for (JLabel l : temperatureTable.values()) {
+					l.setForeground(Color.WHITE);
+				}
+				temperatureSlider.setLabelTable(temperatureTable);
 
-			sizeSlider.setMaximum(1);
-			sizeSlider.setValue(0);
+				sizeSlider.setMaximum(1);
+				sizeSlider.setValue(0);
+			}
+
+			theFSM.raiseChose();
+			theFSM.raiseAny();
 		}
-
-		theFSM.raiseChose();
-		theFSM.raiseAny();
 	}
 
 	void updateMoney(long amount) {
@@ -513,15 +579,64 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void updateSliders() {
-		theFSM.setSucre(this.nbSugar);
-		theFSM.setTaille(this.size);
-		theFSM.setTemperature(this.temperature);
+		if (!recipeStarted) {
+			theFSM.setSucre(this.nbSugar);
+			theFSM.setTaille(this.size);
+			theFSM.setTemperature(this.temperature);
+		}
+	}
+
+	public int computeChange() {
+		return (int)(theFSM.getMoney()
+				- (theFSM.getPrice()
+				- (10*theFSM.getOwnCup())
+				+ (10*theFSM.getLait())
+				+ (30*theFSM.getCroutons())
+				+ (10*theFSM.getSirop())
+				+ (60*theFSM.getGlace())));
+	}
+
+	void hideOptions() {
+		checkLait.setVisible(false);
+		checkLait.setEnabled(false);
+		checkLait.setSelected(false);
+
+		checkCroutons.setEnabled(false);
+		checkCroutons.setVisible(false);
+		checkCroutons.setSelected(false);
+
+		checkGlace.setVisible(false);
+		checkGlace.setVisible(false);
+		checkGlace.setSelected(false);
+
+		checkSirop.setVisible(false);
+		checkSirop.setEnabled(false);
+		checkSirop.setSelected(false);
+
+		theFSM.setLait(0);
+		theFSM.setSirop(0);
+		theFSM.setCroutons(0);
+		theFSM.setGlace(0);
 	}
 
 	void reset() {
 		sugarSlider.setValue(1);
+
+		sizeSlider.setMaximum(2);
 		sizeSlider.setValue(1);
+
 		temperatureSlider.setValue(2);
+		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
+		temperatureTable.put(0, new JLabel("20°C"));
+		temperatureTable.put(1, new JLabel("35°C"));
+		temperatureTable.put(2, new JLabel("60°C"));
+		temperatureTable.put(3, new JLabel("85°C"));
+		for (JLabel l : temperatureTable.values()) {
+			l.setForeground(Color.WHITE);
+		}
+		temperatureSlider.setLabelTable(temperatureTable);
+
+		hideOptions();
 
 		consoleMessage = "<html>Welcome<br>You may take order";
 		messagesToUser.setText(consoleMessage);
@@ -557,5 +672,9 @@ public class DrinkFactoryMachine extends JFrame {
 
 		theFSM.setEpice(-1);
 		lblSugar.setText("Sugar");
+	}
+
+	public boolean hasOwnCup() {
+		return theFSM.getOwnCup() == 1;
 	}
 }

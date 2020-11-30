@@ -16,25 +16,93 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         theDfm = dfm;
     }
 
+
+    @Override
+    public void onUpdateOptionsRaised() {
+        if (!theDfm.recipeStarted) {
+            theDfm.hideOptions();
+
+            theDfm.sugarSlider.setVisible(true);
+
+            switch (theDfm.choice.name) {
+                case "coffee":
+                    theDfm.checkLait.setVisible(true);
+                    theDfm.checkLait.setEnabled(true);
+
+                    theDfm.checkSirop.setVisible(true);
+                    theDfm.checkSirop.setEnabled(true);
+
+                    theDfm.checkGlace.setVisible(true);
+                    theDfm.checkGlace.setEnabled(true);
+
+                    theDfm.lblSugar.setText("Sugar");
+
+                    theDfm.sizeSlider.setMaximum(2);
+                    theDfm.sizeSlider.setValue(1);
+                    break;
+
+                case "tea":
+                    theDfm.checkLait.setVisible(true);
+                    theDfm.checkLait.setEnabled(true);
+
+                    theDfm.checkSirop.setVisible(true);
+                    theDfm.checkSirop.setEnabled(true);
+
+                    theDfm.lblSugar.setText("Sugar");
+
+                    theDfm.sizeSlider.setMaximum(2);
+                    theDfm.sizeSlider.setValue(1);
+                    break;
+
+                case "expresso":
+                    theDfm.checkSirop.setVisible(true);
+                    theDfm.checkSirop.setEnabled(true);
+
+                    theDfm.checkGlace.setVisible(true);
+                    theDfm.checkGlace.setEnabled(true);
+
+                    theDfm.lblSugar.setText("Sugar");
+
+                    theDfm.sizeSlider.setMaximum(2);
+                    theDfm.sizeSlider.setValue(1);
+                    break;
+
+                case "soup":
+                    theDfm.checkCroutons.setVisible(true);
+                    theDfm.checkCroutons.setEnabled(true);
+
+                    theDfm.sizeSlider.setMaximum(2);
+                    theDfm.sizeSlider.setValue(1);
+                    break;
+
+                case "icetea":
+                    theDfm.checkSirop.setVisible(true);
+                    theDfm.checkSirop.setEnabled(true);
+
+                    theDfm.lblSugar.setText("Sugar");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     @Override
     public void onRefundRaised() {
     	theDfm.messagesToUser.setText("Abandon de la commande recuperez votre monnaie");
-    	theDfm.change = (int) theDfm.money;
-        theDfm.lblChange.setText(String.valueOf(theDfm.change));
+        theDfm.lblChange.setText(String.valueOf(theDfm.money));
         theDfm.reset();
     }
 
     @Override
     public void onGiveChangeRaised() {
-        theDfm.change = (int) theDfm.money;
         theDfm.lblChange.setText(String.valueOf(theDfm.change));
     }
 
     @Override
     public void onTimesupRaised() {
-        System.out.println("Commande annulée pour cause d'inactivité");
-        theDfm.change = (int) theDfm.money;
-        theDfm.lblChange.setText(String.valueOf(theDfm.change));
+        theDfm.messagesToUser.setText("Commande annulée pour cause d'inactivité");
+        theDfm.lblChange.setText(String.valueOf(theDfm.money));
         theDfm.reset();
     }
 
@@ -47,13 +115,17 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onOrderVerifiedRaised() {
         theDfm.recipeStarted = true;
+        theDfm.hideOptions();
+
         theDfm.finalChoice = theDfm.choice;
         theDfm.choice = theDfm.NONE;
+
         theDfm.size = theDfm.sizeSlider.getValue();
         theDfm.temperature = theDfm.temperatureSlider.getValue();
         theDfm.nbSugar = theDfm.sugarSlider.getValue();
         theDfm.updateSliders();
-        System.out.println(theDfm.ownCup);
+
+        theDfm.change = theDfm.computeChange();
     }
 
     @Override
@@ -93,14 +165,15 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         choiceDescription += getSizeString();
         choiceDescription += theDfm.finalChoice;
         choiceDescription += "<br> with " + theDfm.nbSugar + " pieces of sugar";
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
-		} catch (IOException ee) {
-			ee.printStackTrace();
-		}
-		theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
-
+        if (!theDfm.hasOwnCup()) {
+            BufferedImage myPicture = null;
+            try {
+                myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
+            theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
+        }
         System.out.println("lets go le " + theDfm.finalChoice + " lets go");
 
         theDfm.messagesToUser.setText(choiceDescription);

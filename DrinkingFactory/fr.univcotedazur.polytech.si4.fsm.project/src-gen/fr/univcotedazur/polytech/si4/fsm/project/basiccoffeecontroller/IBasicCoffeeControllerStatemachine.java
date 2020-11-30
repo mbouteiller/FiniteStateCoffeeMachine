@@ -20,6 +20,8 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void raiseFinish();
 		
+		public boolean isRaisedUpdateOptions();
+		
 		public boolean isRaisedRefund();
 		
 		public boolean isRaisedGiveChange();
@@ -70,21 +72,21 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setEpice(long value);
 		
-		public boolean getLait();
+		public long getLait();
 		
-		public void setLait(boolean value);
+		public void setLait(long value);
 		
-		public boolean getCroutons();
+		public long getCroutons();
 		
-		public void setCroutons(boolean value);
+		public void setCroutons(long value);
 		
-		public boolean getSirop();
+		public long getSirop();
 		
-		public void setSirop(boolean value);
+		public void setSirop(long value);
 		
-		public boolean getGlace();
+		public long getGlace();
 		
-		public void setGlace(boolean value);
+		public void setGlace(long value);
 		
 		public long getCoffeeStock();
 		
@@ -113,6 +115,7 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 	
 	public interface SCInterfaceListener {
 	
+		public void onUpdateOptionsRaised();
 		public void onRefundRaised();
 		public void onGiveChangeRaised();
 		public void onStartRecipeRaised();
