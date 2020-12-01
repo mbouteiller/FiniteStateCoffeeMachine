@@ -88,6 +88,10 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setGlace(long value);
 		
+		public boolean getNfc();
+		
+		public void setNfc(boolean value);
+		
 		public long getCoffeeStock();
 		
 		public void setCoffeeStock(long value);

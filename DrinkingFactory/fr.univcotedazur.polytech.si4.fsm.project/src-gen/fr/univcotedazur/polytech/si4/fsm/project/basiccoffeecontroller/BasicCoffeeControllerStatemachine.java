@@ -421,6 +421,20 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private boolean nfc;
+		
+		public synchronized boolean getNfc() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return nfc;
+			}
+		}
+		
+		public void setNfc(boolean value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.nfc = value;
+			}
+		}
+		
 		private long coffeeStock;
 		
 		public synchronized long getCoffeeStock() {
@@ -650,6 +664,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setSirop(0);
 		
 		sCInterface.setGlace(0);
+		
+		sCInterface.setNfc(false);
 		
 		sCInterface.setCoffeeStock(0);
 		
@@ -1285,6 +1301,14 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public synchronized void setGlace(long value) {
 		sCInterface.setGlace(value);
+	}
+	
+	public synchronized boolean getNfc() {
+		return sCInterface.getNfc();
+	}
+	
+	public synchronized void setNfc(boolean value) {
+		sCInterface.setNfc(value);
 	}
 	
 	public synchronized long getCoffeeStock() {
@@ -3873,7 +3897,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((((!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1) && isStateActive(State.main_region_Main_payment_Paid)) && sCInterface.getMoney()>=(((((sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))) + ((10 * sCInterface.getLait()))) + ((30 * sCInterface.getCroutons()))) + ((10 * sCInterface.getSirop()))) + ((60 * sCInterface.getGlace()))))) {
+			if ((((!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1) && isStateActive(State.main_region_Main_payment_Paid)) && ((sCInterface.getMoney()>=(((((sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))) + ((10 * sCInterface.getLait()))) + ((30 * sCInterface.getCroutons()))) + ((10 * sCInterface.getSirop()))) + ((60 * sCInterface.getGlace())))) || sCInterface.getNfc()))) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {
@@ -3903,7 +3927,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((sCInterface.getMoney()>=(((((sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))) + ((10 * sCInterface.getLait()))) + ((30 * sCInterface.getCroutons()))) + ((10 * sCInterface.getSirop()))) + ((60 * sCInterface.getGlace()))) && isStateActive(State.main_region_Main_choice_Chosen)) && (!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1))) {
+			if (((((sCInterface.getMoney()>=(((((sCInterface.getPrice() - ((10 * sCInterface.getOwnCup()))) + ((10 * sCInterface.getLait()))) + ((30 * sCInterface.getCroutons()))) + ((10 * sCInterface.getSirop()))) + ((60 * sCInterface.getGlace())))) || sCInterface.getNfc()) && isStateActive(State.main_region_Main_choice_Chosen)) && (!sCInterface.operationCallback.isSoup() || sCInterface.getEpice()!=-1))) {
 				exitSequence_main_region_Main();
 				react_main_region__sync0();
 			} else {

@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.IBasicCoffeeControllerStatemachine.SCInterfaceListener;
+import fr.univcotedazur.polytech.si4.fsm.project.user.Info;
 
 public class CoffeeMachineControlerInterfaceImplementation implements SCInterfaceListener {
 
@@ -115,7 +116,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onOrderVerifiedRaised() {
         theDfm.recipeStarted = true;
-        theDfm.hideOptions();
 
         theDfm.finalChoice = theDfm.choice;
         theDfm.choice = theDfm.NONE;
@@ -126,6 +126,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         theDfm.updateSliders();
 
         theDfm.change = theDfm.computeChange();
+        theDfm.hideOptions();
     }
 
     @Override
@@ -175,6 +176,26 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
             theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
         }
         System.out.println("lets go le " + theDfm.finalChoice + " lets go");
+
+        if (theDfm.nfcFree) {
+            Info currentInfo = theDfm.nfcMap.get(theDfm.nfcInput.getText().hashCode());
+            int priceWithDiscount = theDfm.computePrice() - currentInfo.getSum()/10; ;
+
+            if (priceWithDiscount <= 0) {
+                choiceDescription += "<br> Price = 0€";
+            }
+            else {
+                choiceDescription += "<br> Price = " + priceWithDiscount/100 + "," + (priceWithDiscount-(priceWithDiscount/100)) + "€";
+            }
+
+            currentInfo.setSum(0);
+            currentInfo.setCount(0);
+            theDfm.nfcFree = false;
+        }
+        else {
+            choiceDescription += "<br> Price = " + theDfm.computePrice()/100 + "," + (theDfm.computePrice()-(theDfm.computePrice()/100)) + "€";
+        }
+
 
         theDfm.messagesToUser.setText(choiceDescription);
         theDfm.makeDrink();

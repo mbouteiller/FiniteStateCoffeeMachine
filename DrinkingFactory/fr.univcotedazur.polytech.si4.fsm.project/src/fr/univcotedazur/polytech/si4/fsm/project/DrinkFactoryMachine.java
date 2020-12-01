@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
@@ -23,6 +24,7 @@ import javax.swing.event.ChangeListener;
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.BasicCoffeeControllerStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.basiccoffeecontroller.IBasicCoffeeControllerStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.products.*;
+import fr.univcotedazur.polytech.si4.fsm.project.user.Info;
 
 public class DrinkFactoryMachine extends JFrame {
 	protected static BasicCoffeeControllerStatemachine theFSM;
@@ -31,11 +33,13 @@ public class DrinkFactoryMachine extends JFrame {
 	protected long money;
 	protected int size, temperature, nbSugar;
 	protected int change;
-	protected boolean recipeStarted = false;
+	protected boolean recipeStarted = false, nfcFree = false;
 	protected String consoleMessage;
+	protected HashMap<Integer, Info> nfcMap = new HashMap<>();
 	JLabel messagesToUser, lblChange, lblSugar, lblTemperature;
 	JSlider sizeSlider, temperatureSlider, sugarSlider;
 	JCheckBox checkLait, checkCroutons, checkSirop, checkGlace;
+	JTextField nfcInput;
 	Timer timer;
 	float progressBarValue;
 	int stopTimer;
@@ -165,7 +169,7 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
 		messagesToUser.setToolTipText("message to the user");
 		messagesToUser.setBackground(Color.WHITE);
-		messagesToUser.setBounds(126, 34, 165, 35);
+		messagesToUser.setBounds(126, 34, 165, 70);
 		contentPane.add(messagesToUser);
 
 		checkLait = new JCheckBox();
@@ -408,21 +412,44 @@ public class DrinkFactoryMachine extends JFrame {
 		money10centsButton.addActionListener(actionEvent -> updateMoney(10));
 		panel.add(money10centsButton);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.DARK_GRAY);
-		panel_1.setBounds(538, 154, 96, 40);
-		contentPane.add(panel_1);
-
-		JButton nfcBiiiipButton = new JButton("biiip");
-		nfcBiiiipButton.setForeground(Color.WHITE);
-		nfcBiiiipButton.setBackground(Color.DARK_GRAY);
-		panel_1.add(nfcBiiiipButton);
-
 		JLabel lblNfc = new JLabel("NFC");
 		lblNfc.setForeground(Color.WHITE);
 		lblNfc.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNfc.setBounds(541, 139, 41, 15);
+		lblNfc.setBounds(541, 135, 41, 15);
 		contentPane.add(lblNfc);
+
+		nfcInput = new JTextField();
+		nfcInput.setBounds(550, 154, 70, 20);
+		contentPane.add(nfcInput);
+
+		nfcMap.put(0, new Info(9, 450));
+
+		JButton nfcButton = new JButton("biiip");
+		nfcButton.setForeground(Color.WHITE);
+		nfcButton.setBackground(Color.DARK_GRAY);
+		nfcButton.setBounds(550, 180, 70, 25);
+		nfcButton.addActionListener( actionEvent -> {
+			Info currentInfo = nfcMap.get(nfcInput.getText().hashCode());
+			theFSM.raiseMoneyGiven();
+			theFSM.setNfc(true);
+			if (currentInfo != null) {
+				if (currentInfo.getCount()==10) {
+					nfcFree = true;
+				}
+				else {
+					currentInfo.setCount(currentInfo.getCount()+1);
+					currentInfo.setSum((int)(currentInfo.getSum()+choice.price));
+				}
+			}
+			else {
+				currentInfo = new Info(1, (int)choice.price);
+			}
+
+			nfcMap.put(nfcInput.getText().hashCode(), currentInfo);
+			System.out.println(nfcInput.getText().hashCode());
+			System.out.println(nfcMap.get(nfcInput.getText().hashCode()).getCount());
+		});
+		contentPane.add(nfcButton);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(12, 292, 622, 15);
@@ -586,14 +613,24 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 	}
 
-	public int computeChange() {
-		return (int)(theFSM.getMoney()
-				- (theFSM.getPrice()
+	public int computePrice() {
+		return (int)(theFSM.getPrice()
 				- (10*theFSM.getOwnCup())
 				+ (10*theFSM.getLait())
 				+ (30*theFSM.getCroutons())
 				+ (10*theFSM.getSirop())
-				+ (60*theFSM.getGlace())));
+				+ (60*theFSM.getGlace()));
+	}
+
+	public int computeChange() {
+		if (!theFSM.getNfc()) {
+			return (int)(theFSM.getMoney() - computePrice());
+		}
+		else {
+			theFSM.setNfc(false);
+			return (int)(theFSM.getMoney());
+		}
+
 	}
 
 	void hideOptions() {
@@ -612,11 +649,6 @@ public class DrinkFactoryMachine extends JFrame {
 		checkSirop.setVisible(false);
 		checkSirop.setEnabled(false);
 		checkSirop.setSelected(false);
-
-		theFSM.setLait(0);
-		theFSM.setSirop(0);
-		theFSM.setCroutons(0);
-		theFSM.setGlace(0);
 	}
 
 	void reset() {
@@ -637,6 +669,10 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setLabelTable(temperatureTable);
 
 		hideOptions();
+		theFSM.setLait(0);
+		theFSM.setSirop(0);
+		theFSM.setCroutons(0);
+		theFSM.setGlace(0);
 
 		consoleMessage = "<html>Welcome<br>You may take order";
 		messagesToUser.setText(consoleMessage);
