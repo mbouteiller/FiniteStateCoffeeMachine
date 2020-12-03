@@ -112,6 +112,74 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setExpressoStock(long value);
 		
+		public long getTpSachet();
+		
+		public void setTpSachet(long value);
+		
+		public long getTpChauffageEau();
+		
+		public void setTpChauffageEau(long value);
+		
+		public long getTpPosGobelet();
+		
+		public void setTpPosGobelet(long value);
+		
+		public long getTpPosDosette();
+		
+		public void setTpPosDosette(long value);
+		
+		public long getTpBonneTemperature();
+		
+		public void setTpBonneTemperature(long value);
+		
+		public long getTpEcoulement();
+		
+		public void setTpEcoulement(long value);
+		
+		public long getTpSucre();
+		
+		public void setTpSucre(long value);
+		
+		public long getTpSirop();
+		
+		public void setTpSirop(long value);
+		
+		public long getTpEpice();
+		
+		public void setTpEpice(long value);
+		
+		public long getTpBroyageGrains();
+		
+		public void setTpBroyageGrains(long value);
+		
+		public long getTpTassageGrains();
+		
+		public void setTpTassageGrains(long value);
+		
+		public long getTpInfusion();
+		
+		public void setTpInfusion(long value);
+		
+		public long getTpRetraitSachet();
+		
+		public void setTpRetraitSachet(long value);
+		
+		public long getTpGlaveVanille();
+		
+		public void setTpGlaveVanille(long value);
+		
+		public long getTpVerrouillagePorte();
+		
+		public void setTpVerrouillagePorte(long value);
+		
+		public long getTpDeverrouillagePorte();
+		
+		public void setTpDeverrouillagePorte(long value);
+		
+		public long getTpInjectionAzote();
+		
+		public void setTpInjectionAzote(long value);
+		
 	public List<SCInterfaceListener> getListeners();
 		public void setSCInterfaceOperationCallback(SCInterfaceOperationCallback operationCallback);
 	

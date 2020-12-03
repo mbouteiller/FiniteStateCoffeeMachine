@@ -446,8 +446,6 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 
 			nfcMap.put(nfcInput.getText().hashCode(), currentInfo);
-			System.out.println(nfcInput.getText().hashCode());
-			System.out.println(nfcMap.get(nfcInput.getText().hashCode()).getCount());
 		});
 		contentPane.add(nfcButton);
 
@@ -538,7 +536,6 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	void makeDrink() {
-		System.out.println(finalChoice.price);
 		money-=finalChoice.price - theFSM.getOwnCup()*10;
 		theFSM.setMoney(money);
 		theFSM.raiseAny();

@@ -109,7 +109,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onRestartRaised() {
-        System.out.println("restart");
         theDfm.reset();
     }
 
@@ -132,7 +131,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onWaitTakeOrderRaised() {
         theDfm.recipeStarted = false;
-        System.out.println("You can retrieve your drink");
         theDfm.messagesToUser.setText("<html>Please retrieve<br>your drink");
     }
 
