@@ -148,23 +148,32 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 
     @Override
     public void onOpenDoorRaised() {
-        BufferedImage myPicture = null;
-        try {
-            myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
-        } catch (IOException ee) {
-            ee.printStackTrace();
+        if (theDfm.hasOwnCup()) {
+            BufferedImage myPicture = null;
+            try {
+                myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
+            theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
         }
-        theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
+        else {
+            BufferedImage myPicture = null;
+            try {
+                myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
+            theDfm.labelForPictures.setIcon(new ImageIcon(myPicture));
+        }
     }
 
     @Override
     public void onStartRecipeRaised() {
         String choiceDescription = "<html>Preparing order :<br>";
 
-        choiceDescription += getTemperatureString();
         choiceDescription += getSizeString();
         choiceDescription += theDfm.finalChoice;
-        choiceDescription += "<br> with " + theDfm.nbSugar + " pieces of sugar";
         if (!theDfm.hasOwnCup()) {
             BufferedImage myPicture = null;
             try {
@@ -184,7 +193,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
                 choiceDescription += "<br> Price = 0€";
             }
             else {
-                choiceDescription += "<br> Price = " + priceWithDiscount/100 + "," + (priceWithDiscount-(priceWithDiscount/100)) + "€";
+                choiceDescription += "<br> Price = " + (float)priceWithDiscount/100 + "€";
             }
 
             currentInfo.setSum(0);
@@ -192,7 +201,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
             theDfm.nfcFree = false;
         }
         else {
-            choiceDescription += "<br> Price = " + theDfm.computePrice()/100 + "," + (theDfm.computePrice()-(theDfm.computePrice()/100)) + "€";
+            choiceDescription += "<br> Price = " + (float)theDfm.computePrice()/100 + "€";
         }
 
 
@@ -217,28 +226,6 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         }
         return size;
     }
-
-    private String getTemperatureString() {
-        String temperature = "";
-        switch (theDfm.temperature) {
-            case 0:
-                temperature += "Ambient ";
-                break;
-            case 1:
-                temperature += "Gentle ";
-                break;
-            case 2:
-                temperature += "Hot ";
-                break;
-            case 3:
-                temperature += "Very hot ";
-                break;
-            default:
-                break;
-        }
-        return temperature;
-    }
-
 
 	@Override
 	public void onAdd10Raised() {
