@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(50)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;var ownCup: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;var epice: integer = -1&#xA;var lait: integer&#xA;var croutons: integer&#xA;var sirop: integer&#xA;var glace: integer&#xA;&#xA;var nfc: boolean&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;var tpSachet:integer = 3&#xA;var tpChauffageEau:integer = temperature*3&#xA;var tpPosGobelet:integer = 2&#xA;var tpPosDosette:integer = 2&#xA;var tpBonneTemperature:integer = temperature*1&#xA;var tpEcoulement:integer = taille*1+1&#xA;var tpSucre:integer = sucre*1&#xA;var tpSirop:integer = 2&#xA;var tpEpice:integer = 1&#xA;var tpBroyageGrains:integer = 3&#xA;var tpTassageGrains:integer = taille*1+1&#xA;var tpInfusion:integer = 4&#xA;var tpRetraitSachet:integer = 1&#xA;var tpGlaveVanille:integer = 5&#xA;var tpVerrouillagePorte:integer = 1&#xA;var tpDeverrouillagePorte:integer = 1&#xA;var tpInjectionAzote:integer = taille*1+1&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;operation isSoup() : boolean&#xA;operation isIceTea() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;in event finish&#xA;&#xA;out event updateOptions&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;out event restart&#xA;out event waitTakeOrder&#xA;out event closeDoor&#xA;out event openDoor&#xA;" name="basicCoffeeController">
-    <regions xmi:id="_JIF3cCGvEeuHSLcleLT0Yw" name="main region">
+  <sgraph:Statechart xmi:id="_zXqUIAoMEeuLfff9QNBocQ" specification="@CycleBased(50)&#xA;//@EventDriven&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;&#xA;var choice: string&#xA;var price: integer&#xA;var money: integer&#xA;var ownCup: integer&#xA;&#xA;var sucre: integer&#xA;var taille: integer&#xA;var temperature: integer&#xA;var epice: integer = -1&#xA;var lait: integer&#xA;var croutons: integer&#xA;var sirop: integer&#xA;var glace: integer&#xA;&#xA;var nfc: boolean&#xA;&#xA;var coffeeStock:integer&#xA;var teaStock:integer&#xA;var iceTeaStock:integer&#xA;var soupStock:integer&#xA;var expressoStock:integer&#xA;&#xA;var tpSachet:integer = 3&#xA;var tpChauffageEau:integer = temperature*3&#xA;var tpPosGobelet:integer = 2&#xA;var tpPosDosette:integer = 2&#xA;var tpBonneTemperature:integer = temperature*1&#xA;var tpEcoulement:integer = taille*1+1&#xA;var tpSucre:integer = sucre*1&#xA;var tpSirop:integer = 2&#xA;var tpEpice:integer = 1&#xA;var tpBroyageGrains:integer = 3&#xA;var tpTassageGrains:integer = taille*1+1&#xA;var tpInfusion:integer = 4&#xA;var tpRetraitSachet:integer = 1&#xA;var tpGlaveVanille:integer = 5&#xA;var tpVerrouillagePorte:integer = 1&#xA;var tpDeverrouillagePorte:integer = 1&#xA;var tpInjectionAzote:integer = taille*1+1&#xA;&#xA;operation isCoffee() : boolean&#xA;operation isTea() : boolean&#xA;operation isExpresso() : boolean&#xA;operation isSoup() : boolean&#xA;operation isIceTea() : boolean&#xA;&#xA;in event chose&#xA;in event moneyGiven&#xA;in event any&#xA;in event cancel&#xA;in event takeOrder&#xA;&#xA;in event finish&#xA;&#xA;out event updateOptions&#xA;out event refund&#xA;out event giveChange&#xA;out event startRecipe&#xA;out event timesup&#xA;out event orderVerified&#xA;out event restart&#xA;out event waitTakeOrder&#xA;out event closeDoor&#xA;out event openDoor&#xA;out event add10&#xA;out event add15&#xA;out event add20&#xA;" name="basicCoffeeController">
+    <regions xmi:id="_JIF3cCGvEeuHSLcleLT0Yw" name="zzz">
       <vertices xsi:type="sgraph:State" xmi:id="_J0gRgCGvEeuHSLcleLT0Yw" name="Main" incomingTransitions="_iyh1UCGvEeuHSLcleLT0Yw _SiiCgCG4EeuHSLcleLT0Yw _81ukwCHsEeuUNNvsZTlSZA _8BgiACJ6EeuE6K6PuOeeTQ">
         <outgoingTransitions xmi:id="_SiiCgCG4EeuHSLcleLT0Yw" specification="cancel / raise refund" target="_J0gRgCGvEeuHSLcleLT0Yw"/>
         <regions xmi:id="_OgkYAiGvEeuHSLcleLT0Yw" name="choice">
@@ -68,8 +68,8 @@
           <vertices xsi:type="sgraph:State" xmi:id="_0dV2ICHvEeuobfgD16IJXQ" specification="" name="PositionnementDosette" incomingTransitions="_jPKS4DV3EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_OMqzsCHzEeuobfgD16IJXQ" specification="after tpPosDosette s" target="_2wbuICJzEeuE6K6PuOeeTQ"/>
           </vertices>
-          <vertices xsi:type="sgraph:State" xmi:id="_2wbuICJzEeuE6K6PuOeeTQ" name="WaitPositionnementDosette" incomingTransitions="_OMqzsCHzEeuobfgD16IJXQ">
-            <outgoingTransitions xmi:id="_8vMLkCJzEeuE6K6PuOeeTQ" specification="always" target="_NSitwCHzEeuobfgD16IJXQ"/>
+          <vertices xsi:type="sgraph:State" xmi:id="_2wbuICJzEeuE6K6PuOeeTQ" specification=" " name="WaitPositionnementDosette" incomingTransitions="_OMqzsCHzEeuobfgD16IJXQ">
+            <outgoingTransitions xmi:id="_8vMLkCJzEeuE6K6PuOeeTQ" specification="always/raise add15" target="_NSitwCHzEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_i8zXkDV3EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_jPKS4DV3EeuZXZObTPpblA" specification="" target="_0dV2ICHvEeuobfgD16IJXQ"/>
@@ -80,7 +80,7 @@
             <outgoingTransitions xmi:id="_PqCJkCHzEeuobfgD16IJXQ" specification="after tpChauffageEau s" target="_-WA_cCJzEeuE6K6PuOeeTQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_-WA_cCJzEeuE6K6PuOeeTQ" specification="" name="WaitChauffageEau" incomingTransitions="_PqCJkCHzEeuobfgD16IJXQ">
-            <outgoingTransitions xmi:id="_CYSiECJ0EeuE6K6PuOeeTQ" specification="always" target="_NSitwCHzEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_CYSiECJ0EeuE6K6PuOeeTQ" specification="always/raise add15&#xD;&#xA;" target="_NSitwCHzEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_hnLocDV3EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_h-fVMDV3EeuZXZObTPpblA" specification="" target="_54XUYCHvEeuobfgD16IJXQ"/>
@@ -93,7 +93,7 @@
             <outgoingTransitions xmi:id="_Gu2YcCINEeuobfgD16IJXQ" specification="after tpPosGobelet s" target="_tXGoQCJoEeu9oti8QzbfOA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_tXGoQCJoEeu9oti8QzbfOA" name="WaitPositionnementGobelet" incomingTransitions="_Gu2YcCINEeuobfgD16IJXQ">
-            <outgoingTransitions xmi:id="_v42MQCJoEeu9oti8QzbfOA" specification="always" target="_D4M7cCINEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_v42MQCJoEeu9oti8QzbfOA" specification="always/raise add15" target="_D4M7cCINEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_pwI0sCKAEeuVRPrEkay1ZA">
             <outgoingTransitions xmi:id="_qOZeACKAEeuVRPrEkay1ZA" specification="" target="_09NMgCHwEeuobfgD16IJXQ"/>
@@ -104,7 +104,7 @@
             <outgoingTransitions xmi:id="_KcrVECINEeuobfgD16IJXQ" specification="after tpBonneTemperature s" target="_yzjp4CJoEeu9oti8QzbfOA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_yzjp4CJoEeu9oti8QzbfOA" name="WaitBonneTemperature" incomingTransitions="_KcrVECINEeuobfgD16IJXQ">
-            <outgoingTransitions xmi:id="_253_ACJoEeu9oti8QzbfOA" specification="always" target="_D4M7cCINEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_253_ACJoEeu9oti8QzbfOA" specification="always/raise add15" target="_D4M7cCINEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_odQ3kCKAEeuVRPrEkay1ZA">
             <outgoingTransitions xmi:id="_o6gNMCKAEeuVRPrEkay1ZA" specification="" target="_1a_UsCHwEeuobfgD16IJXQ"/>
@@ -126,7 +126,7 @@
             <outgoingTransitions xmi:id="_WtltECINEeuobfgD16IJXQ" specification="" target="_f7dbwDMtEeugVLT9roTByg"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_-dz1ECJpEeu9oti8QzbfOA" name="WaitSucre" incomingTransitions="_jVEK8CINEeuobfgD16IJXQ _lQRkUDMtEeugVLT9roTByg">
-            <outgoingTransitions xmi:id="_CHdcUCJqEeu9oti8QzbfOA" specification="always" target="_hdXpgCINEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_CHdcUCJqEeu9oti8QzbfOA" specification="always/raise add10" target="_hdXpgCINEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Choice" xmi:id="_f7dbwDMtEeugVLT9roTByg" incomingTransitions="_WtltECINEeuobfgD16IJXQ">
             <outgoingTransitions xmi:id="_hy--EDMtEeugVLT9roTByg" specification="[sirop==0]" target="_VH6IsCINEeuobfgD16IJXQ"/>
@@ -141,7 +141,7 @@
             <outgoingTransitions xmi:id="_XEOrcCINEeuobfgD16IJXQ" specification="" target="_VhUuQCINEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_D8nnICJqEeu9oti8QzbfOA" name="WaitEcoulementEau" incomingTransitions="_mSDggCINEeuobfgD16IJXQ">
-            <outgoingTransitions xmi:id="_GZHewCJqEeu9oti8QzbfOA" specification="always" target="_hdXpgCINEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_GZHewCJqEeu9oti8QzbfOA" specification="always/raise add10" target="_hdXpgCINEeuobfgD16IJXQ"/>
           </vertices>
         </regions>
         <regions xmi:id="_QBui8DMtEeugVLT9roTByg" name="r3">
@@ -149,7 +149,7 @@
             <outgoingTransitions xmi:id="_U95iADMtEeugVLT9roTByg" specification="after tpSirop s" target="_TmfDIDMtEeugVLT9roTByg"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_TmfDIDMtEeugVLT9roTByg" name="WaitSirop" incomingTransitions="_U95iADMtEeugVLT9roTByg _x0w_oDMtEeugVLT9roTByg">
-            <outgoingTransitions xmi:id="_rc10QDMtEeugVLT9roTByg" specification="always" target="_hdXpgCINEeuobfgD16IJXQ"/>
+            <outgoingTransitions xmi:id="_rc10QDMtEeugVLT9roTByg" specification="always/raise add10" target="_hdXpgCINEeuobfgD16IJXQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_bMWBQDMtEeugVLT9roTByg">
             <outgoingTransitions xmi:id="_b3XUMDMtEeugVLT9roTByg" specification="" target="_tfu5EDMtEeugVLT9roTByg"/>
@@ -167,7 +167,7 @@
         <outgoingTransitions xmi:id="_FpYMcCKBEeuVRPrEkay1ZA" specification="" target="_q-sHMDVzEeuZXZObTPpblA"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_d83wECKCEeuVRPrEkay1ZA" specification="always / raise waitTakeOrder" name="AttenteRecuperation" incomingTransitions="_KMpoADJTEeui1YGRb-OPEQ _eoZG0DMsEeugVLT9roTByg _qqowsDMsEeugVLT9roTByg _BPUekDMtEeugVLT9roTByg _DE3D4DMtEeugVLT9roTByg">
-        <outgoingTransitions xmi:id="_siHwcC_vEeurYNkKbEI8NQ" specification="after 100ms" target="_qW5K0C_2EeurYNkKbEI8NQ"/>
+        <outgoingTransitions xmi:id="_siHwcC_vEeurYNkKbEI8NQ" specification="after 100ms/raise add10" target="_qW5K0C_2EeurYNkKbEI8NQ"/>
       </vertices>
       <vertices xsi:type="sgraph:Synchronization" xmi:id="_Lfm70CKIEeuVRPrEkay1ZA" incomingTransitions="_7hJwwDVvEeuLnsr9rSza4g _8tFYYDVvEeuLnsr9rSza4g">
         <outgoingTransitions xmi:id="_n3UN8DVwEeuLnsr9rSza4g" specification="" target="_ASxssDVwEeuLnsr9rSza4g"/>
@@ -213,7 +213,7 @@
             <outgoingTransitions xmi:id="_N3Z0wDJOEeui1YGRb-OPEQ" specification="after tpPosGobelet s" target="_MpnzDDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_MpnzDDJOEeui1YGRb-OPEQ" specification="" name="WaitPositionnementGobelet" incomingTransitions="_N3Z0wDJOEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_adcIMDJOEeui1YGRb-OPEQ" specification="always" target="_YrgQgDJOEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_adcIMDJOEeui1YGRb-OPEQ" specification="always/raise add15" target="_YrgQgDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_djhwUDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_d8KSwDV4EeuZXZObTPpblA" specification="" target="_JjAnYDJOEeui1YGRb-OPEQ"/>
@@ -224,7 +224,7 @@
             <outgoingTransitions xmi:id="_TKQOczJOEeui1YGRb-OPEQ" specification="after tpChauffageEau s" target="_TKQ1hjJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_TKQ1hjJOEeui1YGRb-OPEQ" specification="" name="WaitChauffageEau" incomingTransitions="_TKQOczJOEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_buhVkDJOEeui1YGRb-OPEQ" specification="always" target="_YrgQgDJOEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_buhVkDJOEeui1YGRb-OPEQ" specification="always/raise add15&#xD;&#xA;" target="_YrgQgDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_iqkioDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_jDgAADV4EeuZXZObTPpblA" specification="" target="_TKQOcDJOEeui1YGRb-OPEQ"/>
@@ -240,7 +240,7 @@
             <outgoingTransitions xmi:id="_lBXZ8zJOEeui1YGRb-OPEQ" specification="after tpBonneTemperature s" target="_lBXZ-jJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_lBXZ-jJOEeui1YGRb-OPEQ" name="WaitBonneTemperature" incomingTransitions="_lBXZ8zJOEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="__2YUkDJOEeui1YGRb-OPEQ" specification="always" target="_92cdIDJOEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="__2YUkDJOEeui1YGRb-OPEQ" specification="always/raise add20" target="_92cdIDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_KfHrQDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_K7Q0sDV4EeuZXZObTPpblA" specification="" target="_lBXZ8DJOEeui1YGRb-OPEQ"/>
@@ -251,7 +251,7 @@
             <outgoingTransitions xmi:id="_t6FHLDJOEeui1YGRb-OPEQ" specification="after tpPosDosette s" target="_t6FHMTJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_t6FHMTJOEeui1YGRb-OPEQ" name="WaitPositionnementDosette" incomingTransitions="_t6FHLDJOEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_AyLOcDJPEeui1YGRb-OPEQ" specification="always" target="_92cdIDJOEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_AyLOcDJPEeui1YGRb-OPEQ" specification="always/raise add20" target="_92cdIDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_LXePkDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_Lv5WoDV4EeuZXZObTPpblA" specification="" target="_t6FHKTJOEeui1YGRb-OPEQ"/>
@@ -262,7 +262,7 @@
             <outgoingTransitions xmi:id="_1he9UDJOEeui1YGRb-OPEQ" specification="after tpEpice s" target="_zdo2QDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_zdo2QDJOEeui1YGRb-OPEQ" name="WaitEpice" incomingTransitions="_1he9UDJOEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_CgvCADJPEeui1YGRb-OPEQ" specification="always" target="_92cdIDJOEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_CgvCADJPEeui1YGRb-OPEQ" specification="always/raise add20" target="_92cdIDJOEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_MJuL4DV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_MiqQUDV4EeuZXZObTPpblA" specification="" target="_u97JsDJOEeui1YGRb-OPEQ"/>
@@ -281,7 +281,7 @@
             <outgoingTransitions xmi:id="_q5ZSezJQEeui1YGRb-OPEQ" specification="after tpPosDosette s" target="_q5Z5cDJQEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_q5Z5cDJQEeui1YGRb-OPEQ" name="WaitPositionnementDosette" incomingTransitions="_q5ZSezJQEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_Khh9wDJREeui1YGRb-OPEQ" specification="always" target="_wFJlkDJQEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_Khh9wDJREeui1YGRb-OPEQ" specification="always/raise add15" target="_wFJlkDJQEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_whWsQDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_w2pm0DV4EeuZXZObTPpblA" specification="" target="_q5ZSeDJQEeui1YGRb-OPEQ"/>
@@ -292,7 +292,7 @@
             <outgoingTransitions xmi:id="_sNTxUzJQEeui1YGRb-OPEQ" specification="after tpChauffageEau s" target="_sNUYYDJQEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_sNUYYDJQEeui1YGRb-OPEQ" specification="" name="WaitChauffageEau" incomingTransitions="_sNTxUzJQEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_LXD3kDJREeui1YGRb-OPEQ" specification="always" target="_wFJlkDJQEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_LXD3kDJREeui1YGRb-OPEQ" specification="always/raise add15" target="_wFJlkDJQEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_zSbFsDV4EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_zuk2MDV4EeuZXZObTPpblA" specification="" target="_sNTxUDJQEeui1YGRb-OPEQ"/>
@@ -308,7 +308,7 @@
             <outgoingTransitions xmi:id="_7ag7bDJQEeui1YGRb-OPEQ" specification="after tpBonneTemperature s" target="_7ahiYDJQEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_7ahiYDJQEeui1YGRb-OPEQ" name="WaitHotTemperature" incomingTransitions="_7ag7bDJQEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_xeDcwDJREeui1YGRb-OPEQ" specification="always" target="_T-tp4DJREeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_xeDcwDJREeui1YGRb-OPEQ" specification="always/raise add15" target="_T-tp4DJREeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_SPl1oDJREeui1YGRb-OPEQ">
             <outgoingTransitions xmi:id="_SjwHwDJREeui1YGRb-OPEQ" specification="" target="_7ag7aTJQEeui1YGRb-OPEQ"/>
@@ -319,7 +319,7 @@
             <outgoingTransitions xmi:id="_J0eqjzJREeui1YGRb-OPEQ" specification="after tpPosGobelet s" target="_J0eqlDJREeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_J0eqlDJREeui1YGRb-OPEQ" specification="" name="WaitPositionnementGobelet" incomingTransitions="_J0eqjzJREeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_yr03cDJREeui1YGRb-OPEQ" specification="always" target="_T-tp4DJREeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_yr03cDJREeui1YGRb-OPEQ" specification="always/raise add15" target="_T-tp4DJREeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_RMQwYDJREeui1YGRb-OPEQ">
             <outgoingTransitions xmi:id="_RyHPcDJREeui1YGRb-OPEQ" specification="" target="_J0eqjDJREeui1YGRb-OPEQ"/>
@@ -338,7 +338,7 @@
             <outgoingTransitions xmi:id="_Bs1_kTJSEeui1YGRb-OPEQ" specification="" target="_KZVhoDMuEeuF1p-U9ucc6w"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_Bs1_kjJSEeui1YGRb-OPEQ" name="WaitSucre" incomingTransitions="_Bs1YpTJSEeui1YGRb-OPEQ _Oj6rsDMuEeuF1p-U9ucc6w">
-            <outgoingTransitions xmi:id="_K8lsoDJSEeui1YGRb-OPEQ" specification="always" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_K8lsoDJSEeui1YGRb-OPEQ" specification="always/raise add10" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Choice" xmi:id="_KZVhoDMuEeuF1p-U9ucc6w" incomingTransitions="_Bs1_kTJSEeui1YGRb-OPEQ">
             <outgoingTransitions xmi:id="_MjXwQDMuEeuF1p-U9ucc6w" specification="[sirop==0]" target="_Bs1YojJSEeui1YGRb-OPEQ"/>
@@ -353,7 +353,7 @@
             <outgoingTransitions xmi:id="_EP1gwTJSEeui1YGRb-OPEQ" specification="" target="_EP050jJSEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_EP1gwjJSEeui1YGRb-OPEQ" name="WaitEcoulementEau" incomingTransitions="_EP051TJSEeui1YGRb-OPEQ">
-            <outgoingTransitions xmi:id="_Nmmb0DJSEeui1YGRb-OPEQ" specification="always" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_Nmmb0DJSEeui1YGRb-OPEQ" specification="always/raise add10" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
           </vertices>
         </regions>
         <regions xmi:id="_2KEL8DMtEeugVLT9roTByg" name="r3">
@@ -361,7 +361,7 @@
             <outgoingTransitions xmi:id="_BVh-0TMuEeuF1p-U9ucc6w" specification="after tpSirop s" target="_BVil4DMuEeuF1p-U9ucc6w"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_BVil4DMuEeuF1p-U9ucc6w" name="WaitSirop" incomingTransitions="_BVh-0TMuEeuF1p-U9ucc6w _BVj0BjMuEeuF1p-U9ucc6w">
-            <outgoingTransitions xmi:id="_CYU4kDMuEeuF1p-U9ucc6w" specification="always" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
+            <outgoingTransitions xmi:id="_CYU4kDMuEeuF1p-U9ucc6w" specification="always/raise add10" target="_JgOcUDJSEeui1YGRb-OPEQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_BVjM8jMuEeuF1p-U9ucc6w">
             <outgoingTransitions xmi:id="_BVjM8zMuEeuF1p-U9ucc6w" specification="" target="_BVjM9DMuEeuF1p-U9ucc6w"/>
@@ -410,7 +410,7 @@
             <outgoingTransitions xmi:id="_b1pBQzVvEeuLnsr9rSza4g" specification="after tpSachet s" target="_b1poUDVvEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_b1poUDVvEeuLnsr9rSza4g" specification="" name="WaitPositionnementSachet" incomingTransitions="_b1pBQzVvEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_7hJwwDVvEeuLnsr9rSza4g" specification="always" target="_Lfm70CKIEeuVRPrEkay1ZA"/>
+            <outgoingTransitions xmi:id="_7hJwwDVvEeuLnsr9rSza4g" specification="always/ raise add15" target="_Lfm70CKIEeuVRPrEkay1ZA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_RIvkQDVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_RgbEcDVwEeuLnsr9rSza4g" specification="" target="_b1pBQDVvEeuLnsr9rSza4g"/>
@@ -421,7 +421,7 @@
             <outgoingTransitions xmi:id="_eJ6xAzVvEeuLnsr9rSza4g" specification="after tpChauffageEau s" target="_eJ6xCjVvEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_eJ6xCjVvEeuLnsr9rSza4g" specification="" name="WaitChauffageEau" incomingTransitions="_eJ6xAzVvEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_8tFYYDVvEeuLnsr9rSza4g" specification="always" target="_Lfm70CKIEeuVRPrEkay1ZA"/>
+            <outgoingTransitions xmi:id="_8tFYYDVvEeuLnsr9rSza4g" specification="always/raise add15" target="_Lfm70CKIEeuVRPrEkay1ZA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_SBlQwDVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_SWGIMDVwEeuLnsr9rSza4g" specification="" target="_eJ6xADVvEeuLnsr9rSza4g"/>
@@ -434,7 +434,7 @@
             <outgoingTransitions xmi:id="_T4KX4zVwEeuLnsr9rSza4g" specification="after tpPosGobelet s" target="_T4K-8DVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_T4K-8DVwEeuLnsr9rSza4g" name="WaitPositionnementGobelet" incomingTransitions="_T4KX4zVwEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_1BKZEDVwEeuLnsr9rSza4g" specification="always" target="_0UrGgDVwEeuLnsr9rSza4g"/>
+            <outgoingTransitions xmi:id="_1BKZEDVwEeuLnsr9rSza4g" specification="always/raise add15" target="_0UrGgDVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_lJeHoDVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_lhOgUDVwEeuLnsr9rSza4g" specification="" target="_T4KX4DVwEeuLnsr9rSza4g"/>
@@ -445,7 +445,7 @@
             <outgoingTransitions xmi:id="_bU4oLzVwEeuLnsr9rSza4g" specification="after tpBonneTemperature s" target="_bU5PNTVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_bU5PNTVwEeuLnsr9rSza4g" name="WaitBonneTemperature" incomingTransitions="_bU4oLzVwEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_2YDTgDVwEeuLnsr9rSza4g" specification="always" target="_0UrGgDVwEeuLnsr9rSza4g"/>
+            <outgoingTransitions xmi:id="_2YDTgDVwEeuLnsr9rSza4g" specification="always/raise add15" target="_0UrGgDVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_mNAoQDVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_mk-cUDVwEeuLnsr9rSza4g" specification="" target="_bU4oLDVwEeuLnsr9rSza4g"/>
@@ -461,7 +461,7 @@
             <outgoingTransitions xmi:id="_tsDMvjVwEeuLnsr9rSza4g" specification="" target="_tsDMxDVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_tsDMvzVwEeuLnsr9rSza4g" name="WaitSucre" incomingTransitions="_tsDMtjVwEeuLnsr9rSza4g _tsDMzDVwEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_XuO1EDVxEeuLnsr9rSza4g" specification="always" target="_WsQasDVxEeuLnsr9rSza4g"/>
+            <outgoingTransitions xmi:id="_XuO1EDVxEeuLnsr9rSza4g" specification="always/raise add10" target="_WsQasDVxEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:Choice" xmi:id="_tsDMxDVwEeuLnsr9rSza4g" incomingTransitions="_tsDMvjVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_tsDMxTVwEeuLnsr9rSza4g" specification="[sirop==0]" target="_tsDMtDVwEeuLnsr9rSza4g"/>
@@ -476,7 +476,7 @@
             <outgoingTransitions xmi:id="_tsDM2TVwEeuLnsr9rSza4g" specification="" target="_tsDMzzVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_tsDM2jVwEeuLnsr9rSza4g" name="WaitEcoulementEau" incomingTransitions="_tsDM0TVwEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_YmbBUDVxEeuLnsr9rSza4g" specification="always" target="_WsQasDVxEeuLnsr9rSza4g"/>
+            <outgoingTransitions xmi:id="_YmbBUDVxEeuLnsr9rSza4g" specification="always/raise add10" target="_WsQasDVxEeuLnsr9rSza4g"/>
           </vertices>
         </regions>
         <regions xmi:id="_tsDM3zVwEeuLnsr9rSza4g" name="r3">
@@ -484,7 +484,7 @@
             <outgoingTransitions xmi:id="_tsDM4jVwEeuLnsr9rSza4g" specification="after tpSirop s" target="_tsDM5zVwEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_tsDM5zVwEeuLnsr9rSza4g" name="WaitSirop" incomingTransitions="_tsDM4jVwEeuLnsr9rSza4g _tsDzzDVwEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_ZvneADVxEeuLnsr9rSza4g" specification="always" target="_WsQasDVxEeuLnsr9rSza4g"/>
+            <outgoingTransitions xmi:id="_ZvneADVxEeuLnsr9rSza4g" specification="always/raise add10" target="_WsQasDVxEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_tsDzwjVwEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_tsDzwzVwEeuLnsr9rSza4g" specification="" target="_tsDzxDVwEeuLnsr9rSza4g"/>
@@ -507,7 +507,7 @@
             <outgoingTransitions xmi:id="_DjcE6zVzEeuLnsr9rSza4g" specification="after tpChauffageEau s" target="_Djcr5jVzEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_Djcr5jVzEeuLnsr9rSza4g" specification="" name="WaitChauffageEau" incomingTransitions="_DjcE6zVzEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_vT08MCJ_EeuVRPrEkay1ZA" specification="always" target="_n5G3ECJ_EeuVRPrEkay1ZA"/>
+            <outgoingTransitions xmi:id="_vT08MCJ_EeuVRPrEkay1ZA" specification="always/raise add15" target="_n5G3ECJ_EeuVRPrEkay1ZA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_NC_IcDVzEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_NYal4DVzEeuLnsr9rSza4g" specification="" target="_DjcE6DVzEeuLnsr9rSza4g"/>
@@ -518,7 +518,7 @@
             <outgoingTransitions xmi:id="_EmTQGzVzEeuLnsr9rSza4g" specification="after tpBroyageGrains s" target="_EmTQIDVzEeuLnsr9rSza4g"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_EmTQIDVzEeuLnsr9rSza4g" name="WaitBroyageGrains" incomingTransitions="_EmTQGzVzEeuLnsr9rSza4g">
-            <outgoingTransitions xmi:id="_rCPLMCJ_EeuVRPrEkay1ZA" specification="always" target="_n5G3ECJ_EeuVRPrEkay1ZA"/>
+            <outgoingTransitions xmi:id="_rCPLMCJ_EeuVRPrEkay1ZA" specification="always/raise add15" target="_n5G3ECJ_EeuVRPrEkay1ZA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_Om9coDVzEeuLnsr9rSza4g">
             <outgoingTransitions xmi:id="_O7pTMDVzEeuLnsr9rSza4g" specification="" target="_EmTQGDVzEeuLnsr9rSza4g"/>
@@ -531,7 +531,7 @@
             <outgoingTransitions xmi:id="_q-sHNjVzEeuZXZObTPpblA" specification="after tpPosGobelet s" target="_q-suRDVzEeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_q-suRDVzEeuZXZObTPpblA" name="WaitPositionnementGobelet" incomingTransitions="_q-sHNjVzEeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_x3UWcDV0EeuZXZObTPpblA" specification="always" target="_wlN1YDV0EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_x3UWcDV0EeuZXZObTPpblA" specification="always/raise add10" target="_wlN1YDV0EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_q-t8YzVzEeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_q-t8ZDVzEeuZXZObTPpblA" specification="" target="_q-sHNDVzEeuZXZObTPpblA"/>
@@ -542,7 +542,7 @@
             <outgoingTransitions xmi:id="_q-t8aDVzEeuZXZObTPpblA" specification="after tpBonneTemperature s" target="_q-ujdjVzEeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_q-ujdjVzEeuZXZObTPpblA" name="WaitBonneTemperature" incomingTransitions="_q-t8aDVzEeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_yyWbUDV0EeuZXZObTPpblA" specification="always" target="_wlN1YDV0EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_yyWbUDV0EeuZXZObTPpblA" specification="always/raise add10" target="_wlN1YDV0EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_q-vKhDVzEeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_q-vKhTVzEeuZXZObTPpblA" specification="" target="_q-t8ZjVzEeuZXZObTPpblA"/>
@@ -556,7 +556,7 @@
             <outgoingTransitions xmi:id="_q-vKizVzEeuZXZObTPpblA" specification="after tpTassageGrains s" target="_q-vxljVzEeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_q-vxljVzEeuZXZObTPpblA" name="WaitTassageGrains" incomingTransitions="_q-vKizVzEeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_0AXGkDV0EeuZXZObTPpblA" specification="always" target="_wlN1YDV0EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_0AXGkDV0EeuZXZObTPpblA" specification="always/raise add10" target="_wlN1YDV0EeuZXZObTPpblA"/>
           </vertices>
         </regions>
       </vertices>
@@ -569,7 +569,7 @@
             <outgoingTransitions xmi:id="_rws9gTV0EeuZXZObTPpblA" specification="" target="_rws9hzV0EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_rws9gjV0EeuZXZObTPpblA" name="WaitSucre" incomingTransitions="_rwsWdjV0EeuZXZObTPpblA _rws9jzV0EeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_xB-0cDV1EeuZXZObTPpblA" specification="always" target="_vwzgcDV1EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_xB-0cDV1EeuZXZObTPpblA" specification="always/raise add10" target="_vwzgcDV1EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:Choice" xmi:id="_rws9hzV0EeuZXZObTPpblA" incomingTransitions="_rws9gTV0EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_rws9iDV0EeuZXZObTPpblA" specification="[sirop==0]" target="_rwsWdDV0EeuZXZObTPpblA"/>
@@ -584,7 +584,7 @@
             <outgoingTransitions xmi:id="_rws9nDV0EeuZXZObTPpblA" specification="" target="_rws9kjV0EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_rws9nTV0EeuZXZObTPpblA" name="WaitEcoulementEau" incomingTransitions="_rws9lDV0EeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_ySPicDV1EeuZXZObTPpblA" specification="always" target="_vwzgcDV1EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_ySPicDV1EeuZXZObTPpblA" specification="always/raise add10" target="_vwzgcDV1EeuZXZObTPpblA"/>
           </vertices>
         </regions>
         <regions xmi:id="_rws9ojV0EeuZXZObTPpblA" name="r3">
@@ -592,7 +592,7 @@
             <outgoingTransitions xmi:id="_rws9pTV0EeuZXZObTPpblA" specification="after tpSirop s" target="_rws9qjV0EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_rws9qjV0EeuZXZObTPpblA" name="WaitSirop" incomingTransitions="_rws9pTV0EeuZXZObTPpblA _rwtkkDV0EeuZXZObTPpblA">
-            <outgoingTransitions xmi:id="_zjg9EDV1EeuZXZObTPpblA" specification="always" target="_vwzgcDV1EeuZXZObTPpblA"/>
+            <outgoingTransitions xmi:id="_zjg9EDV1EeuZXZObTPpblA" specification="always/raise add10" target="_vwzgcDV1EeuZXZObTPpblA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_rws9rzV0EeuZXZObTPpblA">
             <outgoingTransitions xmi:id="_rws9sDV0EeuZXZObTPpblA" specification="" target="_rws9sTV0EeuZXZObTPpblA"/>
@@ -3393,7 +3393,7 @@
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHspCGvEeuHSLcleLT0Yw"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_JIHFkSGvEeuHSLcleLT0Yw" fontName="Verdana" fillColor="16448250" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHFkiGvEeuHSLcleLT0Yw" x="269" y="884" width="6848" height="4850"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_JIHFkiGvEeuHSLcleLT0Yw" x="279" y="884" width="6848" height="4850"/>
     </children>
     <styles xsi:type="notation:BooleanValueStyle" xmi:id="_zYfakQoMEeuLfff9QNBocQ" name="inlineDefinitionSection"/>
     <styles xsi:type="notation:DiagramStyle" xmi:id="_zYfakgoMEeuLfff9QNBocQ"/>
@@ -3688,7 +3688,7 @@
     <edges xmi:id="_CYTJICJ0EeuE6K6PuOeeTQ" type="Transition" element="_CYSiECJ0EeuE6K6PuOeeTQ" source="_rJ11ETV4EeuZXZObTPpblA" target="_NSjU0CHzEeuobfgD16IJXQ">
       <children xsi:type="notation:DecorationNode" xmi:id="_CYTwMSJ0EeuE6K6PuOeeTQ" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_CYTwMiJ0EeuE6K6PuOeeTQ"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_CYTwMyJ0EeuE6K6PuOeeTQ" x="-9" y="-29"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_CYTwMyJ0EeuE6K6PuOeeTQ" x="26" y="-10"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_CYTJISJ0EeuE6K6PuOeeTQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_CYTwMCJ0EeuE6K6PuOeeTQ" fontName="Verdana"/>
@@ -4139,7 +4139,7 @@
     <edges xmi:id="_yr03cTJREeui1YGRb-OPEQ" type="Transition" element="_yr03cDJREeui1YGRb-OPEQ" source="_J0eqgDJREeui1YGRb-OPEQ" target="_T-uQ8DJREeui1YGRb-OPEQ">
       <children xsi:type="notation:DecorationNode" xmi:id="_yr1egTJREeui1YGRb-OPEQ" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_yr1egjJREeui1YGRb-OPEQ"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_yr1egzJREeui1YGRb-OPEQ" x="18" y="-34"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_yr1egzJREeui1YGRb-OPEQ" x="5" y="-38"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_yr03cjJREeui1YGRb-OPEQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_yr1egDJREeui1YGRb-OPEQ" fontName="Verdana"/>
@@ -4515,7 +4515,7 @@
     <edges xmi:id="_7hK-4DVvEeuLnsr9rSza4g" type="Transition" element="_7hJwwDVvEeuLnsr9rSza4g" source="_o1os4TVvEeuLnsr9rSza4g" target="_Lfm70SKIEeuVRPrEkay1ZA">
       <children xsi:type="notation:DecorationNode" xmi:id="_7hMNADVvEeuLnsr9rSza4g" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_7hMNATVvEeuLnsr9rSza4g"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_7hMNAjVvEeuLnsr9rSza4g" x="-1" y="35"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_7hMNAjVvEeuLnsr9rSza4g" x="30" y="59"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_7hK-4TVvEeuLnsr9rSza4g" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_7hLl8DVvEeuLnsr9rSza4g" fontName="Verdana"/>

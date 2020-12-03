@@ -40,6 +40,12 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public boolean isRaisedOpenDoor();
 		
+		public boolean isRaisedAdd10();
+		
+		public boolean isRaisedAdd15();
+		
+		public boolean isRaisedAdd20();
+		
 		public String getChoice();
 		
 		public void setChoice(String value);
@@ -197,6 +203,9 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		public void onWaitTakeOrderRaised();
 		public void onCloseDoorRaised();
 		public void onOpenDoorRaised();
+		public void onAdd10Raised();
+		public void onAdd15Raised();
+		public void onAdd20Raised();
 		}
 	
 	public interface SCInterfaceOperationCallback {

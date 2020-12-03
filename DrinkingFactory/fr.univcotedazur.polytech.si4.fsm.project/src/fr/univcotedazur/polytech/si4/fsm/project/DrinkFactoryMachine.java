@@ -540,8 +540,8 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.setMoney(money);
 		theFSM.raiseAny();
 		//TODO supprimer ce timer une fois la progress bar faite
-		timer=new Timer(10, ready);
-		timer.start();
+		//timer=new Timer(10, ready);
+		//timer.start();
 	}
 
 	ActionListener ready = new ActionListener() {

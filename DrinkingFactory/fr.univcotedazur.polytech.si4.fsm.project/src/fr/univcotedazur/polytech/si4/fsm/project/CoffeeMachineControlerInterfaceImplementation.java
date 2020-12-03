@@ -110,6 +110,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onRestartRaised() {
         theDfm.reset();
+        theDfm.progressBar.setValue(0);
     }
 
     @Override
@@ -237,4 +238,25 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         }
         return temperature;
     }
+
+
+	@Override
+	public void onAdd10Raised() {
+		// TODO Auto-generated method stub
+		theDfm.progressBar.setValue(theDfm.progressBar.getValue()+10);
+	}
+
+
+	@Override
+	public void onAdd15Raised() {
+		// TODO Auto-generated method stub
+		theDfm.progressBar.setValue(theDfm.progressBar.getValue()+15);
+	}
+
+
+	@Override
+	public void onAdd20Raised() {
+		// TODO Auto-generated method stub
+		theDfm.progressBar.setValue(theDfm.progressBar.getValue()+20);
+	}
 }
