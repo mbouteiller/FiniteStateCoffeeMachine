@@ -2180,7 +2180,7 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	/* Entry action for state 'Present'. */
 	private void entryAction_r_Main_activity_Present() {
-		timer.setTimer(this, 0, (15 * 1000), false);
+		timer.setTimer(this, 0, (45 * 1000), false);
 	}
 	
 	/* Entry action for state 'Start'. */
