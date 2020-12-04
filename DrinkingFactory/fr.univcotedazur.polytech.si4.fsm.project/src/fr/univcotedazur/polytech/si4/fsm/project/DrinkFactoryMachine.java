@@ -39,7 +39,6 @@ public class DrinkFactoryMachine extends JFrame {
 	float progressBarValue;
 	int stopTimer;
 	JProgressBar progressBar;
-	int coffeeStockInt, teaStockInt, expressoStockInt, soupStockInt, iceTeaStockInt;
 	JButton coffeeButton, teaButton, expressoButton, soupButton, icedTeaButton;
 	JLabel labelForPictures;
 
@@ -130,17 +129,19 @@ public class DrinkFactoryMachine extends JFrame {
 		consoleMessage = "<html>Welcome<br>You may take order";
 		money = 0;
 		choice = NONE;
-		coffeeStockInt = 1;
-		teaStockInt = 4;
-		soupStockInt = 7;
-		iceTeaStockInt = 4;
-		expressoStockInt = 2;
 		
-		theFSM.setCoffeeStock(coffeeStockInt);
-		theFSM.setTeaStock(teaStockInt);
-		theFSM.setExpressoStock(expressoStockInt);
-		theFSM.setSoupStock(soupStockInt);
-		theFSM.setIceTeaStock(iceTeaStockInt);
+		theFSM.setCoffeeStock(1);
+		theFSM.setTeaStock(4);
+		theFSM.setExpressoStock(7);
+		theFSM.setSoupStock(4);
+		theFSM.setIceTeaStock(2);
+
+		theFSM.setLaitStock(1);
+		theFSM.setSiropStock(5);
+		theFSM.setGlaceStock(3);
+		theFSM.setEpiceStock(6);
+		theFSM.setSucreStock(7);
+		theFSM.setCroutonStock(3);
 
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
@@ -164,7 +165,7 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(messagesToUser);
 
 		checkLait = new JCheckBox();
-		checkLait.setText("Nuage de lait");
+		checkLait.setText("Nuage de lait [" + theFSM.getLaitStock() + "]");
 		checkLait.setBounds(126, 100, 165, 25);
 		checkLait.setBackground(Color.DARK_GRAY);
 		checkLait.setForeground(Color.WHITE);
@@ -182,7 +183,7 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(checkLait);
 
 		checkCroutons = new JCheckBox();
-		checkCroutons.setText("Croutons");
+		checkCroutons.setText("Croutons [" + theFSM.getCroutonStock() + "]");
 		checkCroutons.setBounds(126, 125, 165, 25);
 		checkCroutons.setBackground(Color.DARK_GRAY);
 		checkCroutons.setForeground(Color.WHITE);
@@ -199,15 +200,15 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(checkCroutons);
 
 		checkSirop = new JCheckBox();
-		checkSirop.setText("Sirop d'érable");
+		checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
 		checkSirop.setBounds(126, 150, 165, 25);
 		checkSirop.setBackground(Color.DARK_GRAY);
 		checkSirop.setForeground(Color.WHITE);
 		checkSirop.addActionListener(e -> {
 			if (checkSirop.isSelected()) {
+				theFSM.setSirop(1);
 				sugarSlider.setVisible(false);
 				lblSugar.setVisible(false);
-				theFSM.setSirop(1);
 			}
 			else {
 				theFSM.setSirop(0);
@@ -220,7 +221,7 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(checkSirop);
 
 		checkGlace = new JCheckBox();
-		checkGlace.setText("Glace vanille");
+		checkGlace.setText("Glace vanille [" + theFSM.getGlaceStock() + "]");
 		checkGlace.setBounds(126, 175, 165, 25);
 		checkGlace.setBackground(Color.DARK_GRAY);
 		checkGlace.setForeground(Color.WHITE);
@@ -231,7 +232,6 @@ public class DrinkFactoryMachine extends JFrame {
 			else {
 				theFSM.setGlace(0);
 			}
-
 		});
 		checkGlace.setVisible(false);
 		checkGlace.setEnabled(false);
@@ -243,7 +243,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblCoins.setBounds(538, 12, 44, 15);
 		contentPane.add(lblCoins);
 
-		coffeeButton = new JButton(coffeeStockInt + " Coffee");
+		coffeeButton = new JButton(theFSM.getCoffeeStock() + " Coffee");
 		coffeeButton.setForeground(Color.WHITE);
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
@@ -251,28 +251,28 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(coffeeButton);
 		
 		
-		expressoButton = new JButton(expressoStockInt + " Expresso");
+		expressoButton = new JButton(theFSM.getExpressoStock() + " Expresso");
 		expressoButton.setForeground(Color.WHITE);
 		expressoButton.setBackground(Color.DARK_GRAY);
 		expressoButton.setBounds(12, 71, 96, 25);
 		expressoButton.addActionListener(actionEvent -> updateChoice(new Expresso()));
 		contentPane.add(expressoButton);
 
-		teaButton = new JButton(teaStockInt + " Tea");
+		teaButton = new JButton(theFSM.getTeaStock() + " Tea");
 		teaButton.setForeground(Color.WHITE);
 		teaButton.setBackground(Color.DARK_GRAY);
 		teaButton.setBounds(12, 108, 96, 25);
 		teaButton.addActionListener(actionEvent -> updateChoice(new Tea()));
 		contentPane.add(teaButton);
 
-		soupButton = new JButton(soupStockInt + " Soup");
+		soupButton = new JButton(theFSM.getSoupStock() + " Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
 		soupButton.setBounds(12, 145, 96, 25);
 		soupButton.addActionListener(actionEvent -> updateChoice(new Soup()));
 		contentPane.add(soupButton);
 
-		icedTeaButton = new JButton(iceTeaStockInt + " Ice Tea");
+		icedTeaButton = new JButton(theFSM.getIceTeaStock() + " Ice Tea");
 		icedTeaButton.setForeground(Color.WHITE);
 		icedTeaButton.setBackground(Color.DARK_GRAY);
 		icedTeaButton.setBounds(12, 182, 96, 25);
@@ -540,6 +540,22 @@ public class DrinkFactoryMachine extends JFrame {
 
 			if (choice.isSoup()) {
 				lblSugar.setText("Spice");
+				if (theFSM.getEpiceStock()==0) {
+					sugarSlider.setEnabled(false);
+					sugarSlider.setValue(0);
+				}
+				else {
+					if (theFSM.getEpiceStock() < 4) {
+						sugarSlider.setMaximum((int)theFSM.getEpiceStock());
+						sugarSlider.setEnabled(true);
+						sugarSlider.setValue(1);
+					}
+					else {
+						sugarSlider.setMaximum(4);
+						sugarSlider.setEnabled(true);
+						sugarSlider.setValue(1);
+					}
+				}
 			}
 			if (choice.isIceTea()) {
 				Hashtable<Integer, JLabel> temperatureTable = new Hashtable<>();
@@ -583,7 +599,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	void updateSliders() {
-		if (!recipeStarted) {
+		if (recipeStarted) {
 			theFSM.setSucre(this.nbSugar);
 			theFSM.setTaille(this.size);
 			theFSM.setTemperature(this.temperature);
@@ -628,10 +644,142 @@ public class DrinkFactoryMachine extends JFrame {
 		checkSirop.setSelected(false);
 	}
 
+	void updateOptions() {
+		switch (choice.name) {
+			case "coffee":
+				checkLait.setText("Lait [" + theFSM.getLaitStock() + "]");
+				if (theFSM.getLaitStock()==0) {
+					checkLait.setVisible(true);
+					checkLait.setEnabled(false);
+				}
+				else {
+					checkLait.setVisible(true);
+					checkLait.setEnabled(true);
+				}
+
+				checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
+				if (theFSM.getSiropStock()==0) {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(false);
+				}
+				else {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(true);
+				}
+
+				checkGlace.setText("Glace vanille [" + theFSM.getGlaceStock() + "]");
+				if (theFSM.getGlaceStock()==0) {
+					checkGlace.setVisible(true);
+					checkGlace.setEnabled(false);
+				}
+				else {
+					checkGlace.setVisible(true);
+					checkGlace.setEnabled(true);
+				}
+
+				lblSugar.setText("Sugar");
+				lblSugar.setVisible(true);
+
+				sizeSlider.setMaximum(2);
+				sizeSlider.setValue(1);
+				break;
+
+			case "tea":
+				checkLait.setText("Lait [" + theFSM.getLaitStock() + "]");
+				if (theFSM.getLaitStock()==0) {
+					checkLait.setVisible(true);
+					checkLait.setEnabled(false);
+				}
+				else {
+					checkLait.setVisible(true);
+					checkLait.setEnabled(true);
+				}
+
+				checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
+				if (theFSM.getSiropStock()==0) {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(false);
+				}
+				else {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(true);
+				}
+
+				lblSugar.setText("Sugar");
+				lblSugar.setVisible(true);
+
+				sizeSlider.setMaximum(2);
+				sizeSlider.setValue(1);
+				break;
+
+			case "expresso":
+				checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
+				if (theFSM.getSiropStock()==0) {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(false);
+				}
+				else {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(true);
+				}
+
+				checkGlace.setText("Glace vanille [" + theFSM.getGlaceStock() + "]");
+				if (theFSM.getGlaceStock()==0) {
+					checkGlace.setVisible(true);
+					checkGlace.setEnabled(false);
+				}
+				else {
+					checkGlace.setVisible(true);
+					checkGlace.setEnabled(true);
+				}
+
+				lblSugar.setText("Sugar");
+				lblSugar.setVisible(true);
+
+				sizeSlider.setMaximum(2);
+				sizeSlider.setValue(1);
+				break;
+
+			case "soup":
+				checkCroutons.setText("Croutons [" + theFSM.getCroutonStock() + "]");
+				if(theFSM.getCroutonStock()==0) {
+					checkCroutons.setVisible(true);
+					checkCroutons.setEnabled(false);
+				}
+				else {
+					checkCroutons.setVisible(true);
+					checkCroutons.setEnabled(true);
+				}
+
+				lblSugar.setVisible(true);
+
+				sizeSlider.setMaximum(2);
+				sizeSlider.setValue(1);
+				break;
+
+			case "icetea":
+				checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
+				if (theFSM.getSiropStock()==0) {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(false);
+				}
+				else {
+					checkSirop.setVisible(true);
+					checkSirop.setEnabled(true);
+				}
+
+				lblSugar.setText("Sugar");
+				lblSugar.setVisible(true);
+				break;
+			default:
+				break;
+		}
+	}
+
 	void reset() {
-		sugarSlider.setVisible(true);
-		sugarSlider.setEnabled(true);
-		sugarSlider.setValue(1);
+		System.out.println(theFSM.getSucreStock());
+
+		updateSugarSlider();
 
 		sizeSlider.setMaximum(2);
 		sizeSlider.setValue(1);
@@ -656,30 +804,41 @@ public class DrinkFactoryMachine extends JFrame {
 		consoleMessage = "<html>Welcome<br>You may take order";
 		messagesToUser.setText(consoleMessage);
 
-		coffeeStockInt = (int)theFSM.getCoffeeStock();
-		coffeeButton.setText(coffeeStockInt + " Coffee");
-		if(coffeeStockInt==0) {
+		coffeeButton.setText(theFSM.getCoffeeStock() + " Coffee");
+		if(theFSM.getCoffeeStock()==0) {
 			coffeeButton.setEnabled(false);
 		}
-		teaStockInt = (int)theFSM.getTeaStock();
-		teaButton.setText(teaStockInt + " Tea");
-		if(teaStockInt==0) {
+		teaButton.setText(theFSM.getTeaStock() + " Tea");
+		if(theFSM.getTeaStock()==0) {
 			teaButton.setEnabled(false);
 		}
-		expressoStockInt = (int)theFSM.getExpressoStock();
-		expressoButton.setText(expressoStockInt + " Expresso");
-		if(expressoStockInt==0) {
+		expressoButton.setText(theFSM.getExpressoStock() + " Expresso");
+		if(theFSM.getExpressoStock()==0) {
 			expressoButton.setEnabled(false);
 		}
-		soupStockInt = (int)theFSM.getSoupStock();
-		soupButton.setText(soupStockInt + " Soup");
-		if(soupStockInt==0) {
+		soupButton.setText(theFSM.getSoupStock() + " Soup");
+		if(theFSM.getSoupStock()==0) {
 			soupButton.setEnabled(false);
 		}
-		iceTeaStockInt = (int)theFSM.getIceTeaStock();
-		icedTeaButton.setText(iceTeaStockInt + " Ice Tea");
-		if(iceTeaStockInt==0) {
+		icedTeaButton.setText(theFSM.getIceTeaStock() + " Ice Tea");
+		if(theFSM.getIceTeaStock()==0) {
 			icedTeaButton.setEnabled(false);
+		}
+		checkLait.setText("Lait [" + theFSM.getLaitStock() + "]");
+		if (theFSM.getLaitStock()==0) {
+			checkLait.setEnabled(false);
+		}
+		checkSirop.setText("Sirop d'érable [" + theFSM.getSiropStock() + "]");
+		if (theFSM.getSiropStock()==0) {
+			checkSirop.setEnabled(false);
+		}
+		checkGlace.setText("Glace vanille [" + theFSM.getGlaceStock() + "]");
+		if (theFSM.getGlaceStock()==0) {
+			checkGlace.setEnabled(false);
+		}
+		checkCroutons.setText("Croutons [" + theFSM.getCroutonStock() + "]");
+		if(theFSM.getCroutonStock()==0) {
+			checkCroutons.setEnabled(false);
 		}
 
 		money = 0;
@@ -688,6 +847,44 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.setEpice(-1);
 		lblSugar.setText("Sugar");
 		lblSugar.setVisible(true);
+	}
+
+	public void updateSugarSlider() {
+		sugarSlider.setVisible(true);
+		if (theFSM.getSucreStock()==0) {
+			sugarSlider.setEnabled(false);
+			sugarSlider.setValue(0);
+		}
+		else {
+			if (theFSM.getSucreStock() < 4) {
+				sugarSlider.setMaximum((int)theFSM.getSucreStock());
+				sugarSlider.setEnabled(true);
+				sugarSlider.setValue(1);
+			}
+			else {
+				sugarSlider.setEnabled(true);
+				sugarSlider.setValue(1);
+			}
+		}
+	}
+
+	public void updateEpiceSlider() {
+		sugarSlider.setVisible(true);
+		if (theFSM.getEpiceStock()==0) {
+			sugarSlider.setEnabled(false);
+			sugarSlider.setValue(0);
+		}
+		else {
+			if (theFSM.getEpiceStock() < 4) {
+				sugarSlider.setMaximum((int)theFSM.getEpiceStock());
+				sugarSlider.setEnabled(true);
+				sugarSlider.setValue(1);
+			}
+			else {
+				sugarSlider.setEnabled(true);
+				sugarSlider.setValue(1);
+			}
+		}
 	}
 
 	public boolean hasOwnCup() {

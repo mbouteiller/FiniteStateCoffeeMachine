@@ -559,6 +559,90 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 			}
 		}
 		
+		private long sucreStock;
+		
+		public synchronized long getSucreStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return sucreStock;
+			}
+		}
+		
+		public void setSucreStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.sucreStock = value;
+			}
+		}
+		
+		private long siropStock;
+		
+		public synchronized long getSiropStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return siropStock;
+			}
+		}
+		
+		public void setSiropStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.siropStock = value;
+			}
+		}
+		
+		private long laitStock;
+		
+		public synchronized long getLaitStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return laitStock;
+			}
+		}
+		
+		public void setLaitStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.laitStock = value;
+			}
+		}
+		
+		private long glaceStock;
+		
+		public synchronized long getGlaceStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return glaceStock;
+			}
+		}
+		
+		public void setGlaceStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.glaceStock = value;
+			}
+		}
+		
+		private long epiceStock;
+		
+		public synchronized long getEpiceStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return epiceStock;
+			}
+		}
+		
+		public void setEpiceStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.epiceStock = value;
+			}
+		}
+		
+		private long croutonStock;
+		
+		public synchronized long getCroutonStock() {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				return croutonStock;
+			}
+		}
+		
+		public void setCroutonStock(long value) {
+			synchronized(BasicCoffeeControllerStatemachine.this) {
+				this.croutonStock = value;
+			}
+		}
+		
 		private long tpSachet;
 		
 		public synchronized long getTpSachet() {
@@ -1001,6 +1085,18 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		sCInterface.setSoupStock(0);
 		
 		sCInterface.setExpressoStock(0);
+		
+		sCInterface.setSucreStock(0);
+		
+		sCInterface.setSiropStock(0);
+		
+		sCInterface.setLaitStock(0);
+		
+		sCInterface.setGlaceStock(0);
+		
+		sCInterface.setEpiceStock(0);
+		
+		sCInterface.setCroutonStock(0);
 		
 		sCInterface.setTpSachet(3);
 		
@@ -1858,6 +1954,54 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 	
 	public synchronized void setExpressoStock(long value) {
 		sCInterface.setExpressoStock(value);
+	}
+	
+	public synchronized long getSucreStock() {
+		return sCInterface.getSucreStock();
+	}
+	
+	public synchronized void setSucreStock(long value) {
+		sCInterface.setSucreStock(value);
+	}
+	
+	public synchronized long getSiropStock() {
+		return sCInterface.getSiropStock();
+	}
+	
+	public synchronized void setSiropStock(long value) {
+		sCInterface.setSiropStock(value);
+	}
+	
+	public synchronized long getLaitStock() {
+		return sCInterface.getLaitStock();
+	}
+	
+	public synchronized void setLaitStock(long value) {
+		sCInterface.setLaitStock(value);
+	}
+	
+	public synchronized long getGlaceStock() {
+		return sCInterface.getGlaceStock();
+	}
+	
+	public synchronized void setGlaceStock(long value) {
+		sCInterface.setGlaceStock(value);
+	}
+	
+	public synchronized long getEpiceStock() {
+		return sCInterface.getEpiceStock();
+	}
+	
+	public synchronized void setEpiceStock(long value) {
+		sCInterface.setEpiceStock(value);
+	}
+	
+	public synchronized long getCroutonStock() {
+		return sCInterface.getCroutonStock();
+	}
+	
+	public synchronized void setCroutonStock(long value) {
+		sCInterface.setCroutonStock(value);
 	}
 	
 	public synchronized long getTpSachet() {
@@ -5891,6 +6035,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[7]) {
 				exitSequence_r_Step3Coffee_r1_Sucre();
+				sCInterface.setSucreStock(sCInterface.getSucreStock() - sCInterface.sucre);
+				
 				enterSequence_r_Step3Coffee_r1_WaitSucre_default();
 			} else {
 				did_transition = false;
@@ -5959,6 +6105,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[9]) {
 				exitSequence_r_Step3Coffee_r3_Sirop();
+				sCInterface.siropStock--;
+				
 				enterSequence_r_Step3Coffee_r3_WaitSirop_default();
 				r_Step3Coffee_react(false);
 			} else {
@@ -6290,6 +6438,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 				exitSequence_r_Step2Soup_r3_Epice();
 				sCInterface.raiseAdd15();
 				
+				sCInterface.setEpiceStock(sCInterface.getEpiceStock() - sCInterface.epice);
+				
 				enterSequence_r_Step2Soup_r3_WaitEpice_default();
 				r_Step2Soup_react(false);
 			} else {
@@ -6514,6 +6664,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[24]) {
 				exitSequence_r_Step3IceTea_r1_Sucre();
+				sCInterface.setSucreStock(sCInterface.getSucreStock() - sCInterface.sucre);
+				
 				enterSequence_r_Step3IceTea_r1_WaitSucre_default();
 			} else {
 				did_transition = false;
@@ -6580,6 +6732,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[26]) {
 				exitSequence_r_Step3IceTea_r3_Sirop();
+				sCInterface.siropStock--;
+				
 				enterSequence_r_Step3IceTea_r3_WaitSirop_default();
 				r_Step3IceTea_react(false);
 			} else {
@@ -6699,6 +6853,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[31]) {
 				exitSequence_r_Croutons();
+				sCInterface.croutonStock--;
+				
 				enterSequence_r_AttenteRecuperation_default();
 				react();
 			} else {
@@ -6717,6 +6873,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[32]) {
 				exitSequence_r_NuageDeLait();
+				sCInterface.laitStock--;
+				
 				enterSequence_r_AttenteRecuperation_default();
 				react();
 			} else {
@@ -6735,6 +6893,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[33]) {
 				exitSequence_r_GlaceVanille();
+				sCInterface.glaceStock--;
+				
 				react_r__choice_3();
 			} else {
 				did_transition = false;
@@ -6922,6 +7082,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[38]) {
 				exitSequence_r_Step3Tea_r1_Sucre();
+				sCInterface.setSucreStock(sCInterface.getSucreStock() - sCInterface.sucre);
+				
 				enterSequence_r_Step3Tea_r1_WaitSucre_default();
 			} else {
 				did_transition = false;
@@ -6986,6 +7148,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[40]) {
 				exitSequence_r_Step3Tea_r3_Sirop();
+				sCInterface.siropStock--;
+				
 				enterSequence_r_Step3Tea_r3_WaitSirop_default();
 				r_Step3Tea_react(false);
 			} else {
@@ -7229,6 +7393,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[46]) {
 				exitSequence_r_Step3Expresso_r1_Sucre();
+				sCInterface.setSucreStock(sCInterface.getSucreStock() - sCInterface.sucre);
+				
 				enterSequence_r_Step3Expresso_r1_WaitSucre_default();
 			} else {
 				did_transition = false;
@@ -7297,6 +7463,8 @@ public class BasicCoffeeControllerStatemachine implements IBasicCoffeeController
 		if (try_transition) {
 			if (timeEvents[48]) {
 				exitSequence_r_Step3Expresso_r3_Sirop();
+				sCInterface.siropStock--;
+				
 				enterSequence_r_Step3Expresso_r3_WaitSirop_default();
 				r_Step3Expresso_react(false);
 			} else {

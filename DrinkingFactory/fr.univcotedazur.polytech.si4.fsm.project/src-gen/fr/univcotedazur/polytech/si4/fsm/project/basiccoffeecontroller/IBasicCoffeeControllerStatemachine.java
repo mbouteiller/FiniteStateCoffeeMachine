@@ -118,6 +118,30 @@ public interface IBasicCoffeeControllerStatemachine extends ITimerCallback,IStat
 		
 		public void setExpressoStock(long value);
 		
+		public long getSucreStock();
+		
+		public void setSucreStock(long value);
+		
+		public long getSiropStock();
+		
+		public void setSiropStock(long value);
+		
+		public long getLaitStock();
+		
+		public void setLaitStock(long value);
+		
+		public long getGlaceStock();
+		
+		public void setGlaceStock(long value);
+		
+		public long getEpiceStock();
+		
+		public void setEpiceStock(long value);
+		
+		public long getCroutonStock();
+		
+		public void setCroutonStock(long value);
+		
 		public long getTpSachet();
 		
 		public void setTpSachet(long value);

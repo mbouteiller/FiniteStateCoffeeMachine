@@ -23,68 +23,14 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
         if (!theDfm.recipeStarted) {
             theDfm.hideOptions();
 
-            theDfm.sugarSlider.setVisible(true);
-
-            switch (theDfm.choice.name) {
-                case "coffee":
-                    theDfm.checkLait.setVisible(true);
-                    theDfm.checkLait.setEnabled(true);
-
-                    theDfm.checkSirop.setVisible(true);
-                    theDfm.checkSirop.setEnabled(true);
-
-                    theDfm.checkGlace.setVisible(true);
-                    theDfm.checkGlace.setEnabled(true);
-
-                    theDfm.lblSugar.setText("Sugar");
-
-                    theDfm.sizeSlider.setMaximum(2);
-                    theDfm.sizeSlider.setValue(1);
-                    break;
-
-                case "tea":
-                    theDfm.checkLait.setVisible(true);
-                    theDfm.checkLait.setEnabled(true);
-
-                    theDfm.checkSirop.setVisible(true);
-                    theDfm.checkSirop.setEnabled(true);
-
-                    theDfm.lblSugar.setText("Sugar");
-
-                    theDfm.sizeSlider.setMaximum(2);
-                    theDfm.sizeSlider.setValue(1);
-                    break;
-
-                case "expresso":
-                    theDfm.checkSirop.setVisible(true);
-                    theDfm.checkSirop.setEnabled(true);
-
-                    theDfm.checkGlace.setVisible(true);
-                    theDfm.checkGlace.setEnabled(true);
-
-                    theDfm.lblSugar.setText("Sugar");
-
-                    theDfm.sizeSlider.setMaximum(2);
-                    theDfm.sizeSlider.setValue(1);
-                    break;
-
-                case "soup":
-                    theDfm.checkCroutons.setVisible(true);
-                    theDfm.checkCroutons.setEnabled(true);
-
-                    theDfm.sizeSlider.setMaximum(2);
-                    theDfm.sizeSlider.setValue(1);
-                    break;
-
-                case "icetea":
-                    theDfm.checkSirop.setVisible(true);
-                    theDfm.checkSirop.setEnabled(true);
-
-                    theDfm.lblSugar.setText("Sugar");
-                    break;
-                default:
-                    break;
+            if (!theDfm.choice.name.equals("soup")) {
+                theDfm.updateSugarSlider();
             }
+            else {
+                theDfm.updateEpiceSlider();
+            }
+
+            theDfm.updateOptions();
         }
     }
 
@@ -132,7 +78,7 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
     @Override
     public void onWaitTakeOrderRaised() {
         theDfm.recipeStarted = false;
-        theDfm.messagesToUser.setText("<html>Please retrieve<br>your drink");
+        theDfm.messagesToUser.setText("<html>Please retrieve<br>your drink<br>Cleaning ...");
     }
 
     @Override
@@ -232,12 +178,10 @@ public class CoffeeMachineControlerInterfaceImplementation implements SCInterfac
 		theDfm.progressBar.setValue(theDfm.progressBar.getValue()+10);
 	}
 
-
 	@Override
 	public void onAdd15Raised() {
 		theDfm.progressBar.setValue(theDfm.progressBar.getValue()+15);
 	}
-
 
 	@Override
 	public void onAdd20Raised() {
